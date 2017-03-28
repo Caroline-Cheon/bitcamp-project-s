@@ -27,3 +27,33 @@ $.fn.cf = function () {
   /* fire cf */
   $('.mento-set-form').cf();
 }); //end doc ready
+
+
+
+
+
+//mento-set button~
+$( function() {
+	$(document.body).on('click', '.user-change', function() {
+		console.log('.user-change 클릭이벤트 발생이요');
+		$(".user-change-modal").removeClass("user-change-modal-hide");
+	/*	console.log('#test1.clickEvent')
+		userInfo(); // 세션 정보 획득 
+		console.log(memberInfo); 
+	if (memberInfo == undefined) {
+	  $(".seeds").removeClass("seeds-call");
+	  $(".seeds").load("seeds/json.mbti.html #container");
+		*/
+	});
+});
+ 
+
+
+
+
+
+
+
+
+
+
