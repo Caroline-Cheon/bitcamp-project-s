@@ -9,9 +9,9 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link rel="stylesheet" type="text/css" href="../common/css/header.css">
 <link rel="stylesheet" type="text/css" href="css/expert.css">
+<link rel="stylesheet" type="text/css" href="css/chat.css">
 <link rel="stylesheet" href="../mystuff/css/modal.css">
 <link rel="stylesheet" href="../common/css/common.css">
-<link rel="stylesheet" href="css/chat.css">
 <link rel="stylesheet" type="text/css" href="../auth/css/login.css">
 <style>
 
@@ -255,7 +255,7 @@ $(function() {
 		  var mteImg = $(this).children('img').attr('src');
 			  console.log(mteName);
 			  console.log(mteImg);
-		  sno = $(this).attr('sno'); 
+		  sno = Number($(this).attr('sno')); 
 		  $('.chat-modal').load(clientRoot + '/expert/chat-2.html .window',function() {
 		        $(".chat-modal").css('display','block');
 			  $('.detail-mentee-area').css("display","none");
@@ -280,8 +280,7 @@ $(function() {
 			        $.each(list, function(k, v) {
 			          var text   = list[k].message;
 			          var writer = list[k].writerNo;
-			          
-			          if (writer == sno) {
+			          if (writer == memberInfo.memberNo) {
 			              $('.chatwindow').append('<div class="right">' + text + '</div>');
 			          } else {
 			              $('.chatwindow').append('<div class="left bye">' + text + '</div>');
@@ -308,7 +307,7 @@ $(function() {
 			             var status = ajaxResult.status;
 			             if (status != "success") return;
 			       });
-			       $('.chatwindow').append('<div class="left">' + text + '</div>');
+			       $('.chatwindow').append('<div class="right">' + text + '</div>');
 			       $('#message').val('');
 
 			  });

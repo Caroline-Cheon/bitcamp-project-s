@@ -212,7 +212,7 @@ $( function() {
 							 var schl = ajaxResult.data.personSchool;
 							 var desc = ajaxResult.data.personDescription;
 							 
-							 $('.mystuff-modal').load('mystuff/person-test.html .person-dash', function() {
+							 $('.mystuff-modal').load('mystuff/person-modal.html .person-dash', function() {
 
 								 $('.card-image img').attr('src',img);
 								 $('.name .p-name').text(name);
@@ -231,19 +231,23 @@ $( function() {
 // 멘토 모달 띄우기 
 			
 			
-			$(document.body).on( "click", ".mentoBox", function() {
+			$(document.body).on( "click", ".mento-slide", function() {
 				
 				console.log("-----------------------------------------------");
 				console.log("멘토 모달창");
 				console.log(this);
 				
-				var cono = $(this).attr('data-no');
-				var eno = $(this).attr('eno');
-				console.log(cono);
 				
-				$.getJSON(serverRoot + '/person/getOne.json', 
+				var cono = $(this).children('.mento-conts').children('.buttonHolder').attr('data-no');
+				var sno = memberInfo.memberNo;
+				console.log(cono);
+				console.log(sno);
+				
+				$.getJSON(serverRoot + '/message/list.json', 
 						{
-					"cono": cono
+					"cono": cono,
+					"sno": memberInfo.memberNo,
+					"mno": memberInfo.memberNo
 						}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
@@ -251,22 +255,23 @@ $( function() {
 								return;
 							}
 							
-							console.log("인물 리스트0");
-							console.log(ajaxResult);
-							 console.log(ajaxResult.data.personJob);
-							 var name = ajaxResult.data.personName;
-							 var job = ajaxResult.data.personJob;
-							 var img = ajaxResult.data.personImage2;
-							 var schl = ajaxResult.data.personSchool;
-							 var desc = ajaxResult.data.personDescription;
+							console.log("멘토와의 채팅");
+							
+							console.log(ajaxResult.data.list);
+							console.log(ajaxResult.data.mento);
+							console.log(ajaxResult.data.list.length);
+							
+								var mteName = ajaxResult.data.mento.name;
+								var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
+								console.log(mteName);
+								console.log(mtePhoto);
 							 
-							 $('.mystuff-modal').load('mystuff/person-test.html .person-dash', function() {
-
-								 $('.card-image img').attr('src',img);
-								 $('.name .p-name').text(name);
-								 $('.p-job').html(job);
-								 $('.p-schl').html(schl);
-								 $('.p-descs').html(desc);
+							 $('.mystuff-modal').load('mystuff/plan-modal.html .plan-modal', function() {
+								 console.log($(this));
+                                  console.log("모달창 들어왔다.")
+                                  
+                                  $('.mystuff-chat-bot h3').text(mteName);
+                                  $('.mystuff-chat-bot img').attr('src',mtePhoto);
 								 
 							 }) // mystuff-modal 창에 로드 시키기.
 				
@@ -307,7 +312,7 @@ $( function() {
 					 
 				       if($(".frame-area-center").hasClass("mystuff")) {
 				    	   
-					 $('.mystuff-modal').load('mystuff/talks.html #contents', function() {
+					 $('.mystuff-modal').load('mystuff/video-modal.html #contents', function() {
 						 console.log("여기도 들어오나")
 						 
 						 $('#iframe').append("<iframe src="+"'"+videoAddr+"'"+"style='width:;width: 100%;height: 386px;' background-color: black; frameborder='0' scrolling='no' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>")

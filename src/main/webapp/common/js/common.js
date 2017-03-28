@@ -263,6 +263,10 @@ $(function() {
 					} else {
 						memberInfo = ajaxResult.data.topic;
 						topicName = ajaxResult.data.topicName;
+						
+						if(ajaxResult.data.topic == null || ajaxResult.data.topicName == []) {
+							userInfo();
+						}
 						console.log('세션 획득 정보');
 						console.log(memberInfo);
 						console.log(topicName);
@@ -275,8 +279,10 @@ $(function() {
 				setInterval(function(){
 					$(".new-message blink").toggle();
 					}, 550);
-				if (memberInfo.photoPath != undefined)
-	    			$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
+				if (memberInfo.photoPath != undefined) {
+					
+					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
+				}
 				$('.user-info h3').text(memberInfo.name);
 				/* topicName length 만큼 반복문 돌려서 생성해야 함 */ 
 				$('.recommand-info .one').text(topicName[0]);

@@ -11,30 +11,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import bitcamp.java89.ems2.domain.Message;
+import bitcamp.java89.ems2.domain.Plan;
 import bitcamp.java89.ems2.service.MessageService;
+import bitcamp.java89.ems2.service.PlanService;
 
 @RestController
 public class MessegeJsonControl {
   @Autowired ServletContext sc;
   @Autowired MessageService messageService;
+  @Autowired PlanService planService;
   
   @RequestMapping("/message/list")
   public AjaxResult list(@RequestParam int cono, @RequestParam int sno, @RequestParam int mno) throws Exception {
     List<Message> list = messageService.messageList(cono, sno);
+    System.out.println("/message/list :" + list);
     
     Message message = new Message(); 
     message.setContentsNo(cono);
     message.setMemberNo(sno);
     
-    if (sno == mno)
-      messageService.menteeVisit(message);
-    if (sno != mno)
-      messageService.mentoVisit(message);
-    
     HashMap<String,Object> resultMap = new HashMap<>(); 
-    resultMap.put("list", list);
     
-    return new AjaxResult(AjaxResult.SUCCESS, resultMap); 
+    if (sno == mno) {
+      messageService.menteeVisit(message);
+      if (list == null) { // 멘티가 메세지 리스트를 가져올때 메세지 내용이 없다면
+        Plan plan = planService.getOne(cono); // 내용이 없다면 멘토 이름과 사진만 리턴
+        System.out.println(plan);
+        resultMap.put("list", plan); 
+        return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+      }
+      
+      Plan plan = planService.getOne(cono);
+      resultMap.put("list", list); // 멘티가 메세지 리스트를 가져올때 메세지 내용이 있다면
+      resultMap.put("mento", plan);
+      return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+    }
+   
+    else { // 멘토라면 ~
+      messageService.mentoVisit(message);
+      if (list == null) { // 멘토가 채팅 modal을 띄웠을 때 메세지 내용이 없다면
+        return new AjaxResult(AjaxResult.FAIL, "멘티와의 대화가 아직 없습니다.");    
+      }    
+    resultMap.put("list", list);
+    return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+      
+    }
+     
   }
   
   @RequestMapping("/message/mentee-send")
