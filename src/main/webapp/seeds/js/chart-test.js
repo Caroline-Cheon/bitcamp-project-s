@@ -1,4 +1,6 @@
 function chartCreater(i,e,n,s,f,t,p,j) {
+	console.log('chartcreater');
+	console.log(i,e,n,s,f,t,p,j);
 	var chart = AmCharts.makeChart("chartdiv", {
 		  "type": "serial",
 		  "theme": "chalk",
