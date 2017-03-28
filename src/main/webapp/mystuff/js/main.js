@@ -1,11 +1,7 @@
-
-
 $( function() { 
-	
 	var currPageNo = 1;
 	var pageSize = 5;
 	var sno = 5;
-	
 		
 	$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
 	
@@ -136,7 +132,6 @@ $( function() {
 		  });  
 	
 	});
-
 
 
 		        // 좋아요 버튼 눌렀을 때

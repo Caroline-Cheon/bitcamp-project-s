@@ -17,15 +17,34 @@ import bitcamp.java89.ems2.service.LikeService;
 @RestController // 이 애노테이션을 붙이면, 스프링 설정 파일에 JSON 변환기 'MappingJackson2JsonView' 객체를 등록하지 않아도 된다.
 public class LikeJsonControl {
   @Autowired ServletContext sc;
-  
   @Autowired LikeService likeService;
   
-  @RequestMapping("/mentoLike/list")
+  @RequestMapping("/mentoLike/Count")
+  public AjaxResult mentoListCount(int sno) throws Exception {
+    int totalCount = likeService.mentoGetSize(sno);
+    
+    HashMap<String,Object> resultMap = new HashMap<>();
+    resultMap.put("totalCount", totalCount);
+    
+    if (totalCount == 0)
+      return new AjaxResult(AjaxResult.FAIL, "리스트가 없습니다.");
+  return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+  }
+  
+  @RequestMapping("/videoLike/Count")
+  public AjaxResult videoListCount(int sno) throws Exception {
+    int totalCount = likeService.mentoGetSize(sno);
+    
+    HashMap<String,Object> resultMap = new HashMap<>();
+    resultMap.put("totalCount", totalCount);
+    
+    if (totalCount == 0)
+      return new AjaxResult(AjaxResult.FAIL, "리스트가 없습니다.");
+    return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+  }
+  
   public AjaxResult mentoList(@RequestParam(defaultValue="1") int pageNo,
           @RequestParam(defaultValue="4") int pageSize, int sno) throws Exception {
-    
-
-
     List<Like> list = likeService.mentoList(pageNo, pageSize, sno);
     int totalCount = likeService.mentoGetSize(sno);
     System.out.println("mentoCount"+totalCount);
@@ -34,7 +53,7 @@ public class LikeJsonControl {
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("list", list);
     resultMap.put("totalCount", totalCount);
-    
+
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
   
@@ -56,9 +75,7 @@ public class LikeJsonControl {
       
       HashMap<String,Object> resultMap = new HashMap<>();
       resultMap.put("list", list);
-//      System.out.println("아아"+ list);
       resultMap.put("totalCount", totalCount);
-      
       return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
   

@@ -1,3 +1,239 @@
+function pageLoad(choose) {
+	if (choose == 'mystuff') {
+		$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
+			$.getJSON(serverRoot + '/person/list.json', 
+				    {
+					  "pageNo": currPageNo,
+					  "pageSize": pageSize,
+					  "sno": sno
+					}, function(ajaxResult) {
+				      var status = ajaxResult.status;
+				      if (status != "success") return;
+				      console.log("person 객체");
+				      console.log(ajaxResult.data.list);
+				      var list = ajaxResult.data.list;
+				      var section = $('.ps-carousel .ul');
+				      console.log(section);
+				      var template = Handlebars.compile($('#personList').html());
+				      section.html(template({"list": list}));
+					});
+			$.getJSON(serverRoot + '/video/list.json', 
+				    {
+					  "pageNo": currPageNo,
+					  "pageSize": pageSize,
+					  "sno": sno
+					}, function(ajaxResult) {
+				      var status = ajaxResult.status;
+				      if (status != "success") return;
+				      console.log("video 객체");
+				      console.log(ajaxResult);
+				      var list = ajaxResult.data.list;
+				      $.each(list, function(k, v) {
+				    	  $.getJSON(serverRoot + '/video/isLike.json', 
+				    		{
+				    		  "cono": v.contentsNo,
+				    		  "sno": sno
+				    		}, function(ajaxResult) {
+				  		      var status = ajaxResult.status;
+						      if (status != "success") return;
+						      var isLike = ajaxResult.data.isLike;
+						      if (isLike == 1) {
+						    	  list[k].isLike = true;
+						      } else {
+						    	  list[k].isLike = false;
+						      }
+						      var section = $('.section');
+						      var template = Handlebars.compile($('#trTemplate').html());
+						      section.html(template({"list": list}));
+				    		});
+				      });
+				  	});  
+	//		멘토 슬라이드 
+			$.getJSON(serverRoot + '/plan/list.json',
+					 {
+				  "pageNo": currPageNo,
+				  "pageSize": pageSize,
+				  "sno": sno
+				},
+				    function(ajaxResult) {
+				      var status = ajaxResult.status;
+				      if (status != "success")
+				        return;
+				      var list = ajaxResult.data.list;
+				      countLike();
+				      function countLike() {
+				      $.each(list, function(k, v) {
+				    	  $.getJSON(serverRoot + '/video/isLike.json', 
+				    		{
+				    		  "cono": v.contentsNo,
+				    		  "sno": sno
+				    		}, function(ajaxResult) {
+				  		      var status = ajaxResult.status;
+						      if (status != "success") return;
+						      var isLike = ajaxResult.data.isLike;
+						      if (isLike == 1) {
+						    	  list[k].isLike = true;
+						      } else {
+						    	  list[k].isLike = false;
+						      }
+						      var section = $('.mt-carousel > .ul');
+						      var template = Handlebars.compile($('#mentoList').html());
+						      section.html(template({"list": list}));
+						      jcarousels();
+				    		});
+				      });
+				      }
+				  });  
+			});
+	} else if (choose == 'likes') {
+		
+	} else if (choose == 'seeds') {
+		$(".seeds").load("seeds/seeds-temp.html .seeds");
+	} else if (choose == 'mento-like') {
+		var currPageNo = 1;
+		var pageSize = 4;
+		var sno = memberInfo.memberNo;
+		$.getJSON(serverRoot + '/mentoLike/Count.json', sno, function(ajaxResult) {
+			if (ajaxResult.status == 'success') {
+				$(".likes").load("likes/mento-like.html .dashboard", function() {
+					likeMentoList(currPageNo, pageSize, sno);
+				});
+			}
+		});
+		
+		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
+
+			});
+			$('#prevPgBtn').click(function() {
+				if (currPageNo > 1) {
+					likeMentoList(--currPageNo, 4, sno);
+				}
+			});
+			$('#nextPgBtn').click(function() {
+				likeMentoList(++currPageNo, 4, sno);
+			});
+			function mentoLikePreparePagingButton(totalCount) {
+				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
+				if (currPageNo <= 1) {
+					$('#prevPgBtn').attr('disabled', true);
+				} else {
+					$('#prevPgBtn').attr('disabled', false);
+				}
+
+				var maxPageNo = parseInt(totalCount / pageSize);
+				if ((totalCount % pageSize) > 0) {
+					maxPageNo++;
+				}
+
+				if (currPageNo >= maxPageNo) {
+					$('#nextPgBtn').attr('disabled', true); 
+				} else {
+					$('#nextPgBtn').attr('disabled', false);
+				}
+
+				// 현재 페이지 번호를 출력한다.
+				$('#pageNo').text(currPageNo);
+			}
+			function likeMentoList(pageNo, pageSize, sno) {
+				$.getJSON(serverRoot + '/mentoLike/list.json', 
+						{
+					"pageNo": pageNo,
+					"pageSize": pageSize,
+					"sno": sno
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success")
+								return;
+
+							var list = ajaxResult.data.list;
+							console.log(list);
+
+							var section = $('.mento-like-list');
+
+							var template = Handlebars.compile($('#mentoLike').html());
+							section.html(template({"list": list}));
+
+							mtHover();
+							mentoLikePreparePagingButton(ajaxResult.data.totalCount);
+							console.log(ajaxResult.data.totalCount);
+						});
+			}
+
+	} else if (choose == 'video-like') {
+		// 좋아하는 영상 클릭시.
+		$(document.body).on( "click", ".video-like-btn", function() {
+			var currPageNo = 1;
+			var pageSize = 15;
+			var sno = memberInfo.memberNo;
+			$.getJSON(serverRoot + '/videoLike/Count.json', sno, function(ajaxResult) {
+				if (ajaxResult.status == 'success') {
+					$(".likes").load("likes/video-like.html .dashboard", function() {
+						likeVideoList(currPageNo, pageSize, sno);
+					});
+				}
+			});
+			$('#prevPgBtn').click(function() {
+				if (currPageNo > 1) {
+					likeVideoList(--currPageNo, 15, sno);
+				}
+			});
+			$('#nextPgBtn').click(function() {
+				likeVideoList(++currPageNo, 15, sno);
+			});
+			function preparePagingButton(totalCount) {
+				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
+				if (currPageNo <= 1) {
+					$('#prevPgBtn').attr('disabled', true);
+				} else {
+					$('#prevPgBtn').attr('disabled', false);
+				}
+
+				var maxPageNo = parseInt(totalCount / pageSize);
+				if ((totalCount % pageSize) > 0) {
+					maxPageNo++;
+				}
+
+				if (currPageNo >= maxPageNo) {
+					$('#nextPgBtn').attr('disabled', true); 
+				} else {
+					$('#nextPgBtn').attr('disabled', false);
+				}
+
+				// 현재 페이지 번호를 출력한다.
+				$('#pageNo').text(currPageNo);
+			}
+
+			function likeVideoList(pageNo, pageSize, sno) {
+				$.getJSON(serverRoot + '/videoLike/list.json', 
+						{
+					"pageNo": pageNo,
+					"pageSize": pageSize,
+					"sno": sno
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success")
+								return;
+
+							var list = ajaxResult.data.list;
+							console.log(list);
+
+							var section = $('.video-like-list');
+
+							var template = Handlebars.compile($('#videoLike').html());
+							section.html(template({"list": list}));
+
+							console.log("like");
+							console.log(ajaxResult.data.totalCount);
+							preparePagingButton(ajaxResult.data.totalCount);
+						});
+			}
+		}); // 좋아하는 영상 클릭시 이벤트
+	}
+}
+
+
 /*   user session 정보 받아오는 함수   */
 function userInfo() {
 	console.log('userInfo().start');
@@ -186,6 +422,26 @@ $(function() {
 				  isopen_messagemenu = false;
 				  console.log('/auth/logout.json.userInfo() 수행');
 				  userInfo(); 
+				  $('.mystuff .dashboard').addClass('animated fadeOut');
+				  $('.likes .dashboard').addClass('animated fadeOut');
+			      if($(".frame-area-center").hasClass("mystuff")) {
+			          $(".seeds").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack",
+			        		  function() {
+			        	  		$('.mystuff .dashboard').removeClass('animated fadeOut');
+			        	  		$('.likes .dashboard').removeClass('animated fadeOut');
+			        	  		$('.mystuff .dashboard').remove();
+			        	  		$('.likes .dashboard').remove();
+			        		  });
+			          $(".mystuff").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
+			        } else if($(".frame-area-center").hasClass("likes")) {
+			          $(".likes").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
+			          $(".mystuff").switchClass("frame-area-left", "frame-area-right", 2000, "easeInOutBack");
+			          $(".seeds").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack",
+			        		  function() {
+			        	  		$('.dashboard').removeClass('animated fadeOut');
+			        	  		$('.dashboard').remove();
+			        	  		});
+			        }
 			});
 	      }
 	    }

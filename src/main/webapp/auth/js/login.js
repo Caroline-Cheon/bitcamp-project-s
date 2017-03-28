@@ -125,6 +125,8 @@ $(function() {
 				console.log('modal-confirm-yes-btn :', param);
 				userInfo();
 				eventControll();
+				$(".seeds").switchClass("frame-area-center", "frame-area-left", 2000, "easeInOutBack");
+				$(".mystuff").switchClass("frame-area-right", "frame-area-center", 2000, "easeInOutBack");
 			} else {
 				warnModalStart('save-fail');
 			}
