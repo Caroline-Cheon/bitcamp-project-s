@@ -56,15 +56,14 @@ $(function() {
 		    	$('.header-icon-message').css("display", "inline-block");
 		    	$('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
 		    		userInfo();
-		    		if (memberInfo.photoPath != undefined)
-		    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-		    		$('.user-info h3').text(memberInfo.name);
+		    		setTimeout(function() {
+		    			loadContorl();
+		    		}, 3500);
 		    	});
 		}, 'json');
 	}
 	$(document.body).on('keypress', '.login-button-go', function(event) {
-		logIn(event, login);
-		var login = 'undefined';
+		logIn(event);
 	});
 	$(document.body).on('click', '.login-button-go', function(event) {
 		logIn(event);

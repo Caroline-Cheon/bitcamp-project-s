@@ -1,3 +1,9 @@
+function loadContorl() {
+	console.log('loadContorl 시작');
+	console.log(memberInfo.memberNo);
+	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
+	if (hasLike == 'has') pageLoad('mento-likes'); 
+}
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
 		$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
@@ -239,11 +245,20 @@ function userInfo() {
 	console.log('userInfo().start');
 	  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
 			memberInfo = ajaxResult.data.topic;
-			memberName = ajaxResult.data.topicName;
+			topicName = ajaxResult.data.topicName;
+			hasLike = ajaxResult.data.hasLike;
 			console.log('세션 획득 정보');
 			console.log(memberInfo);
 			console.log(topicName);
+			console.log(hasLike);
 			eventControll();
+			if(memberInfo != undefined) {
+	    		$('.user-info h3').text(memberInfo.name);
+	    		if (memberInfo.photoPath != undefined) {
+	    			console.log(memberInfo.photoPath);
+	    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+	    		}
+			}
 	  });
 }
 /*   /user session 정보 받아오는 함수   */

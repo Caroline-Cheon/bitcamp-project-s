@@ -16,11 +16,13 @@ import bitcamp.java89.ems2.domain.Member;
 import bitcamp.java89.ems2.domain.Mento;
 import bitcamp.java89.ems2.domain.Topic;
 import bitcamp.java89.ems2.service.AuthService;
+import bitcamp.java89.ems2.service.LikeService;
 
 @RestController
 public class AuthJsonControl {
   
   @Autowired AuthService authService;
+  @Autowired LikeService likeService;
   @Autowired MentoDao mentoDao;
   
   @RequestMapping("/auth/login")
@@ -54,6 +56,7 @@ public class AuthJsonControl {
   @RequestMapping("/auth/loginUser")
   public AjaxResult loginUser(HttpSession session) throws Exception {
     Member member = (Member)session.getAttribute("member");
+    System.out.println("/auth/loginUser :" + member);
     if (member == null) { // 로그인이 되지 않은 상태
       return new AjaxResult(AjaxResult.FAIL, "로그인을 하지 않았습니다.");
     } else {
@@ -61,12 +64,13 @@ public class AuthJsonControl {
       System.out.println("/auth/loginUser.topic :" + topic);
       List<String> topicName = authService.getResultNames(member.getMemberNo());
       System.out.println("/auth/loginUser.topicName :" + topicName);
-      System.out.println("/auth/loginUser :" + member);
       HashMap<String, Object> resultMap = new HashMap<>(); 
+      int likeCount = likeService.hasLike(member.getMemberNo());
       resultMap.put("topic", topic);
-      if (topic == null)
-        resultMap.put("topic", member);
+      if (topic == null) resultMap.put("topic", member);
       resultMap.put("topicName", topicName);
+      if (likeCount != 0) resultMap.put("hasLike", "has");
+      if (likeCount == 0) resultMap.put("hasLike", "none");
       return new AjaxResult(AjaxResult.SUCCESS, resultMap);
     }
   }
