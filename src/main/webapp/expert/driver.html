@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="../mystuff/css/modal.css">
 <link rel="stylesheet" href="../common/css/common.css">
 <link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" type="text/css" href="../auth/css/login.css">
 <style>
 
 .fa-plus {
@@ -124,8 +125,19 @@
 <script type="text/javascript" src="../common/js/context.js"></script>
 <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-load-image/js/load-image.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-load-image/js/load-image-meta.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-load-image/js/load-image-exif.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-load-image/js/load-image-exif-map.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-load-image/js/load-image-orientation.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
+<script type="text/javascript" src="../node_modules/blueimp-file-upload/js/jquery.fileupload-process.js"></script> 
+<script type="text/javascript" src="../node_modules/blueimp-file-upload/js/jquery.fileupload-image.js"></script>
 <script type="text/javascript" src="../node_modules/handlebars/dist/handlebars.js"></script>
 <script type="text/javascript" src="../common/js/context.js"></script>
+<script type="text/javascript" src="../auth/js/login.js"></script>
 <script type="text/javascript" src="../common/js/common.js"></script>
 <script type="text/javascript" src="../mystuff/js/modal.js"></script>
 <script>
@@ -234,15 +246,22 @@ $(function() {
 	  
 	  var sno;
 	  var cono;
-	  var eno;
+
 	  // 멘티 한명 클릭시 채팅창 보이기
 	  $(document.body).on("click", ".mentee-info", function() {
 		  userInfo();
 		  console.log("들어왔닛??");
+		  var mteName = $(this).children('.mentee-info-name').text();
+		  var mteImg = $(this).children('img').attr('src');
+			  console.log(mteName);
+			  console.log(mteImg);
 		  sno = $(this).attr('sno'); 
 		  $('.chat-modal').load(clientRoot + '/expert/chat-2.html .window',function() {
 		        $(".chat-modal").css('display','block');
 			  $('.detail-mentee-area').css("display","none");
+			  $('.bot h3').text(mteName);
+			  $('.bot img').attr('src', mteImg);
+			  
 			  
 			  
 			  console.log("ddasd");

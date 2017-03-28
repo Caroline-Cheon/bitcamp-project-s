@@ -460,25 +460,7 @@ h3.warn-modal-testInfo {
 {{/each}}
 </script>
 <script>
-<!-- eventControll -->
-function eventControll() {
-	console.log('eventControll.start');
-  if(memberInfo != null) {
-  console.log('event controll 제어 조건자 상태');
-  console.log(loginEvent, testEvent, memberInfo);
-   loginEvent = true; 
-   $('.warn-modal-logInfo').css('display', 'none');
-   $('.warn-modal-testInfo').css('display', 'block');
-	      if (memberInfo.resultNo >= '1') {
-	        testEvent = true;
-	      } else {
-	    	  testEvent = false;
-	      }
-         console.log('test event 제어변수 상태');
-         console.log(testEvent);
-  }
-}
-<!-- /eventControll -->
+
 <!--   modal contector   -->
 function modalConnector() {
 	if (!loginEvent) {

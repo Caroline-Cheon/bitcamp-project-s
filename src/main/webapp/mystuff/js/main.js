@@ -99,8 +99,8 @@ $( function() {
 		      
 		  
 		      var list = ajaxResult.data.list;
-//		      console.log("멘토");
-//		      console.log(list);
+		      console.log("멘토");
+		      console.log(list);
 		      countLike();
 		      
 		      function countLike() {
@@ -230,6 +230,60 @@ $( function() {
 			})
 			
 			})
+			
+			
+			
+// 멘토 모달 띄우기 
+			
+			
+			$(document.body).on( "click", ".mentoBox", function() {
+				
+				console.log("-----------------------------------------------");
+				console.log("멘토 모달창");
+				console.log(this);
+				
+				var cono = $(this).attr('data-no');
+				var eno = $(this).attr('eno');
+				console.log(cono);
+				
+				$.getJSON(serverRoot + '/person/getOne.json', 
+						{
+					"cono": cono
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success") {
+								return;
+							}
+							
+							console.log("인물 리스트0");
+							console.log(ajaxResult);
+							 console.log(ajaxResult.data.personJob);
+							 var name = ajaxResult.data.personName;
+							 var job = ajaxResult.data.personJob;
+							 var img = ajaxResult.data.personImage2;
+							 var schl = ajaxResult.data.personSchool;
+							 var desc = ajaxResult.data.personDescription;
+							 
+							 $('.mystuff-modal').load('mystuff/person-test.html .person-dash', function() {
+
+								 $('.card-image img').attr('src',img);
+								 $('.name .p-name').text(name);
+								 $('.p-job').html(job);
+								 $('.p-schl').html(schl);
+								 $('.p-descs').html(desc);
+								 
+							 }) // mystuff-modal 창에 로드 시키기.
+				
+			})
+			
+			})
+			
+			
+			
+			
+			
+			
 			
 			
 			

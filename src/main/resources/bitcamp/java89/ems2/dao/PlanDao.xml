@@ -14,7 +14,7 @@
   </resultMap>
   
   <resultMap type="bitcamp.java89.ems2.domain.Mento" id="mento-map">
-    <id     column="mno"        property="memberNo"/>
+    <id     column="eno"        property="mentoNo"/>
     <result column="name"       property="name"/>
     <result column="age"       property="age"/>
     <result column="email"       property="email"/>
@@ -45,7 +45,7 @@
   </select>
   
    <select id="getList" resultMap="plan-map" parameterType="map">
-  select plan.cono,name,plmap,plimg, sarea from contents ctt
+  select plan.cono,mto.eno,name,plmap,plimg, sarea from contents ctt
   inner join plan on plan.cono = ctt.cono
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno

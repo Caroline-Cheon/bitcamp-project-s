@@ -235,7 +235,23 @@ body .window .windowrap .bot h3 {
   text-align: center;
   position: relative;
 }
-body .window .windowrap .bot h3:before {
+
+.window .windowrap .bot img {
+	
+	  width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    border-radius: 100px;
+    /* background-color: transparent; */
+    overflow: hidden;
+    left: 110px;
+    top: 15px;
+
+	}
+
+
+/* body .window .windowrap .bot h3:before {
   content: '';
   position: absolute;
   height: 30px;
@@ -250,7 +266,7 @@ body .window .windowrap .bot h3:before {
           transform: translateY(-50%);
   border: 1px solid #BE93C5;
   border-radius: 100%;
-}
+} */
 body .window .windowrap:before {
   content: '';
   position: absolute;

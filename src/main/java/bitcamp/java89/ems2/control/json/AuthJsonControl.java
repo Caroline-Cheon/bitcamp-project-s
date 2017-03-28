@@ -63,11 +63,15 @@ public class AuthJsonControl {
       System.out.println("/auth/loginUser.topicName :" + topicName);
       System.out.println("/auth/loginUser :" + member);
       HashMap<String, Object> resultMap = new HashMap<>(); 
-      resultMap.put("topic", topic);
-      if (topic == null)
+      if (topic == null) {
         resultMap.put("topic", member);
+        return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+      } else {
+        
+        resultMap.put("topic", topic);
       resultMap.put("topicName", topicName);
       return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+       }
     }
   }
 }
