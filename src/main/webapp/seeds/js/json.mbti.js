@@ -1,3 +1,11 @@
+function makembtizero() {
+    stepCount = 0; 
+    stepChange = 0;
+    hasStep = new Array(); 
+    mbti = [0, 0, 0, 0];
+    mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
+    mbtiResult = {};
+}
 $(function() {
     var stepCount = 0; 
     var stepChange = 0;
@@ -50,16 +58,17 @@ $(function() {
         if (memberInfo == null) {
         	console.log("비로그인 상태 : Session 전송 후 저장된 데이터 확인");
             window.sessionStorage.setItem('result', resultMsg);
-            console.log(window.sessionStorage.getItem('result'));
+            console.log(window.sessionStorage.getItem('result'));   // istp
             window.sessionStorage.setItem('resultValues', resultValues);
             console.log(window.sessionStorage.getItem('resultValues'));
             $('.seeds').load('seeds/seeds-temp.html','.seeds-wrapper',function(){
-            	console.log('들어왔니 펑션 안으로?');
+            	console.log('들어왔니 펑션 안으로?  11');
             	$('.seeds-modal-call').addClass('seeds-modal',function(){
             		console.log('modal 추가 됐다.');
             		$('.seeds-modal').load('seeds/chart-test.html','.chart-result', function() {
                         chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
                                 mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
+                        makembtizero();
             		});
             	});
             });
@@ -73,18 +82,26 @@ $(function() {
                 "eachResult" : resultValues
             }
             $.post(serverRoot + '/seeds/add.json', param, function(ajaxResult) {
-                if (ajaxResult.status !="success") {
+                if (ajaxResult.status != "success") {
                     alert(ajaxResult.data);
-                      return;
+                    return;
                 }
-	          });
+            });
+                $('.frame-area-out').switchClass('frame-area-out','frame-area-center', 2000, 'easeInOutBack');
+                $('.seeds').load('seeds/seeds-temp.html','.seeds-wrapper',function(){
+                	console.log('들어왔니 펑션 안으로?  22');
+                	$('.seeds-modal-call').addClass('seeds-modal',function() {
+                		console.log('modal 추가 됐다.');
+                		$('.seeds-modal').load('seeds/chart-test.html','.chart-result', function() {
+                            chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
+                                    mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
+                            makembtizero();
+                		});
+                	});
+                });
+	          
 	        }
-	        stepCount = 0; 
-	        stepChange = 0;
-	        hasStep = new Array(); 
-	        mbti = [0, 0, 0, 0];
-	        mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
-	        mbtiResult = {};
+
 	      }
       });
         
