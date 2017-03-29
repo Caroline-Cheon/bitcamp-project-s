@@ -188,7 +188,7 @@
 .plan-modal .mystuff-chat-bot {
 	top: 0;
     left: 0;
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 75px;
     background: #fff;
@@ -285,7 +285,7 @@
     color: #fff;
 	}
 
-.plan-modal .mystuff-chat-window:after {
+/* .plan-modal .mystuff-chat-window:after {
     content: '';
     position: absolute;
     height: 100%;
@@ -294,9 +294,102 @@
     top: 10px;
     z-index: 0;
     background-size: 5px;
+} */
+
+ .mystuff-chatwindow .right, .mystuff-chatwindow .left {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 25px;
+  color: #555;
+  display: block;
+  float: right;
+  clear: both;
+  padding: 10px 20px;
+  margin: 10px;
+  max-width: 80%;
+  position: relative;
+  -webkit-animation-name: bouncein;
+          animation-name: bouncein;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-timing-function: easeOut;
+          animation-timing-function: easeOut;
 }
 
+.mystuff-chatwindow .right:before, .mystuff-chatwindow .left:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 15px 10px 0;
+  border-color: transparent rgba(255, 255, 255, 0.7) transparent transparent;
+  bottom: -10px;
+  right: 17.5px;
+}
 
+.mystuff-chatwindow .left {
+  float: left;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px 5px 20px;
+}
+.mystuff-chatwindow .left p {
+  display: inline;
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  font-size: 1em;
+  margin: 0px;
+  line-height: 1.5;
+}
 
+ .mystuff-chatwindow .left .bye {
+  -webkit-animation-name: fadeOut;
+          animation-name: fadeOut;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  font-size: 0em;
+  display: inline;
+}
+ .mystuff-chatwindow .left .bye span {
+  -webkit-animation-name: bouncing;
+          animation-name: bouncing;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  color: rgba(0, 0, 0, 0.6);
+}
+ .mystuff-chatwindow .left .bye span:nth-of-type(2) {
+  -webkit-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}
+ .mystuff-chatwindow .left .bye span:nth-of-type(3) {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
 
+ .mystuff-chatwindow .left:before {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  right: auto;
+  left: 17.5px;
+  border-color: transparent rgba(255, 255, 255, 0.5) transparent transparent;
+}
 
+ .mystuff-chatwindow {
+    height: 620px;
+    width: 100%;
+    position: relative;
+    /* display: inline-block; */
+    overflow-y: scroll;
+    /* bottom: 35px; */
+    /* overflow-x: hidden; */
+    margin-right: -30px;
+ }

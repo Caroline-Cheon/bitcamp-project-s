@@ -8,6 +8,7 @@
 
   <resultMap type="bitcamp.java89.ems2.domain.Plan" id="plan-map" extends="mento-map">
     <id     column="cono"        property="contentsNo"/>
+    <id     column="eno"        property="mentoNo"/>
     <result column="name"       property="name"/>
     <result column="mimg"       property="photoPath"/>
     <result column="plmap"       property="planMap"/>
@@ -40,7 +41,7 @@
   </select> -->
   
      <select id="getOne" resultMap="plan-map">
-    select name, mimg
+    select pl.eno, name, mimg
         from plan pl
          inner join mento mte on mte.eno = pl.eno
          inner join membs mb on mb.mno = mte.eno
