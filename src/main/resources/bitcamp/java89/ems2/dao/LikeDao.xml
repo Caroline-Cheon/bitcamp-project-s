@@ -89,19 +89,20 @@
     limit #{startRowIndex}, #{rowSize}
   </select> 
   
-     <select id="mentoList" resultMap="mento-like" parameterType="map">
-     select DISTINCT pl.cono,pl.eno,name,sarea,plmap,plimg,mimg from plan pl
-     inner join mento mto on mto.eno = pl.eno
-     inner join membs mb on mb.mno = mto.eno
-  inner join contents ctt on pl.cono = ctt.cono
-  inner join copic cp on ctt.cono = cp.cono
-  inner join topic tp on cp.tno = tp.tno
-  inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno 
-  inner join mentee mte on ret.sno = mte.sno
-  inner join lklst lk on ctt.cono = lk.cono
-  where ret.sno = #{sno}
-    limit #{startRowIndex}, #{rowSize}
+  <select id="mentoList" resultMap="mento-like" parameterType="map">
+	  SELECT DISTINCT pl.cono,pl.eno,name,sarea,plmap,plimg,mimg 
+	  FROM plan pl
+		  INNER JOIN mento mto on mto.eno = pl.eno
+		  INNER JOIN membs mb on mb.mno = mto.eno
+		  INNER JOIN contents ctt on pl.cono = ctt.cono
+		  INNER JOIN copic cp on ctt.cono = cp.cono
+		  INNER JOIN topic tp on cp.tno = tp.tno
+		  INNER JOIN snatr snt on tp.tno = snt.tno 
+		  INNER JOIN result ret on snt.reno = ret.reno 
+		  INNER JOIN mentee mte on ret.sno = mte.sno
+		  INNER JOIN lklst lk on ctt.cono = lk.cono
+	  WHERE ret.sno = #{sno}
+    LIMIT #{startRowIndex}, #{rowSize}
   </select>
   
   

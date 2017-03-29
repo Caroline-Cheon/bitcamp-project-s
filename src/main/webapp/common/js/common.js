@@ -2,7 +2,7 @@ function loadContorl() {
 	console.log('loadContorl 시작');
 	console.log(memberInfo.memberNo);
 	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
-	if (hasLike == 'has') pageLoad('mento-likes'); 
+	if (hasLike == 'has') pageLoad('mento-like'); 
 }
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
@@ -96,14 +96,19 @@ function pageLoad(choose) {
 	} else if (choose == 'seeds') {
 		$(".seeds").load("seeds/seeds-temp.html .seeds");
 	} else if (choose == 'mento-like') {
+		console.log('pageload/mento-like');
+		console.log(memberInfo.memberNo);
 		var currPageNo = 1;
 		var pageSize = 4;
-		$.getJSON(serverRoot + '/mentoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
-			if (ajaxResult.status == 'success') {
-				$(".likes").load("likes/mento-like.html .dashboard", function() {
-					likeMentoList(currPageNo, pageSize);
-				});
-			}
+		$.getJSON(serverRoot + '/mentoLike/Count.json', {"sno": memberInfo.memberNo}, 
+				function(ajaxResult) {
+					if (ajaxResult.status == 'success') {
+						console.log('/mentoLike/Count.json');
+						console.log(pageSize ,currPageNo);
+						$(".likes").load("likes/mento-like.html .dashboard", function() {
+							likeMentoList(currPageNo, pageSize);
+						});
+					}
 		});
 		
 		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
@@ -141,11 +146,11 @@ function pageLoad(choose) {
 			}
 			function likeMentoList(currPageNo, pageSize) {
 				$.getJSON(serverRoot + '/mentoLike/list.json', 
-						{
+					{
 					"pageNo": currPageNo,
 					"pageSize": pageSize,
 					"sno": memberInfo.memberNo
-						}, 
+					}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
 							if (status != "success")
@@ -170,21 +175,20 @@ function pageLoad(choose) {
 		$(document.body).on( "click", ".video-like-btn", function() {
 			var currPageNo = 1;
 			var pageSize = 15;
-			var sno = memberInfo.memberNo;
-			$.getJSON(serverRoot + '/videoLike/Count.json', sno, function(ajaxResult) {
+			$.getJSON(serverRoot + '/videoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
 				if (ajaxResult.status == 'success') {
 					$(".likes").load("likes/video-like.html .dashboard", function() {
-						likeVideoList(currPageNo, pageSize, sno);
+						likeVideoList(currPageNo, pageSize);
 					});
 				}
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
-					likeVideoList(--currPageNo, 15, sno);
+					likeVideoList(--currPageNo, 15);
 				}
 			});
 			$('#nextPgBtn').click(function() {
-				likeVideoList(++currPageNo, 15, sno);
+				likeVideoList(++currPageNo, 15);
 			});
 			function preparePagingButton(totalCount) {
 				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
@@ -251,6 +255,7 @@ function userInfo() {
 			console.log(topicName);
 			console.log(hasLike);
 			eventControll();
+			loadControl();
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {
@@ -284,6 +289,7 @@ $(function() {
 						console.log('세션 획득 정보');
 						console.log(memberInfo);
 						console.log(topicName);
+						console.log(hasLike);
 						eventControll();
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
