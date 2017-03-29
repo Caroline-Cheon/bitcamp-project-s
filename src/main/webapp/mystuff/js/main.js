@@ -1,141 +1,11 @@
 $( function() { 
-	var currPageNo = 1;
-	var pageSize = 5;
-	var sno = 5;
-		
-	$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
 	
-	$.getJSON(serverRoot + '/person/list.json', 
-		    {
-			  "pageNo": currPageNo,
-			  "pageSize": pageSize,
-			  "sno": sno
-			}, function(ajaxResult) {
-		      var status = ajaxResult.status;
-		      if (status != "success") return;
-		      console.log("person 객체");
-		      console.log(ajaxResult.data.list);
-		      
-		      var list = ajaxResult.data.list;
-		      var section = $('.ps-carousel .ul');
-		      console.log(section);
-		      var template = Handlebars.compile($('#personList').html());
-		      section.html(template({"list": list}));
-			});
-			
-	
-	
-	$.getJSON(serverRoot + '/video/list.json', 
-		    {
-			  "pageNo": currPageNo,
-			  "pageSize": pageSize,
-			  "sno": sno
-			}, function(ajaxResult) {
-		      var status = ajaxResult.status;
-		      if (status != "success") return;
-		      console.log("video 객체");
-		      console.log(ajaxResult);
-		  
-		      var list = ajaxResult.data.list;
-		      $.each(list, function(k, v) {
-		    	  $.getJSON(serverRoot + '/video/isLike.json', 
-		    		{
-		    		  "cono": v.contentsNo,
-		    		  "sno": sno
-		    		}, function(ajaxResult) {
-		  		      var status = ajaxResult.status;
-				      if (status != "success") return;
-				      
-				      var isLike = ajaxResult.data.isLike;
-				      
-				      if (isLike == 1) {
-				    	  list[k].isLike = true;
-				      } else {
-				    	  list[k].isLike = false;
-				      }
-				      
-				      /*console.log(list[k].isLike);*/
-//				      list[k].isLike = true;
-//				      console.log(list);
-//				      console.log("test02" + typeof list[k].isLike === true);
-				      /*console.log(typeof list[k].isLike == "false");*/
-				      
-				      /*console.log(list);
-		      for (var i in list) {
-		    	  console.log(i,'번째 isLike = ',list[i].isLike)
-		    	  if (list[i].isLike) {
-		    		  $('.btn.heart').addClass('checked')
-		    	  }
-		      }*/
-				      var section = $('.section');
-				      var template = Handlebars.compile($('#trTemplate').html());
-				      section.html(template({"list": list}));
-//				      console.log(list);
-		    		});
-		    	  
-		    	  
-		      });
-
-		  	
-		  	});  
-	
-	
-//	멘토 슬라이드 
-	
-	$.getJSON(serverRoot + '/plan/list.json',
-			 {
-		  "pageNo": currPageNo,
-		  "pageSize": pageSize,
-		  "sno": sno
-		},
-		    function(ajaxResult) {
-		      var status = ajaxResult.status;
-		      if (status != "success")
-		        return;
-		      
-		  
-		      var list = ajaxResult.data.list;
-		      console.log("멘토");
-		      console.log(list);
-		      countLike();
-		      
-		      function countLike() {
-		      $.each(list, function(k, v) {
-		    	  $.getJSON(serverRoot + '/video/isLike.json', 
-		    		{
-		    		  "cono": v.contentsNo,
-		    		  "sno": sno
-		    		}, function(ajaxResult) {
-		  		      var status = ajaxResult.status;
-				      if (status != "success") return;
-				      
-				      var isLike = ajaxResult.data.isLike;
-				      
-				      if (isLike == 1) {
-				    	  list[k].isLike = true;
-				      } else {
-				    	  list[k].isLike = false;
-				      }
-
-				      
-				      var section = $('.mt-carousel > .ul');
-				      var template = Handlebars.compile($('#mentoList').html());
-				      section.html(template({"list": list}));
-//				      console.log(list);
-				      jcarousels();
-		    		});
-		    	  
-		    	  
-		      });
-		      }
-
-		  });  
-	
-	});
-
-
+	userInfo();
+	setTimeout(function() {
+		loadContorl();
+	}, 3500);
+})
 		        // 좋아요 버튼 눌렀을 때
-		        
 		        $(document.body).on( "click", ".buttonHolder", function() {// 좋아요 버튼 눌렀을 때
 		        	 event.preventDefault();
 		        	 var curNo = $(this).attr("data-no");
@@ -180,7 +50,6 @@ $( function() {
 		                
 		        	}
 		        })
-			})
 			
   // mystuff 인물 모달 창 띄우기
 			
@@ -233,14 +102,14 @@ $( function() {
 			var cono; // 멘티가 멘토에게 메세지를 보내기 위해 필요한 해당 설계도 컨텐츠 번호
             var sno; // 접속한 학생 번호
             var eno; // 해당 설계도 관한 멘토 일련번호
-			$(document.body).on( "click", ".mento-slide", function() {
+			$(document.body).on( "click", ".map-img", function() {
 				
 				console.log("-----------------------------------------------");
 				console.log("멘토 모달창");
-				console.log(this);
+				console.log($(this).parents(".mento-slide"));
 				
 				
-				cono = $(this).children('.mento-conts').children('.buttonHolder').attr('data-no');
+				cono = $(this).parents(".mento-slide").children('.mento-conts').children('.buttonHolder').attr('data-no');
 				sno = memberInfo.memberNo;
 				console.log(cono);
 				console.log(sno);

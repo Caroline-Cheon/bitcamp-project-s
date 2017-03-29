@@ -1,6 +1,6 @@
 function loadContorl() {
 	console.log('loadContorl 시작');
-	console.log(memberInfo.memberNo);
+//	console.log(memberInfo.memberNo);
 	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
 }
@@ -112,7 +112,7 @@ function pageLoad(choose) {
 		});
 		
 		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
-
+		    	likeMentoList(currPageNo, pageSize);
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
@@ -145,6 +145,8 @@ function pageLoad(choose) {
 				$('#pageNo').text(currPageNo);
 			}
 			function likeMentoList(currPageNo, pageSize) {
+				console.log("like 멘토 리스트 오는가");
+				console.log(memberInfo.memberNo);
 				$.getJSON(serverRoot + '/mentoLike/list.json', 
 					{
 					"pageNo": currPageNo,
@@ -295,6 +297,7 @@ $(function() {
 						$('.header-icon-message').css("display", "inline-block");
 					}
 				memberNo = memberInfo.memberNo;
+				
 				// 로그인 되었으면
 				setInterval(function(){
 					$(".new-message blink").toggle();
