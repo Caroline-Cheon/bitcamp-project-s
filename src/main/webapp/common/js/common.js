@@ -1,8 +1,8 @@
 function loadContorl() {
 	console.log('loadContorl 시작');
-	console.log(memberInfo.memberNo);
+//	console.log(memberInfo.memberNo);
 	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
-	if (hasLike == 'has') pageLoad('mento-likes'); 
+	if (hasLike == 'has') pageLoad('mento-like'); 
 }
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
@@ -98,7 +98,7 @@ function pageLoad(choose) {
 	} else if (choose == 'mento-like') {
 		var currPageNo = 1;
 		var pageSize = 4;
-		$.getJSON(serverRoot + '/mentoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
+		$.getJSON(serverRoot + '/mentoLike/Count.json', {"sno":memberInfo.memberNo}, function(ajaxResult) {
 			if (ajaxResult.status == 'success') {
 				$(".likes").load("likes/mento-like.html .dashboard", function() {
 					likeMentoList(currPageNo, pageSize);
@@ -107,7 +107,7 @@ function pageLoad(choose) {
 		});
 		
 		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
-
+		    	likeMentoList(currPageNo, pageSize);
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
@@ -140,6 +140,8 @@ function pageLoad(choose) {
 				$('#pageNo').text(currPageNo);
 			}
 			function likeMentoList(currPageNo, pageSize) {
+				console.log("like 멘토 리스트 오는가");
+				console.log(memberInfo.memberNo);
 				$.getJSON(serverRoot + '/mentoLike/list.json', 
 						{
 					"pageNo": currPageNo,

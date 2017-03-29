@@ -54,7 +54,7 @@ public class LikeJsonControl {
       return new AjaxResult(AjaxResult.FAIL, "리스트가 없습니다.");
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
-  
+  @RequestMapping("/mentoLike/list")
   public AjaxResult mentoList(@RequestParam(defaultValue="1") int pageNo,
           @RequestParam(defaultValue="4") int pageSize, int sno) throws Exception {
     List<Like> list = likeService.mentoList(pageNo, pageSize, sno);
