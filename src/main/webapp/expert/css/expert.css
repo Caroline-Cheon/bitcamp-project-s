@@ -1,7 +1,7 @@
 /*  driver 영역  */
 body {
   margin: 0;
-  overflow: hidden;
+/*   overflow: hidden; */
  }
 .container {
   position: relative;

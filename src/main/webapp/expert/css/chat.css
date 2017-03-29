@@ -199,33 +199,30 @@ Right triangle, left side slightly down
 .message-bottom .message-submit:hover {
   background: #1D7745;
 } */
-body .window {
+  .window {
     font-family: "Muli", sans-serif;
     color: #555;
     width: 100%;
     height: 100%;
     position: relative;
 }
-body .window .windowrap {
+  .window .windowrap {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+    height: 770px;
+    width: 450px;
 }
-body .window .windowrap .bot {
-  top: 0;
-  left: 0;
-  position: absolute;
-  width: calc(100% - 2px);
-  height: 75px;
-  background: #fff;
-  z-index: 3;
-  border-top: 1px solid #BE93C5;
-  border-right: 1px solid #BE93C5;
-  border-left: 1px solid #BE93C5;
-  padding-top: 5px;
+  .window .windowrap .bot {
+    position: fixed;
+    width: 448px;
+    height: 75px;
+    background: #fff;
+    z-index: 3;
+    border-top: 1px solid #BE93C5;
+    border-right: 1px solid #BE93C5;
+    border-left: 1px solid #BE93C5;
+    padding-top: 5px;
 }
-body .window .windowrap .bot h3 {
+  .window .windowrap .bot h3 {
   display: table;
   margin: 15px auto 0px;
   font-size: 1.8em;
@@ -251,7 +248,7 @@ body .window .windowrap .bot h3 {
 	}
 
 
-/* body .window .windowrap .bot h3:before {
+/*   .window .windowrap .bot h3:before {
   content: '';
   position: absolute;
   height: 30px;
@@ -267,7 +264,7 @@ body .window .windowrap .bot h3 {
   border: 1px solid #BE93C5;
   border-radius: 100%;
 } */
-body .window .windowrap:before {
+  .window .windowrap:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -277,7 +274,7 @@ body .window .windowrap:before {
   background: linear-gradient(to bottom, #BE93C5, transparent);
   z-index: 2;
 }
-body .window:after {
+  .window:after {
   content: '';
   position: absolute;
   height: 100%;
@@ -287,21 +284,21 @@ body .window:after {
   z-index: 0;
   background-size: 5px;
 }
-body .window .enter {
-  position: absolute;
-  bottom: 3px;
-  z-index: 1;
-  width: calc(100% - 22px);
-  left: 0;
-  font-size: 20px;
-  padding: 10px;
-  border: 1px solid #7BC6CC;
-  font-family: "Muli", sans-serif;
+  .window .enter {
+    position: fixed;
+    bottom: 72px;
+    z-index: 1;
+    width: 428px;
+    /* left: 0; */
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #7BC6CC;
+    font-family: "Muli", sans-serif;
 }
-body .window .enter:focus {
+  .window .enter:focus {
   outline: none;
 }
-body .window #btn {
+  .window #btn {
   display: block;
   z-index: 3;
   background: #BE93C5;
@@ -312,14 +309,14 @@ body .window #btn {
   width: 45px;
   color: #fff;
 }
-body .window .send {
-  display: block;
-  position: absolute;
-  z-index: 3;
-  bottom: 4px;
-  right: 0px;
+  .window .send {
+    display: block;
+    position: fixed;
+    z-index: 3;
+    bottom: 74px;
+    margin-left: 404px;
 }
-body .window .send:before {
+  .window .send:before {
   content: "\f1d9";
   font-family: FontAwesome;
   position: absolute;
@@ -330,26 +327,23 @@ body .window .send:before {
           transform: translateX(-50%) translateY(-50%);
   color: #fff;
 }
-body .window .chatwindow {
-  position: absolute;
-  min-height: calc(100% - 155px);
-  height: auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 20px;
-  overflow: scroll;
-  bottom: 35px;
-  left: 0px;
-  z-index: 1;
-  background: #BE93C5;
-  background: -webkit-linear-gradient(to bottom, #BE93C5, #7BC6CC);
-  background: -webkit-linear-gradient(top, #BE93C5, #7BC6CC);
-  background: linear-gradient(to bottom, #BE93C5, #7BC6CC);
+  .window .chatwindow {
+    position: absolute;
+    height: 629px;
+    width: 450px;
+    top: 80px;
+    overflow-y: scroll;
+    display: inline-block;
+    left: 0px;
+    z-index: 1;
+    background: #BE93C5;
+    background: -webkit-linear-gradient(to bottom, #BE93C5, #7BC6CC);
+    background: linear-gradient(to bottom, #BE93C5, #7BC6CC);
 }
-body .window .chatwindow::-webkit-scrollbar {
+  .window .chatwindow::-webkit-scrollbar {
   width: 0px;
 }
-body .window .chatwindow .right, body .window .chatwindow .left {
+  .window .chatwindow .right,   .window .chatwindow .left {
   background: rgba(255, 255, 255, 0.7);
   border-radius: 25px;
   color: #555;
@@ -397,7 +391,7 @@ body .window .chatwindow .right, body .window .chatwindow .left {
             transform: scale(1);
   }
 }
-body .window .chatwindow .right:before, body .window .chatwindow .left:before {
+  .window .chatwindow .right:before,   .window .chatwindow .left:before {
   content: '';
   position: absolute;
   width: 0;
@@ -408,12 +402,12 @@ body .window .chatwindow .right:before, body .window .chatwindow .left:before {
   bottom: -10px;
   right: 17.5px;
 }
-body .window .chatwindow .left {
+  .window .chatwindow .left {
   float: left;
   background: rgba(255, 255, 255, 0.5);
   padding: 10px 20px 5px 20px;
 }
-body .window .chatwindow .left p {
+  .window .chatwindow .left p {
   display: inline;
   -webkit-animation-name: fadeIn;
           animation-name: fadeIn;
@@ -447,7 +441,7 @@ body .window .chatwindow .left p {
     font-size: 1em;
   }
 }
-body .window .chatwindow .left .bye {
+  .window .chatwindow .left .bye {
   -webkit-animation-name: fadeOut;
           animation-name: fadeOut;
   -webkit-animation-duration: 2s;
@@ -457,7 +451,7 @@ body .window .chatwindow .left .bye {
   font-size: 0em;
   display: inline;
 }
-body .window .chatwindow .left .bye span {
+  .window .chatwindow .left .bye span {
   -webkit-animation-name: bouncing;
           animation-name: bouncing;
   -webkit-animation-duration: 2s;
@@ -466,11 +460,11 @@ body .window .chatwindow .left .bye span {
           animation-iteration-count: infinite;
   color: rgba(0, 0, 0, 0.6);
 }
-body .window .chatwindow .left .bye span:nth-of-type(2) {
+  .window .chatwindow .left .bye span:nth-of-type(2) {
   -webkit-animation-delay: 0.5s;
           animation-delay: 0.5s;
 }
-body .window .chatwindow .left .bye span:nth-of-type(3) {
+  .window .chatwindow .left .bye span:nth-of-type(3) {
   -webkit-animation-delay: 1s;
           animation-delay: 1s;
 }
@@ -524,7 +518,7 @@ body .window .chatwindow .left .bye span:nth-of-type(3) {
     font-size: 0em;
   }
 }
-body .window .chatwindow .left:before {
+  .window .chatwindow .left:before {
   -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
   right: auto;
@@ -534,7 +528,7 @@ body .window .chatwindow .left:before {
 
 
 .chat-modal {
-    width: 33.4%;
+    width: 34.4%;
     height: 98%;
     border-left: 1px solid rgba(158, 158, 158, 0.25);
     position: absolute;
@@ -542,3 +536,8 @@ body .window .chatwindow .left:before {
     right: 0px;
     top: 0px;
 }
+
+
+::-webkit-scrollbar {
+display:none;
+} 

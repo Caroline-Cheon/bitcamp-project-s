@@ -13,4 +13,6 @@ var slideState = false;
 /*   user session 정보   */
 var memberInfo; 
 var topicName;
+var hasLike;
+var sno;
 /*   /user session 정보   */

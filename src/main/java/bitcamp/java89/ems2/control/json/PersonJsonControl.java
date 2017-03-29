@@ -35,7 +35,7 @@ public class PersonJsonControl {
     List<Person> list = personService.getList(1, 4, sno);
     int totalCount = personService.getSize();
     
-    System.out.println(list);
+//    System.out.println(list);
     
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("list", list);
@@ -50,7 +50,7 @@ public class PersonJsonControl {
     
 
     Person person = personService.getOne(cono);
-    System.out.println("person"+person);
+//    System.out.println("person"+person);
 
     if (person == null) {
       return new AjaxResult(AjaxResult.FAIL, "해당 인물이 없습니다.");

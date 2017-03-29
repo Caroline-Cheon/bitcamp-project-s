@@ -19,7 +19,7 @@
   font-size: 13px; 
 }
 
-#contents {
+#contents, #plan-modal-conts {
     margin: 0 auto;
     width: 960px;
     height: 600px;
@@ -147,3 +147,253 @@
   display:inline-block;
   cursor: pointer;
 }
+
+.mystuff-modal .plan-modal {
+	  width: 1068px;
+    height: 800px;
+    position: absolute;
+    display: inline-block;
+    left: -60px;
+    top: 18px;
+}
+
+.mystuff-modal .plan-modal .mystuff-chat-modal {
+	    width: 33.4%;
+    height: 98%;
+    border-left: 1px solid rgba(158, 158, 158, 0.25);
+    position: absolute;
+    padding: 10px;
+    right: 0px;
+    top: 0px;
+	
+
+	}
+
+
+.mystuff-modal .plan-modal .mystuff-chat-modal .window {
+	  font-family: "Muli", sans-serif;
+    color: #555;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.plan-modal .mystuff-chat-windowrap {
+	    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.plan-modal .mystuff-chat-bot {
+	top: 0;
+    left: 0;
+    position: relative;
+    width: 100%;
+    height: 75px;
+    background: #fff;
+    z-index: 3;
+    border-top: 1px solid #BE93C5;
+    border-right: 1px solid #BE93C5;
+    border-left: 1px solid #BE93C5;
+    padding-top: 5px;
+}
+
+.plan-modal .mystuff-chat-bot img{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    border-radius: 100px;
+    /* background-color: transparent; */
+    overflow: hidden;
+    left: 60px;
+    top: 15px;
+}
+
+.plan-modal .mystuff-chat-bot h3 {
+    display: table;
+    margin: 15px auto 0px;
+    font-size: 2.8em;
+    text-align: left;
+    color: #BE93C5;
+    font-weight: 100;
+    text-align: center;
+    position: relative;
+    left: 30px;
+}
+
+.plan-modal .mystuff-chat-window {
+    position: absolute;
+    /* min-height: calc(100% - 155px); */
+    height: 747px;
+    width: 345px;
+    /* padding-top: 40px; */
+    /* padding-bottom: 20px; */
+    /* overflow: scroll; */
+    /* bottom: 35px; */
+    left: 0px;
+    z-index: 1;
+    background: #BE93C5;
+    background: -webkit-linear-gradient(to bottom, #BE93C5, #7BC6CC);
+    background: -webkit-linear-gradient(top, #BE93C5, #7BC6CC);
+    background: linear-gradient(to bottom, #BE93C5, #7BC6CC);
+}
+
+.plan-modal .mystuff-enter {
+    position: absolute;
+    bottom: 0px;
+    z-index: 1;
+    width: 100%;
+    left: 0;
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #7BC6CC;
+    font-family: "Muli", sans-serif;
+}
+
+
+.plan-modal .mystuff-chat-send {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    bottom: 0px;
+    right: 0px;
+    height: 51px;
+}
+.plan-modal .mystuff-chat-send:before {
+    content: "\f1d9";
+    font-family: FontAwesome;
+    position: absolute;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    color: #fff;
+}
+
+.plan-modal #mystuff-chat-btn {
+    display: block;
+    z-index: 3;
+    background: #BE93C5;
+    /* bottom: 5px; */
+    right: 0;
+    height: 50px;
+    border: 0px;
+    width: 50px;
+    color: #fff;
+	}
+
+/* .plan-modal .mystuff-chat-window:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 10px;
+    top: 10px;
+    z-index: 0;
+    background-size: 5px;
+} */
+
+ .mystuff-chatwindow .right, .mystuff-chatwindow .left {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 25px;
+  color: #555;
+  display: block;
+  float: right;
+  clear: both;
+  padding: 10px 20px;
+  margin: 10px;
+  max-width: 80%;
+  position: relative;
+  -webkit-animation-name: bouncein;
+          animation-name: bouncein;
+  -webkit-animation-duration: 0.3s;
+          animation-duration: 0.3s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-timing-function: easeOut;
+          animation-timing-function: easeOut;
+}
+
+.mystuff-chatwindow .right:before, .mystuff-chatwindow .left:before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 15px 10px 0;
+  border-color: transparent rgba(255, 255, 255, 0.7) transparent transparent;
+  bottom: -10px;
+  right: 17.5px;
+}
+
+.mystuff-chatwindow .left {
+  float: left;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px 20px 5px 20px;
+}
+.mystuff-chatwindow .left p {
+  display: inline;
+  -webkit-animation-name: fadeIn;
+          animation-name: fadeIn;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  font-size: 1em;
+  margin: 0px;
+  line-height: 1.5;
+}
+
+ .mystuff-chatwindow .left .bye {
+  -webkit-animation-name: fadeOut;
+          animation-name: fadeOut;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  font-size: 0em;
+  display: inline;
+}
+ .mystuff-chatwindow .left .bye span {
+  -webkit-animation-name: bouncing;
+          animation-name: bouncing;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  color: rgba(0, 0, 0, 0.6);
+}
+ .mystuff-chatwindow .left .bye span:nth-of-type(2) {
+  -webkit-animation-delay: 0.5s;
+          animation-delay: 0.5s;
+}
+ .mystuff-chatwindow .left .bye span:nth-of-type(3) {
+  -webkit-animation-delay: 1s;
+          animation-delay: 1s;
+}
+
+ .mystuff-chatwindow .left:before {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  right: auto;
+  left: 17.5px;
+  border-color: transparent rgba(255, 255, 255, 0.5) transparent transparent;
+}
+
+ .mystuff-chatwindow {
+    height: 620px;
+    width: 100%;
+    position: relative;
+    /* display: inline-block; */
+    overflow-y: scroll;
+    /* bottom: 35px; */
+    /* overflow-x: hidden; */
+    margin-right: -30px;
+ }
+ 
+::-webkit-scrollbar {
+display:none;
+} 

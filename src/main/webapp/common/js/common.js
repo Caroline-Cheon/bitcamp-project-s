@@ -1,3 +1,9 @@
+function loadContorl() {
+	console.log('loadContorl 시작');
+//	console.log(memberInfo.memberNo);
+	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
+	if (hasLike == 'has') pageLoad('mento-like'); 
+}
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
 		$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
@@ -5,7 +11,7 @@ function pageLoad(choose) {
 				    {
 					  "pageNo": currPageNo,
 					  "pageSize": pageSize,
-					  "sno": sno
+					  "sno": memberInfo.memberNo
 					}, function(ajaxResult) {
 				      var status = ajaxResult.status;
 				      if (status != "success") return;
@@ -21,7 +27,7 @@ function pageLoad(choose) {
 				    {
 					  "pageNo": currPageNo,
 					  "pageSize": pageSize,
-					  "sno": sno
+					  "sno": memberInfo.memberNo
 					}, function(ajaxResult) {
 				      var status = ajaxResult.status;
 				      if (status != "success") return;
@@ -32,7 +38,7 @@ function pageLoad(choose) {
 				    	  $.getJSON(serverRoot + '/video/isLike.json', 
 				    		{
 				    		  "cono": v.contentsNo,
-				    		  "sno": sno
+				    		  "sno": memberInfo.memberNo
 				    		}, function(ajaxResult) {
 				  		      var status = ajaxResult.status;
 						      if (status != "success") return;
@@ -53,7 +59,7 @@ function pageLoad(choose) {
 					 {
 				  "pageNo": currPageNo,
 				  "pageSize": pageSize,
-				  "sno": sno
+				  "sno": memberInfo.memberNo
 				},
 				    function(ajaxResult) {
 				      var status = ajaxResult.status;
@@ -66,7 +72,7 @@ function pageLoad(choose) {
 				    	  $.getJSON(serverRoot + '/video/isLike.json', 
 				    		{
 				    		  "cono": v.contentsNo,
-				    		  "sno": sno
+				    		  "sno": memberInfo.memberNo
 				    		}, function(ajaxResult) {
 				  		      var status = ajaxResult.status;
 						      if (status != "success") return;
@@ -90,27 +96,31 @@ function pageLoad(choose) {
 	} else if (choose == 'seeds') {
 		$(".seeds").load("seeds/seeds-temp.html .seeds");
 	} else if (choose == 'mento-like') {
+		console.log('pageload/mento-like');
+		console.log(memberInfo.memberNo);
 		var currPageNo = 1;
 		var pageSize = 4;
-		var sno = memberInfo.memberNo;
-		$.getJSON(serverRoot + '/mentoLike/Count.json', sno, function(ajaxResult) {
-			if (ajaxResult.status == 'success') {
-				$(".likes").load("likes/mento-like.html .dashboard", function() {
-					likeMentoList(currPageNo, pageSize, sno);
-				});
-			}
+		$.getJSON(serverRoot + '/mentoLike/Count.json', {"sno": memberInfo.memberNo}, 
+				function(ajaxResult) {
+					if (ajaxResult.status == 'success') {
+						console.log('/mentoLike/Count.json');
+						console.log(pageSize ,currPageNo);
+						$(".likes").load("likes/mento-like.html .dashboard", function() {
+							likeMentoList(currPageNo, pageSize);
+						});
+					}
 		});
 		
 		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
-
+		    	likeMentoList(currPageNo, pageSize);
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
-					likeMentoList(--currPageNo, 4, sno);
+					likeMentoList(--currPageNo, 4);
 				}
 			});
 			$('#nextPgBtn').click(function() {
-				likeMentoList(++currPageNo, 4, sno);
+				likeMentoList(++currPageNo, 4);
 			});
 			function mentoLikePreparePagingButton(totalCount) {
 				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
@@ -134,13 +144,15 @@ function pageLoad(choose) {
 				// 현재 페이지 번호를 출력한다.
 				$('#pageNo').text(currPageNo);
 			}
-			function likeMentoList(pageNo, pageSize, sno) {
+			function likeMentoList(currPageNo, pageSize) {
+				console.log("like 멘토 리스트 오는가");
+				console.log(memberInfo.memberNo);
 				$.getJSON(serverRoot + '/mentoLike/list.json', 
-						{
-					"pageNo": pageNo,
+					{
+					"pageNo": currPageNo,
 					"pageSize": pageSize,
-					"sno": sno
-						}, 
+					"sno": memberInfo.memberNo
+					}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
 							if (status != "success")
@@ -165,21 +177,20 @@ function pageLoad(choose) {
 		$(document.body).on( "click", ".video-like-btn", function() {
 			var currPageNo = 1;
 			var pageSize = 15;
-			var sno = memberInfo.memberNo;
-			$.getJSON(serverRoot + '/videoLike/Count.json', sno, function(ajaxResult) {
+			$.getJSON(serverRoot + '/videoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
 				if (ajaxResult.status == 'success') {
 					$(".likes").load("likes/video-like.html .dashboard", function() {
-						likeVideoList(currPageNo, pageSize, sno);
+						likeVideoList(currPageNo, pageSize);
 					});
 				}
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
-					likeVideoList(--currPageNo, 15, sno);
+					likeVideoList(--currPageNo, 15);
 				}
 			});
 			$('#nextPgBtn').click(function() {
-				likeVideoList(++currPageNo, 15, sno);
+				likeVideoList(++currPageNo, 15);
 			});
 			function preparePagingButton(totalCount) {
 				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
@@ -209,7 +220,7 @@ function pageLoad(choose) {
 						{
 					"pageNo": pageNo,
 					"pageSize": pageSize,
-					"sno": sno
+					"sno": memberInfo.memberNo
 						}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
@@ -239,11 +250,21 @@ function userInfo() {
 	console.log('userInfo().start');
 	  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
 			memberInfo = ajaxResult.data.topic;
-			memberName = ajaxResult.data.topicName;
+			topicName = ajaxResult.data.topicName;
+			hasLike = ajaxResult.data.hasLike;
 			console.log('세션 획득 정보');
 			console.log(memberInfo);
 			console.log(topicName);
+			console.log(hasLike);
 			eventControll();
+			loadControl();
+			if(memberInfo != undefined) {
+	    		$('.user-info h3').text(memberInfo.name);
+	    		if (memberInfo.photoPath != undefined) {
+	    			console.log(memberInfo.photoPath);
+	    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+	    		}
+			}
 	  });
 }
 /*   /user session 정보 받아오는 함수   */
@@ -263,20 +284,28 @@ $(function() {
 					} else {
 						memberInfo = ajaxResult.data.topic;
 						topicName = ajaxResult.data.topicName;
+						
+						if(ajaxResult.data.topic == null || ajaxResult.data.topicName == []) {
+							userInfo();
+						}
 						console.log('세션 획득 정보');
 						console.log(memberInfo);
 						console.log(topicName);
+						console.log(hasLike);
 						eventControll();
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
 					}
 				memberNo = memberInfo.memberNo;
+				
 				// 로그인 되었으면
 				setInterval(function(){
 					$(".new-message blink").toggle();
 					}, 550);
-				if (memberInfo.photoPath != undefined)
-	    			$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
+				if (memberInfo.photoPath != undefined) {
+					
+					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
+				}
 				$('.user-info h3').text(memberInfo.name);
 				/* topicName length 만큼 반복문 돌려서 생성해야 함 */ 
 				$('.recommand-info .one').text(topicName[0]);
