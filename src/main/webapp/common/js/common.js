@@ -290,6 +290,7 @@ $(function() {
 						$('.header-icon-message').css("display", "inline-block");
 					}
 				memberNo = memberInfo.memberNo;
+				
 				// 로그인 되었으면
 				setInterval(function(){
 					$(".new-message blink").toggle();

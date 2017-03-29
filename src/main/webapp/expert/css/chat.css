@@ -208,22 +208,19 @@ Right triangle, left side slightly down
 }
   .window .windowrap {
     position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+    height: 770px;
+    width: 450px;
 }
   .window .windowrap .bot {
-  top: 0;
-  left: 0;
-  position: absolute;
-  width: calc(100% - 2px);
-  height: 75px;
-  background: #fff;
-  z-index: 3;
-  border-top: 1px solid #BE93C5;
-  border-right: 1px solid #BE93C5;
-  border-left: 1px solid #BE93C5;
-  padding-top: 5px;
+    position: fixed;
+    width: 448px;
+    height: 75px;
+    background: #fff;
+    z-index: 3;
+    border-top: 1px solid #BE93C5;
+    border-right: 1px solid #BE93C5;
+    border-left: 1px solid #BE93C5;
+    padding-top: 5px;
 }
   .window .windowrap .bot h3 {
   display: table;
@@ -288,15 +285,15 @@ Right triangle, left side slightly down
   background-size: 5px;
 }
   .window .enter {
-  position: absolute;
-  bottom: 3px;
-  z-index: 1;
-  width: calc(100% - 22px);
-  left: 0;
-  font-size: 20px;
-  padding: 10px;
-  border: 1px solid #7BC6CC;
-  font-family: "Muli", sans-serif;
+    position: fixed;
+    bottom: 72px;
+    z-index: 1;
+    width: 428px;
+    /* left: 0; */
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid #7BC6CC;
+    font-family: "Muli", sans-serif;
 }
   .window .enter:focus {
   outline: none;
@@ -313,11 +310,11 @@ Right triangle, left side slightly down
   color: #fff;
 }
   .window .send {
-  display: block;
-  position: absolute;
-  z-index: 3;
-  bottom: 4px;
-  right: 0px;
+    display: block;
+    position: fixed;
+    z-index: 3;
+    bottom: 74px;
+    margin-left: 404px;
 }
   .window .send:before {
   content: "\f1d9";
@@ -331,20 +328,17 @@ Right triangle, left side slightly down
   color: #fff;
 }
   .window .chatwindow {
-  position: absolute;
-  min-height: calc(100% - 155px);
-  height: auto;
-  width: 100%;
-  padding-top: 40px;
-  padding-bottom: 20px;
-  overflow: scroll;
-  bottom: 35px;
-  left: 0px;
-  z-index: 1;
-  background: #BE93C5;
-  background: -webkit-linear-gradient(to bottom, #BE93C5, #7BC6CC);
-  background: -webkit-linear-gradient(top, #BE93C5, #7BC6CC);
-  background: linear-gradient(to bottom, #BE93C5, #7BC6CC);
+    position: absolute;
+    height: 629px;
+    width: 450px;
+    top: 80px;
+    overflow-y: scroll;
+    display: inline-block;
+    left: 0px;
+    z-index: 1;
+    background: #BE93C5;
+    background: -webkit-linear-gradient(to bottom, #BE93C5, #7BC6CC);
+    background: linear-gradient(to bottom, #BE93C5, #7BC6CC);
 }
   .window .chatwindow::-webkit-scrollbar {
   width: 0px;
@@ -534,7 +528,7 @@ Right triangle, left side slightly down
 
 
 .chat-modal {
-    width: 33.4%;
+    width: 34.4%;
     height: 98%;
     border-left: 1px solid rgba(158, 158, 158, 0.25);
     position: absolute;
@@ -544,4 +538,6 @@ Right triangle, left side slightly down
 }
 
 
-
+::-webkit-scrollbar {
+display:none;
+} 
