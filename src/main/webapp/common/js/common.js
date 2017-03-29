@@ -11,7 +11,7 @@ function pageLoad(choose) {
 				    {
 					  "pageNo": currPageNo,
 					  "pageSize": pageSize,
-					  "sno": sno
+					  "sno": memberInfo.memberNo
 					}, function(ajaxResult) {
 				      var status = ajaxResult.status;
 				      if (status != "success") return;
@@ -27,7 +27,7 @@ function pageLoad(choose) {
 				    {
 					  "pageNo": currPageNo,
 					  "pageSize": pageSize,
-					  "sno": sno
+					  "sno": memberInfo.memberNo
 					}, function(ajaxResult) {
 				      var status = ajaxResult.status;
 				      if (status != "success") return;
@@ -38,7 +38,7 @@ function pageLoad(choose) {
 				    	  $.getJSON(serverRoot + '/video/isLike.json', 
 				    		{
 				    		  "cono": v.contentsNo,
-				    		  "sno": sno
+				    		  "sno": memberInfo.memberNo
 				    		}, function(ajaxResult) {
 				  		      var status = ajaxResult.status;
 						      if (status != "success") return;
@@ -59,7 +59,7 @@ function pageLoad(choose) {
 					 {
 				  "pageNo": currPageNo,
 				  "pageSize": pageSize,
-				  "sno": sno
+				  "sno": memberInfo.memberNo
 				},
 				    function(ajaxResult) {
 				      var status = ajaxResult.status;
@@ -72,7 +72,7 @@ function pageLoad(choose) {
 				    	  $.getJSON(serverRoot + '/video/isLike.json', 
 				    		{
 				    		  "cono": v.contentsNo,
-				    		  "sno": sno
+				    		  "sno": memberInfo.memberNo
 				    		}, function(ajaxResult) {
 				  		      var status = ajaxResult.status;
 						      if (status != "success") return;
@@ -98,11 +98,10 @@ function pageLoad(choose) {
 	} else if (choose == 'mento-like') {
 		var currPageNo = 1;
 		var pageSize = 4;
-		var sno = memberInfo.memberNo;
-		$.getJSON(serverRoot + '/mentoLike/Count.json', sno, function(ajaxResult) {
+		$.getJSON(serverRoot + '/mentoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
 			if (ajaxResult.status == 'success') {
 				$(".likes").load("likes/mento-like.html .dashboard", function() {
-					likeMentoList(currPageNo, pageSize, sno);
+					likeMentoList(currPageNo, pageSize);
 				});
 			}
 		});
@@ -112,11 +111,11 @@ function pageLoad(choose) {
 			});
 			$('#prevPgBtn').click(function() {
 				if (currPageNo > 1) {
-					likeMentoList(--currPageNo, 4, sno);
+					likeMentoList(--currPageNo, 4);
 				}
 			});
 			$('#nextPgBtn').click(function() {
-				likeMentoList(++currPageNo, 4, sno);
+				likeMentoList(++currPageNo, 4);
 			});
 			function mentoLikePreparePagingButton(totalCount) {
 				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
@@ -140,12 +139,12 @@ function pageLoad(choose) {
 				// 현재 페이지 번호를 출력한다.
 				$('#pageNo').text(currPageNo);
 			}
-			function likeMentoList(pageNo, pageSize, sno) {
+			function likeMentoList(currPageNo, pageSize) {
 				$.getJSON(serverRoot + '/mentoLike/list.json', 
 						{
-					"pageNo": pageNo,
+					"pageNo": currPageNo,
 					"pageSize": pageSize,
-					"sno": sno
+					"sno": memberInfo.memberNo
 						}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
@@ -215,7 +214,7 @@ function pageLoad(choose) {
 						{
 					"pageNo": pageNo,
 					"pageSize": pageSize,
-					"sno": sno
+					"sno": memberInfo.memberNo
 						}, 
 						function(ajaxResult) {
 							var status = ajaxResult.status;
