@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bitcamp.java89.ems2.domain.Member;
 import bitcamp.java89.ems2.domain.Mentee;
 import bitcamp.java89.ems2.domain.Mento;
+import bitcamp.java89.ems2.domain.Result;
 import bitcamp.java89.ems2.service.MemberService;
 
 //@Controller
@@ -27,7 +28,14 @@ public class MemberJsonControl {
   }
   
   @RequestMapping("/mento/add")
-  public AjaxResult add(Mento mento) throws Exception {
+  public AjaxResult add(int mentoNo, String specialArea, String detailArea, String career) throws Exception {
+    
+    Mento mento = new Mento();
+    mento.setMemberNo(mentoNo);
+    mento.setSpecialArea(specialArea);
+    mento.setDetailArea(detailArea);
+    mento.setCareer(career);
+    
     memberService.addMento(mento);
     return new AjaxResult(AjaxResult.SUCCESS, "등록 성공입니다.");
   }

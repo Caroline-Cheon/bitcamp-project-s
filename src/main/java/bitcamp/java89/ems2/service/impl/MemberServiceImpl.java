@@ -1,5 +1,7 @@
 package bitcamp.java89.ems2.service.impl;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,16 +96,13 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public int addMento(Mento mento) throws Exception {
     
+    System.out.println("add Mento 발생 ???");
     if (mentoDao.count(mento.getEmail()) > 0) {
-      throw new Exception("같은 학생의 이메일이 존재합니다. 등록을 취소합니다.");
+      throw new Exception("같은 멘토의 이메일이 존재합니다. 등록을 취소합니다.");
     } 
-    if (memberDao.count(mento.getEmail()) == 0) { 
-      memberDao.insert(mento);
-      
-    } else {
-      Member member = memberDao.getOneByEmail(mento.getEmail());
-      mento.setMemberNo(member.getMemberNo());
-    }
+    
+    
+    
     
     return mentoDao.insert(mento);
   

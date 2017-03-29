@@ -8,12 +8,7 @@ public class Mento extends Member {
   protected String detailArea;
   protected String career;
   
-//  public int getMentoNo() {
-//    return mentoNo;
-//  }
-//  public void setMentoNo(int mentoNo) {
-//    this.mentoNo = mentoNo;
-//  }
+
   public int getMentoNo() {
     return mentoNo;
   }

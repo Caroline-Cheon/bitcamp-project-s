@@ -89,15 +89,6 @@
     where email=#{email} and pwd=password(#{password})
   </select>
   
-    <select id="getOneByEmail" parameterType="string" resultMap="member-map">
-    select 
-      mno, 
-      name, 
-      tel, 
-      email
-    from membs
-    where email=#{value}
-  </select>
 
   <select id="countByNo" parameterType="int" resultType="int">
     select count(*)

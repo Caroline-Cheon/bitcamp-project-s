@@ -62,14 +62,14 @@ $( function() {
 					'detailArea' : $('.detail-area ').val(),
 					'career' : $('.career-area ').val()
 				}
-				/*
+				
 				$.post(serverRoot + '/mento/add.json', param, function(ajaxResult) {
 					if (ajaxResult.status != "success") {
 						alert(ajaxResult.data);
 					}
 					console.log(ajaxResult.status);
 					
-				}, 'json');*/
+				}, 'json');
 				
 				
 				$('.user-change-modal').css('display','none');
