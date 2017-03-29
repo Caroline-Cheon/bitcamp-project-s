@@ -103,7 +103,7 @@ label.disabled * {
     margin-left: 20px;
 }
 
-.btn {
+.change-submit-btn {
   cursor: pointer;
   font-size: 19px;
   text-transform: uppercase;

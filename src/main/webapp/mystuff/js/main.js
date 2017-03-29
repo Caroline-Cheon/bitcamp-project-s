@@ -230,7 +230,9 @@ $( function() {
 			
 // 멘토 모달 띄우기 
 			
-			
+			var cono; // 멘티가 멘토에게 메세지를 보내기 위해 필요한 해당 설계도 컨텐츠 번호
+            var sno; // 접속한 학생 번호
+            var eno; // 해당 설계도 관한 멘토 일련번호
 			$(document.body).on( "click", ".mento-slide", function() {
 				
 				console.log("-----------------------------------------------");
@@ -238,8 +240,8 @@ $( function() {
 				console.log(this);
 				
 				
-				var cono = $(this).children('.mento-conts').children('.buttonHolder').attr('data-no');
-				var sno = memberInfo.memberNo;
+				cono = $(this).children('.mento-conts').children('.buttonHolder').attr('data-no');
+				sno = memberInfo.memberNo;
 				console.log(cono);
 				console.log(sno);
 				
@@ -260,14 +262,33 @@ $( function() {
 							console.log(ajaxResult.data.list);
 							console.log(ajaxResult.data.mento);
 							console.log(ajaxResult.data.list.length);
-							
+							    var list = ajaxResult.data.list;
+							    eno = ajaxResult.data.mento.mentoNo;
 								var mteName = ajaxResult.data.mento.name;
 								var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
 								console.log(mteName);
 								console.log(mtePhoto);
+								
 							 
 							 $('.mystuff-modal').load('mystuff/plan-modal.html .plan-modal', function() {
-								 console.log($(this));
+									
+							        $('#mystuff-messenger').submit(function () {
+									   return false;
+									  });
+									  $("#mystuff-chat-msg").attr("autocomplete", "off");
+								
+							        $.each(list, function(k, v) {
+								          var text   = list[k].message;
+								          var writer = list[k].writerNo;
+								          if (writer == memberInfo.memberNo) {
+								        	  console.log("본인이 쓴것")
+								              $('.mystuff-chatwindow').append('<div class="right">' + text + '</div>');
+								          } else {
+								        	  console.log("상대방이 쓴것")
+								              $('.mystuff-chatwindow').append('<div class="left bye">' + text + '</div>');
+								          }
+								        }); // 메세지 리스트 div 영역으로 나타내기
+								 
                                   console.log("모달창 들어왔다.")
                                   
                                   $('.mystuff-chat-bot h3').text(mteName);
@@ -278,6 +299,26 @@ $( function() {
 			})
 			
 			})
+			
+         //   멘토에게 질문 남기기
+			$(document.body).on( "click", "#mystuff-chat-btn", function() {
+			     var text = $('#mystuff-chat-msg').val();
+			     console.log(text);
+			     $('.mystuff-chatwindow').append('<div class="right">' + text + '</div>');
+			     $('#mystuff-chat-msg').val('');
+			     
+			       $.getJSON(serverRoot + '/message/mentee-send.json',
+			           {
+			             "msge": text, 
+			             "cono": cono,
+			             "sno" : memberInfo.memberNo, 
+			             "eno" : eno
+			           }, function(ajaxResult) {
+			             var status = ajaxResult.status;
+			             if (status != "success") return;
+			       });
+
+			  });
 			
 			
 			
