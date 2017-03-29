@@ -4,7 +4,9 @@ $( function() {
         $( ".modal-content, .row" ).addClass("animated slideOutRight");
         $( ".modal-back" ).css("animation-duration", "0.8s");
         $( ".modal-content, .row" ).css("animation-duration", "0.5s");
-        $( "#contents, .person-dash").remove();
+        setTimeout(function() {
+        $( "#contents, .person-dash, .plan-modal").remove();
+        }, 700); 
 //        setTimeout( function() {
 //        	$(".pop-modal", parent.document).css("display", "none");
 //        }, 800); 

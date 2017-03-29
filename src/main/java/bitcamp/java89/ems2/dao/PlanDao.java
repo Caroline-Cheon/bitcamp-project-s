@@ -8,6 +8,7 @@ import bitcamp.java89.ems2.domain.Plan;
 public interface PlanDao {
   int countAll() throws Exception;
   int boardSize(int eno) throws Exception;
+  Plan getOne(int cono) throws Exception;
   ArrayList<Plan> boardList(Map<String,Object> paramMap) throws Exception;
   ArrayList<Plan> getList(Map<String,Object> paramMap) throws Exception;
   ArrayList<Plan> detailList(Map<String,Object> paramMap) throws Exception;

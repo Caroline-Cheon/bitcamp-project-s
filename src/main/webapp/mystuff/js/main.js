@@ -3,6 +3,137 @@ $( function() {
 	var pageSize = 5;
 	var sno = 5;
 		
+	$(".mystuff").load("mystuff/mystuff.html .dashboard", function() {
+	
+	$.getJSON(serverRoot + '/person/list.json', 
+		    {
+			  "pageNo": currPageNo,
+			  "pageSize": pageSize,
+			  "sno": sno
+			}, function(ajaxResult) {
+		      var status = ajaxResult.status;
+		      if (status != "success") return;
+		      console.log("person 객체");
+		      console.log(ajaxResult.data.list);
+		      
+		      var list = ajaxResult.data.list;
+		      var section = $('.ps-carousel .ul');
+		      console.log(section);
+		      var template = Handlebars.compile($('#personList').html());
+		      section.html(template({"list": list}));
+			});
+			
+	
+	
+	$.getJSON(serverRoot + '/video/list.json', 
+		    {
+			  "pageNo": currPageNo,
+			  "pageSize": pageSize,
+			  "sno": sno
+			}, function(ajaxResult) {
+		      var status = ajaxResult.status;
+		      if (status != "success") return;
+		      console.log("video 객체");
+		      console.log(ajaxResult);
+		  
+		      var list = ajaxResult.data.list;
+		      $.each(list, function(k, v) {
+		    	  $.getJSON(serverRoot + '/video/isLike.json', 
+		    		{
+		    		  "cono": v.contentsNo,
+		    		  "sno": sno
+		    		}, function(ajaxResult) {
+		  		      var status = ajaxResult.status;
+				      if (status != "success") return;
+				      
+				      var isLike = ajaxResult.data.isLike;
+				      
+				      if (isLike == 1) {
+				    	  list[k].isLike = true;
+				      } else {
+				    	  list[k].isLike = false;
+				      }
+				      
+				      /*console.log(list[k].isLike);*/
+//				      list[k].isLike = true;
+//				      console.log(list);
+//				      console.log("test02" + typeof list[k].isLike === true);
+				      /*console.log(typeof list[k].isLike == "false");*/
+				      
+				      /*console.log(list);
+		      for (var i in list) {
+		    	  console.log(i,'번째 isLike = ',list[i].isLike)
+		    	  if (list[i].isLike) {
+		    		  $('.btn.heart').addClass('checked')
+		    	  }
+		      }*/
+				      var section = $('.section');
+				      var template = Handlebars.compile($('#trTemplate').html());
+				      section.html(template({"list": list}));
+//				      console.log(list);
+		    		});
+		    	  
+		    	  
+		      });
+
+		  	
+		  	});  
+	
+	
+//	멘토 슬라이드 
+	
+	$.getJSON(serverRoot + '/plan/list.json',
+			 {
+		  "pageNo": currPageNo,
+		  "pageSize": pageSize,
+		  "sno": sno
+		},
+		    function(ajaxResult) {
+		      var status = ajaxResult.status;
+		      if (status != "success")
+		        return;
+		      
+		  
+		      var list = ajaxResult.data.list;
+		      console.log("멘토");
+		      console.log(list);
+		      countLike();
+		      
+		      function countLike() {
+		      $.each(list, function(k, v) {
+		    	  $.getJSON(serverRoot + '/video/isLike.json', 
+		    		{
+		    		  "cono": v.contentsNo,
+		    		  "sno": sno
+		    		}, function(ajaxResult) {
+		  		      var status = ajaxResult.status;
+				      if (status != "success") return;
+				      
+				      var isLike = ajaxResult.data.isLike;
+				      
+				      if (isLike == 1) {
+				    	  list[k].isLike = true;
+				      } else {
+				    	  list[k].isLike = false;
+				      }
+
+				      
+				      var section = $('.mt-carousel > .ul');
+				      var template = Handlebars.compile($('#mentoList').html());
+				      section.html(template({"list": list}));
+//				      console.log(list);
+				      jcarousels();
+		    		});
+		    	  
+		    	  
+		      });
+		      }
+
+		  });  
+	
+	});
+
+
 		        // 좋아요 버튼 눌렀을 때
 		        
 		        $(document.body).on( "click", ".buttonHolder", function() {// 좋아요 버튼 눌렀을 때
@@ -81,7 +212,7 @@ $( function() {
 							 var schl = ajaxResult.data.personSchool;
 							 var desc = ajaxResult.data.personDescription;
 							 
-							 $('.mystuff-modal').load('mystuff/person-test.html .person-dash', function() {
+							 $('.mystuff-modal').load('mystuff/person-modal.html .person-dash', function() {
 
 								 $('.card-image img').attr('src',img);
 								 $('.name .p-name').text(name);
@@ -94,6 +225,65 @@ $( function() {
 			})
 			
 			})
+			
+			
+			
+// 멘토 모달 띄우기 
+			
+			
+			$(document.body).on( "click", ".mento-slide", function() {
+				
+				console.log("-----------------------------------------------");
+				console.log("멘토 모달창");
+				console.log(this);
+				
+				
+				var cono = $(this).children('.mento-conts').children('.buttonHolder').attr('data-no');
+				var sno = memberInfo.memberNo;
+				console.log(cono);
+				console.log(sno);
+				
+				$.getJSON(serverRoot + '/message/list.json', 
+						{
+					"cono": cono,
+					"sno": memberInfo.memberNo,
+					"mno": memberInfo.memberNo
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success") {
+								return;
+							}
+							
+							console.log("멘토와의 채팅");
+							
+							console.log(ajaxResult.data.list);
+							console.log(ajaxResult.data.mento);
+							console.log(ajaxResult.data.list.length);
+							
+								var mteName = ajaxResult.data.mento.name;
+								var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
+								console.log(mteName);
+								console.log(mtePhoto);
+							 
+							 $('.mystuff-modal').load('mystuff/plan-modal.html .plan-modal', function() {
+								 console.log($(this));
+                                  console.log("모달창 들어왔다.")
+                                  
+                                  $('.mystuff-chat-bot h3').text(mteName);
+                                  $('.mystuff-chat-bot img').attr('src',mtePhoto);
+								 
+							 }) // mystuff-modal 창에 로드 시키기.
+				
+			})
+			
+			})
+			
+			
+			
+			
+			
+			
 			
 			
 			
@@ -122,7 +312,7 @@ $( function() {
 					 
 				       if($(".frame-area-center").hasClass("mystuff")) {
 				    	   
-					 $('.mystuff-modal').load('mystuff/talks.html #contents', function() {
+					 $('.mystuff-modal').load('mystuff/video-modal.html #contents', function() {
 						 console.log("여기도 들어오나")
 						 
 						 $('#iframe').append("<iframe src="+"'"+videoAddr+"'"+"style='width:;width: 100%;height: 386px;' background-color: black; frameborder='0' scrolling='no' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>")

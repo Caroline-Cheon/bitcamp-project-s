@@ -8,18 +8,20 @@
 
   <resultMap type="bitcamp.java89.ems2.domain.Plan" id="plan-map" extends="mento-map">
     <id     column="cono"        property="contentsNo"/>
+    <result column="name"       property="name"/>
+    <result column="mimg"       property="photoPath"/>
     <result column="plmap"       property="planMap"/>
     <result column="plnm"      property="planName"/>
     <result column="plimg"      property="planImage"/>
   </resultMap>
   
   <resultMap type="bitcamp.java89.ems2.domain.Mento" id="mento-map">
-    <id     column="mno"        property="memberNo"/>
+    <id     column="eno"        property="mentoNo"/>
     <result column="name"       property="name"/>
     <result column="age"       property="age"/>
     <result column="email"       property="email"/>
     <result column="pwd"       property="password"/>
-    <result column="mimg"       property="image"/>
+    <result column="mimg"       property="photoPath"/>
     <result column="sarea"       property="specialArea"/>
   </resultMap>
 
@@ -37,6 +39,16 @@
     where s.sno=#{value}
   </select> -->
   
+     <select id="getOne" resultMap="plan-map">
+    select name, mimg
+        from plan pl
+         inner join mento mte on mte.eno = pl.eno
+         inner join membs mb on mb.mno = mte.eno
+        where pl.cono = #{cono}
+  </select>
+  
+  
+  
    <select id="countAll" resultType="int">
     select 
       count(*)
@@ -45,7 +57,7 @@
   </select>
   
    <select id="getList" resultMap="plan-map" parameterType="map">
-  select plan.cono,name,plmap,plimg, sarea from contents ctt
+  select plan.cono,mto.eno,name,plmap,plimg, sarea from contents ctt
   inner join plan on plan.cono = ctt.cono
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno

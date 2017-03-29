@@ -31,7 +31,6 @@ public class QnaJsonControl {
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
   
-  
  
 }
 
