@@ -232,16 +232,33 @@ h3.warn-modal-testInfo {
 .warn-modal-head .fa-times:hover {
     color: #fff;
 }
-.modal-confirm-btn {
-    text-align: center;
+.modal-confirm-btn,
+.modal-confirm-yes-btn, 
+.modal-confirm-no-btn {
     color: #fff;
     font-weight: 600;
     padding: 4px;
     background: #e2525c;
     width: 100px;
     border-radius: 4px;
-    margin: 0 auto;
+    text-align: center;
     cursor: pointer;
+}
+.modal-confirm-btn {
+    margin: 0 auto;
+}
+.modal-confirm-yes-btn, 
+.modal-confirm-no-btn {
+    display: inline-block;
+    position: relative;
+    left: 50%;
+} 
+.modal-confirm-yes-btn {
+    margin-left: -100px;
+}
+.modal-confirm-no-btn {
+    margin-left: 10px;
+    width: 80px;
 }
 </style>
 <body>

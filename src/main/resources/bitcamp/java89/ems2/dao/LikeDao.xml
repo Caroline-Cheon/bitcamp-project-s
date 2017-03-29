@@ -28,6 +28,11 @@
     <result column="mimg"      property="photoPath"/>
   </resultMap>
   
+  <select id="hasLike" resultType="int">
+    SELECT count(*) 
+    FROM lklst 
+    WHERE sno = #{sno}
+  </select>
   
   <select id="videoCountAll" resultType="int">
    select count(*) from contents ctt

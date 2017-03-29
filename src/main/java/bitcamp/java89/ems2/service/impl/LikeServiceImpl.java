@@ -16,6 +16,10 @@ public class LikeServiceImpl implements LikeService {
   @Autowired ContentsHeaderDao contentsDao;
   @Autowired LikeDao likeDao;
   
+  
+  public int hasLike(int sno) throws Exception {
+    return likeDao.hasLike(sno); 
+  }
  
   public List<Like> videoList(int pageNo, int pageSize, int sno) throws Exception {
 
