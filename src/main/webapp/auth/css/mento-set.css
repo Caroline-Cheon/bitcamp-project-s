@@ -1,8 +1,15 @@
-#user-change-modal {
+.user-change-modal {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transition: all 0.5s ease-in-out;
+  width: 800px;
+  height: 495px;
+  display: none;
+  top: 18%;
+  left: 27%;
   background-color: #eeeff2;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100;
+  z-index: 1000;
 }
 .user-change-modal-hide {
 	display: none;
@@ -17,11 +24,12 @@
   line-height: 1.5;
   margin: 10px 0;
   padding-left: 12px;
+  font-size: 14px;
 }
 .mento-set-box {
   background-color: #fff;
   margin-bottom: 20px;
-      height: 490px;
+      height: 439px;
 }
 fieldset {
   background-color: #fff;
@@ -50,7 +58,7 @@ fieldset {
   margin-bottom: 0;
   color: #fff;
   background-color: #F7DC6F;
-  height: 30px;
+  height: 58px;
    font-size: 18px;
  font-weight: 700;
 }
@@ -96,14 +104,17 @@ label.disabled * {
   background-color: #25303c;
 }
 
-
-.textarea {
+label.label-checkbox.checked {
+  color: black;
+}
+.career-area {
   width: 722px;
-    height: 100px;
-    margin-left: 20px;
+  height: 100px;
+  margin-left: 20px;
+  font-size: 12px;
 }
 
-.btn {
+.mento-set-btn {
   cursor: pointer;
   font-size: 19px;
   text-transform: uppercase;
@@ -113,12 +124,28 @@ label.disabled * {
   color: white;
   width: 80px;
   height: 43px;
-  margin: 6px 18px 0;
+  margin: 0 12px;
   float: right;
 }
 
+.mento-set-cancel-btn {
+	cursor: pointer;
+  font-size: 19px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 4px;
+  background-color: #ea4d7c;
+  color: white;
+  width: 80px;
+  height: 43px;
+  float: right;
+}
+
+
 .detail-area {
-	    margin-left: 20px;
+  margin-left: 20px;
+  width: 722px;
+  font-size: 12px;
 }
 
 

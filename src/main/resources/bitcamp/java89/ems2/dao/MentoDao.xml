@@ -29,6 +29,13 @@
     insert into mento(eno, sarea)
     values(#{memberNo},#{specialArea})
   </insert> 
+  
+<!--   <insert id="insert" parameterType="mentee" 
+          useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
+    insert into mento(eno, sarea, darea, carr)
+    values(#{memberNo},#{specialArea},#{defaultArea},#{career})
+  </insert> 
+   -->
 <!--   <select id="getList" resultMap="member-map">
     select 
       mno, 

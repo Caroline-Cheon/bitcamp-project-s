@@ -32,6 +32,12 @@ public class MemberJsonControl {
     return new AjaxResult(AjaxResult.SUCCESS, "등록 성공입니다.");
   }
   
+/*  @RequestMapping("/mento/beMento")
+  public AjaxResult addMentoSet(Mentee mentee) throws Exception {
+    memberService.beMento(mentee);
+    return new AjaxResult(AjaxResult.SUCCESS, "등록 성공입니다.");
+  }
+  */
   /*  
   @RequestMapping("/member/delete")
   public AjaxResult delete(int memberNo, HttpServletRequest request) throws Exception {

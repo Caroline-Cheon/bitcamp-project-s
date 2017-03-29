@@ -108,6 +108,12 @@ public class MemberServiceImpl implements MemberService {
     return mentoDao.insert(mento);
   
  }
+
+/*  @Override
+  public int beMento(Mentee mentee) throws Exception {
+    
+    return mentoDao.insert(mentee);
+  }*/
 }
 
 
