@@ -26,15 +26,15 @@
 .app {
     position: relative;
     margin: 0 auto;
-    top: 50%;
+    top: 43%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     background: #fff;
     border-radius: 15px;
-/*     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2); */
+    /* box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2); */
 }
 
 .app h2 {
@@ -285,12 +285,12 @@ border-radius: 50%;
     color: #bbb;
     text-transform: uppercase;
     font-weight: bold;
-    padding-left: 25%;
+    padding-left: 24%;
     border-left: 5px solid transparent;
     letter-spacing: 1px;
     transition: all 0.3s linear;
     background: rgba(0, 0, 0, .0001);
-    margin-left: 7px;
+    margin-left: 13px;
 }
 .active {
     display: inline-block;
@@ -354,7 +354,7 @@ border-radius: 50%;
 
 
 .icon-home:before {
-    content: "\f015";
+    content: "\f0e8";
 }
 [class^=icon-]:before, [class*=" icon-"]:before {
     font-family: FontAwesome;
@@ -362,6 +362,7 @@ border-radius: 50%;
     font-style: normal;
     display: inline-block;
     text-decoration: inherit;
+    font-size: 22px;
 }
 
 
