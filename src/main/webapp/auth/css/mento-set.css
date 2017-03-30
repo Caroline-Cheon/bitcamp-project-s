@@ -1,23 +1,20 @@
 .user-change-modal {
   position: fixed;
-  top: 60%;
-  left: 50%;
-  transition: all 0.5s ease-in-out;
   width: 800px;
   height: 495px;
   display: none;
-  top: 18%;
-  left: 27%;
-  background-color: #eeeff2;
+  top: 50%;
+  left: 50%;
+  margin-top: -240px;
+  margin-left: -400px;
+  /* background-color: #eeeff2; */
   z-index: 1000;
-}
-.user-change-modal-hide {
-	display: none;
 }
 #mento-set-wrap {
   width: 800px;
   margin: 0 auto;
   font-family: Malgun Gothic;
+  /* display: none; */
 }
 .mento-set-s-title{
   font-weight: 400;

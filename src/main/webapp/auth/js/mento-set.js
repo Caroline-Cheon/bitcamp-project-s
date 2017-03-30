@@ -30,12 +30,20 @@ $.fn.cf = function () {
 //mento-set button~
 $( function() {
 	$(document.body).on('click', '.user-change', function() {
+		
 		$('.user-change-modal').css('display','block');
+		
 		$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function(){
+			/*$('#mento-set-wrap').addClass('animated fadeIn');
+			setTimeout(function(){
+				$('#mento-set-wrap').css('display','block');
+			},500);*/
+			$('#mento-set-wrap').css('display','block');
+			
 			$('.mento-set-form').cf();
 			$(document.body).on('click', '.mento-set-btn', function() {
 				
-				console.log('drdgdsds');
+				
 				var totalCheckList="";
 				
 				console.log($('.mento-set-ul li:nth-child(1) label:nth-child(1)').hasClass('checked'));
@@ -43,7 +51,7 @@ $( function() {
 				console.log($('.mento-set-ul li:nth-child(2) label:nth-child(1)').hasClass('checked'));
 				console.log($('.mento-set-ul li:nth-child(2) input:nth-child(1)').val());
 				
-				$.each([1,2], function(index, value) {
+				$.each([1,2,3,4,5,6,7], function(index, value) {
 					
 					if($('.mento-set-ul li:nth-child(' + value +') label:nth-child(1)').hasClass('checked')) {
 						totalCheckList += $('.mento-set-ul li:nth-child(' + value +') input:nth-child(1)').val() + ",";
@@ -71,11 +79,12 @@ $( function() {
 					
 				}, 'json');
 				
-				
+				$('#mento-set-wrap').css('display','none');
 				$('.user-change-modal').css('display','none');
 			});
 			
 			$(document.body).on('click', '.mento-set-cancel-btn', function() {
+				$('#mento-set-wrap').css('display','none');
 				$('.user-change-modal').css('display','none');
 			});
 		});

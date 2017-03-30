@@ -12,8 +12,11 @@ $(document.body).on('click', '.fa-share-alt', function(e){
 	}
 });
 
+
+
+
 $(document.body).on("click", ".fa-times", function() {
-	console.log("닫기버튼 클릭");
+	userInfo(); // 세션 정보 획득
 	
 	$('.seeds-modal-call').addClass('animated fadeOut');
 	setTimeout(function() {
@@ -23,6 +26,18 @@ $(document.body).on("click", ".fa-times", function() {
 		/*$('.seeds-modal-call').removeClass('seeds-modal');*/
 		$('.temp-dashboard').remove();
 	}, 800);
+	
+	
+	 /*검사하고 씨드 내용이 검사 결과를 반영하도록~*/
+	/*if (memberInfo != undefined) {
+		var mbtiType;
+		
+		
+		
+		console.log(memberInfo.memberNo);
+		$('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
+	}*/
+	
 	
 });
 
