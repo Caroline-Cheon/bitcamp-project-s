@@ -111,7 +111,7 @@ body {
 
 /*-- dashboard 영역 --*/
 .dashboard {
-  height: 775px;
+  height: 720px;
   margin: 2.5vw auto;
   width: 1285px;
   background: #FFF;
@@ -522,7 +522,7 @@ font-size: 12px;
     height: 19px;
     position: relative;
     line-height: inherit;
-    margin-bottom: 0px;
+    bottom: 8px;
 }
 
 /*--토글 영역(채팅메뉴)--*/
@@ -684,12 +684,14 @@ span.message-context {
     display: inline-block;
     text-decoration: inherit;
     content: "\f119";
-    font-size: 15px;
+    font-size: 18px;
     margin-left: 6px;
+    color: chocolate;
 }
 .nothing-context {
     width: 160px;
-    margin-left: 8px;
-    font-size: 12px;
+    margin-left: 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
