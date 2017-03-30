@@ -5,7 +5,116 @@ function loadContorl() {
 		checkTestResult();
 	}
 	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
+	
+	console.log(memberInfo);
+	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
+}
+/*   like pgbtn click events   */
+$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
+	pageLoad('mento-like');
+});
+$(document.body).on( "click", ".video-like-btn", function() {
+	pageLoad('video-like');
+});
+$('#prevPgBtn').click(function() {
+	if (currPageNo > 1) {
+		currPageNo = --currPageNo;
+		if (pageSize == '4') {
+			likeMentoList();
+		} else if (pageSize == '15') {
+			likeVideoList();
+		}
+	}
+});
+$('#nextPgBtn').click(function() {
+	currPageNo = ++currPageNo;
+	if (pageSize == '4') {
+		likeMentoList();
+	} else if (pageSize == '15') {
+		likeVideoList();
+	}
+});
+/*   /like pgbtn click events   */
+function initPgBtn(choose, totalCount) {
+	if (choose == 'plan') {
+		currPageNo = 1;
+		pageSize = 4;
+		maxPageNo = parseInt(totalCount / pageSize);
+	} else if (choose == 'video') {
+		currPageNo = 1;
+		pageSize = 15;
+		maxPageNo = parseInt(totalCount / pageSize);
+	}
+	console.log('initPgBtn', 'choose', choose);
+	console.log('currPageNo', currPageNo, 'pageSize', pageSize, 'maxPageNo', maxPageNo);
+}
+function prepPgBtn(totalCount) {
+	if (currPageNo <= 1) {
+		$('#prevPgBtn').attr('disabled', true);
+	} else {
+		$('#prevPgBtn').attr('disabled', false);
+	}
+	maxPageNo = parseInt(totalCount / pageSize);
+	if ((totalCount % pageSize) > 0) {
+		maxPageNo++;
+	}
+	if (currPageNo >= maxPageNo) {
+		$('#nextPgBtn').attr('disabled', true); 
+	} else {
+		$('#nextPgBtn').attr('disabled', false);
+	}
+	$('#pageNo').text(currPageNo);
+}
+function likeMentoList() {
+	console.log("likeMentoList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/mentoLike/list.json', 
+		{
+		"pageNo": currPageNo,
+		"pageSize": pageSize,
+		"sno": memberInfo.memberNo
+		}, function(ajaxResult) {
+			console.log(ajaxResult);
+			var status = ajaxResult.status;
+			if (status != "success")
+				return;
+
+			var list = ajaxResult.data.list;
+			console.log(list);
+
+			var section = $('.mento-like-list');
+
+			var template = Handlebars.compile($('#mentoLike').html());
+			section.html(template({"list": list}));
+			mtHover(); // bottom gradient? 
+			prepPgBtn(ajaxResult.data.totalCount);
+		});
+}
+function likeVideoList() {
+	console.log("likeVideoList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/videoLike/list.json',
+		{
+		"pageNo": currPageNo,
+		"pageSize": pageSize,
+		"sno": memberInfo.memberNo
+		}, function(ajaxResult) {
+			console.log(ajaxResult);
+			var status = ajaxResult.status;
+			if (status != "success") return;
+
+			var list = ajaxResult.data.list;
+			console.log(list);
+
+			var section = $('.video-like-list');
+
+			var template = Handlebars.compile($('#videoLike').html());
+			section.html(template({"list": list}));
+			prepPgBtn(ajaxResult.data.totalCount);
+		});
 }
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
@@ -57,12 +166,12 @@ function pageLoad(choose) {
 				    		});
 				      });
 				  	});  
-	//		멘토 슬라이드 
+			// 멘토 슬라이드 
 			$.getJSON(serverRoot + '/plan/list.json',
-					 {
-				  "pageNo": currPageNo,
-				  "pageSize": pageSize,
-				  "sno": memberInfo.memberNo
+				{
+				"pageNo": currPageNo,
+				"pageSize": pageSize,
+				"sno": memberInfo.memberNo
 				},
 				    function(ajaxResult) {
 				      var status = ajaxResult.status;
@@ -94,159 +203,36 @@ function pageLoad(choose) {
 				      }
 				  });  
 			});
-	} else if (choose == 'likes') {
 		
 	} else if (choose == 'seeds') {
 		$(".seeds").load("seeds/seeds-temp.html .seeds");
-	} else if (choose == 'mento-like') {
-		console.log('pageload/mento-like');
-		console.log(memberInfo.memberNo);
-		var currPageNo = 1;
-		var pageSize = 4;
+		
+	} else if (choose == 'likes' || choose == 'mento-like') {
+		console.log('pageload/mento-like', memberInfo.memberNo);
 		$.getJSON(serverRoot + '/mentoLike/Count.json', {"sno": memberInfo.memberNo}, 
 				function(ajaxResult) {
 					if (ajaxResult.status == 'success') {
 						console.log('/mentoLike/Count.json');
-						console.log(pageSize ,currPageNo);
+						initPgBtn('plan', ajaxResult.data.totalCount); 
 						$(".likes").load("likes/mento-like.html .dashboard", function() {
-							likeMentoList(currPageNo, pageSize);
+							likeMentoList();
 						});
 					}
 		});
-		
-		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
-		    	likeMentoList(currPageNo, pageSize);
-			});
-			$('#prevPgBtn').click(function() {
-				if (currPageNo > 1) {
-					likeMentoList(--currPageNo, 4);
-				}
-			});
-			$('#nextPgBtn').click(function() {
-				likeMentoList(++currPageNo, 4);
-			});
-			function mentoLikePreparePagingButton(totalCount) {
-				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
-				if (currPageNo <= 1) {
-					$('#prevPgBtn').attr('disabled', true);
-				} else {
-					$('#prevPgBtn').attr('disabled', false);
-				}
-
-				var maxPageNo = parseInt(totalCount / pageSize);
-				if ((totalCount % pageSize) > 0) {
-					maxPageNo++;
-				}
-
-				if (currPageNo >= maxPageNo) {
-					$('#nextPgBtn').attr('disabled', true); 
-				} else {
-					$('#nextPgBtn').attr('disabled', false);
-				}
-
-				// 현재 페이지 번호를 출력한다.
-				$('#pageNo').text(currPageNo);
-			}
-			function likeMentoList(currPageNo, pageSize) {
-				console.log("like 멘토 리스트 오는가");
-				console.log(memberInfo.memberNo);
-				$.getJSON(serverRoot + '/mentoLike/list.json', 
-					{
-					"pageNo": currPageNo,
-					"pageSize": pageSize,
-					"sno": memberInfo.memberNo
-					}, 
-						function(ajaxResult) {
-							var status = ajaxResult.status;
-							if (status != "success")
-								return;
-
-							var list = ajaxResult.data.list;
-							console.log(list);
-
-							var section = $('.mento-like-list');
-
-							var template = Handlebars.compile($('#mentoLike').html());
-							section.html(template({"list": list}));
-
-							mtHover();
-							mentoLikePreparePagingButton(ajaxResult.data.totalCount);
-							console.log(ajaxResult.data.totalCount);
-						});
-			}
 
 	} else if (choose == 'video-like') {
-		// 좋아하는 영상 클릭시.
-		$(document.body).on( "click", ".video-like-btn", function() {
-			var currPageNo = 1;
-			var pageSize = 15;
-			$.getJSON(serverRoot + '/videoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
-				if (ajaxResult.status == 'success') {
-					$(".likes").load("likes/video-like.html .dashboard", function() {
-						likeVideoList(currPageNo, pageSize);
-					});
-				}
-			});
-			$('#prevPgBtn').click(function() {
-				if (currPageNo > 1) {
-					likeVideoList(--currPageNo, 15);
-				}
-			});
-			$('#nextPgBtn').click(function() {
-				likeVideoList(++currPageNo, 15);
-			});
-			function preparePagingButton(totalCount) {
-				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
-				if (currPageNo <= 1) {
-					$('#prevPgBtn').attr('disabled', true);
-				} else {
-					$('#prevPgBtn').attr('disabled', false);
-				}
-
-				var maxPageNo = parseInt(totalCount / pageSize);
-				if ((totalCount % pageSize) > 0) {
-					maxPageNo++;
-				}
-
-				if (currPageNo >= maxPageNo) {
-					$('#nextPgBtn').attr('disabled', true); 
-				} else {
-					$('#nextPgBtn').attr('disabled', false);
-				}
-
-				// 현재 페이지 번호를 출력한다.
-				$('#pageNo').text(currPageNo);
+		console.log('pageload/video-like', memberInfo.memberNo);
+		$.getJSON(serverRoot + '/videoLike/Count.json', {"sno": memberInfo.memberNo}, function(ajaxResult) {
+			if (ajaxResult.status == 'success') {
+				console.log('/videoLike/Count.json');
+				initPgBtn('video', ajaxResult.data.totalCount); 
+				$(".likes").load("likes/video-like.html .dashboard", function() {
+					likeVideoList();
+				});
 			}
-
-			function likeVideoList(pageNo, pageSize, sno) {
-				$.getJSON(serverRoot + '/videoLike/list.json', 
-						{
-					"pageNo": pageNo,
-					"pageSize": pageSize,
-					"sno": memberInfo.memberNo
-						}, 
-						function(ajaxResult) {
-							var status = ajaxResult.status;
-							if (status != "success")
-								return;
-
-							var list = ajaxResult.data.list;
-							console.log(list);
-
-							var section = $('.video-like-list');
-
-							var template = Handlebars.compile($('#videoLike').html());
-							section.html(template({"list": list}));
-
-							console.log("like");
-							console.log(ajaxResult.data.totalCount);
-							preparePagingButton(ajaxResult.data.totalCount);
-						});
-			}
-		}); // 좋아하는 영상 클릭시 이벤트
+		});
 	}
 }
-
 
 /*   user session 정보 받아오는 함수   */
 function userInfo() {
@@ -255,13 +241,21 @@ function userInfo() {
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
+			if (memberInfo != undefined) sno = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
-			console.log(memberInfo);
-			console.log(topicName);
-			console.log(hasLike);
+			console.log("memberInfo", memberInfo);
+			console.log("topicName", topicName);
+			console.log("hasLike(has/none)", hasLike);
+			console.log("sno", sno);
 			eventControll();
+<<<<<<< HEAD
 			loadControl();
 			checkTestResult();
+=======
+			setTimeout(function() {
+				loadContorl();
+			}, 3500);
+>>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {
@@ -421,17 +415,78 @@ $(function() {
 	    		  isopen_usermenu = false;
 	          }
 	      }
-	      if (target.hasClass("header-icon-message")) {
+	      
+	      if (target.hasClass("header-icon-message")) { // 멘토 답변 업데이트 알림 아이콘.
 	        if (!isopen_messagemenu) {
 	        $(".user-menu").hide();
-	        $(".message-menu").show();
+	        
+	        $('.message-menu').load('common/header.html .message-info', function() {
+
+	        $(".message-menu").css("display","block");
+	        
+				$.getJSON(serverRoot + '/message/mento-list.json', // 새로 올라온 멘토들의 답변 리스트
+						{
+					"sno": memberInfo.memberNo
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success") {
+					             console.log("이게뭐람");
+								return;
+							}
+							
+							
+	             console.log(ajaxResult.data);
+	             
+	             var list = ajaxResult.data;
+	             
+	             
+			      $.each(list, function(k, v) {
+			    	  console.log(list,k,v);
+			    	  $.getJSON(serverRoot + '/message/isMsg.json', 
+			    		{
+			    		  "cono": v.contentsNo,
+			    		  "sno": memberInfo.memberNo
+			    		}, function(ajaxResult) {
+			  		      var status = ajaxResult.status;
+					      if (status == "fail") {
+					    	  console.log("최신 답변 없엉");
+					    	  return;
+					      }
+					      else {
+					    	  $('.nothing-message').hide();
+					    	  console.log(ajaxResult.data);
+					    	  
+					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+					    	 
+					      }
+
+			    		}); // isMsg 콜백함수
+			      });
+	             
+     
+	        
+	}); // 새로 올라온 멘토들의 답변 리스트
+	        
 	        isopen_messagemenu = true;
 	        isopen_usermenu = false;
+	         }) // message-menu 로드 이벤트
+	         
 	        } else {
 	            $(".message-menu").hide();
 	            isopen_messagemenu = false;
 	        }
 	      }
+	      
+	      /*function msgListCall() {
+	    	  var section = $('.message-info');
+	    	  console.log(section);
+	    	  console.log(msgList);
+	    	  var template = Handlebars.compile($('#message-menu').html());
+	    	  section.html(template({"list": msgList}));
+	      }*/
+	      
+	      
 	      if (target.hasClass("header-icon-power")) {
 				$('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {
 					$('.auth-login-form').css("display", "block");
