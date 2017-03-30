@@ -411,17 +411,78 @@ $(function() {
 	    		  isopen_usermenu = false;
 	          }
 	      }
-	      if (target.hasClass("header-icon-message")) {
+	      
+	      if (target.hasClass("header-icon-message")) { // 멘토 답변 업데이트 알림 아이콘.
 	        if (!isopen_messagemenu) {
 	        $(".user-menu").hide();
-	        $(".message-menu").show();
+	        
+	        $('.message-menu').load('common/header.html .message-info', function() {
+
+	        $(".message-menu").css("display","block");
+	        
+				$.getJSON(serverRoot + '/message/mento-list.json', // 새로 올라온 멘토들의 답변 리스트
+						{
+					"sno": memberInfo.memberNo
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success") {
+					             console.log("이게뭐람");
+								return;
+							}
+							
+							
+	             console.log(ajaxResult.data);
+	             
+	             var list = ajaxResult.data;
+	             
+	             
+			      $.each(list, function(k, v) {
+			    	  console.log(list,k,v);
+			    	  $.getJSON(serverRoot + '/message/isMsg.json', 
+			    		{
+			    		  "cono": v.contentsNo,
+			    		  "sno": memberInfo.memberNo
+			    		}, function(ajaxResult) {
+			  		      var status = ajaxResult.status;
+					      if (status == "fail") {
+					    	  console.log("최신 답변 없엉");
+					    	  return;
+					      }
+					      else {
+					    	  $('.nothing-message').hide();
+					    	  console.log(ajaxResult.data);
+					    	  
+					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+					    	 
+					      }
+
+			    		}); // isMsg 콜백함수
+			      });
+	             
+     
+	        
+	}); // 새로 올라온 멘토들의 답변 리스트
+	        
 	        isopen_messagemenu = true;
 	        isopen_usermenu = false;
+	         }) // message-menu 로드 이벤트
+	         
 	        } else {
 	            $(".message-menu").hide();
 	            isopen_messagemenu = false;
 	        }
 	      }
+	      
+	      /*function msgListCall() {
+	    	  var section = $('.message-info');
+	    	  console.log(section);
+	    	  console.log(msgList);
+	    	  var template = Handlebars.compile($('#message-menu').html());
+	    	  section.html(template({"list": msgList}));
+	      }*/
+	      
+	      
 	      if (target.hasClass("header-icon-power")) {
 				$('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {
 					$('.auth-login-form').css("display", "block");
