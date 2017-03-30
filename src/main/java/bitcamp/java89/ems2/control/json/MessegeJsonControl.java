@@ -93,9 +93,8 @@ public class MessegeJsonControl {
    
    List<Integer> conoList = messageService.conoList(sno);
    ArrayList<Message> list = new ArrayList<Message>();
-   System.out.println(conoList.get(0)); // 5
-   System.out.println(conoList.size()); // 1
-   
+//   System.out.println(conoList.get(0)); // 5
+//   System.out.println(conoList.size()); // 1
     for (int i = 0; i < conoList.size(); i++) {
       System.out.println(sno);
       HashMap<String, Object> targetMento = new HashMap<>(); 

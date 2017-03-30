@@ -69,45 +69,46 @@ function likeMentoList() {
 		"pageNo": currPageNo,
 		"pageSize": pageSize,
 		"sno": memberInfo.memberNo
-		}, 
-			function(ajaxResult) {
-				var status = ajaxResult.status;
-				if (status != "success")
-					return;
+		}, function(ajaxResult) {
+			console.log(ajaxResult);
+			var status = ajaxResult.status;
+			if (status != "success")
+				return;
 
-				var list = ajaxResult.data.list;
-				console.log(list);
+			var list = ajaxResult.data.list;
+			console.log(list);
 
-				var section = $('.mento-like-list');
+			var section = $('.mento-like-list');
 
-				var template = Handlebars.compile($('#mentoLike').html());
-				section.html(template({"list": list}));
-				mtHover(); // bottom gradient? 
-				prepPgBtn(ajaxResult.data.totalCount);
-			});
+			var template = Handlebars.compile($('#mentoLike').html());
+			section.html(template({"list": list}));
+			mtHover(); // bottom gradient? 
+			prepPgBtn(ajaxResult.data.totalCount);
+		});
 }
 function likeVideoList() {
 	console.log("likeVideoList CALL");
 	console.log(memberInfo.memberNo);
 	console.log(currPageNo, pageSize);
-	$.getJSON(serverRoot + '/videoLike/list.json', 
+	$.getJSON(serverRoot + '/videoLike/list.json',
 		{
-		"pageNo": pageNo,
+		"pageNo": currPageNo,
 		"pageSize": pageSize,
 		"sno": memberInfo.memberNo
 		}, function(ajaxResult) {
-				var status = ajaxResult.status;
-				if (status != "success") return;
+			console.log(ajaxResult);
+			var status = ajaxResult.status;
+			if (status != "success") return;
 
-				var list = ajaxResult.data.list;
-				console.log(list);
+			var list = ajaxResult.data.list;
+			console.log(list);
 
-				var section = $('.video-like-list');
+			var section = $('.video-like-list');
 
-				var template = Handlebars.compile($('#videoLike').html());
-				section.html(template({"list": list}));
-				prepPgBtn(ajaxResult.data.totalCount);
-			});
+			var template = Handlebars.compile($('#videoLike').html());
+			section.html(template({"list": list}));
+			prepPgBtn(ajaxResult.data.totalCount);
+		});
 }
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
