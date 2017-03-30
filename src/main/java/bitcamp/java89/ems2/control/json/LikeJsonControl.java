@@ -33,6 +33,7 @@ public class LikeJsonControl {
   
   @RequestMapping("/mentoLike/Count")
   public AjaxResult mentoListCount(int sno) throws Exception {
+    System.out.println("/mentoLike/Count sno :" + sno);
     int totalCount = likeService.mentoGetSize(sno);
     
     HashMap<String,Object> resultMap = new HashMap<>();
@@ -54,13 +55,12 @@ public class LikeJsonControl {
       return new AjaxResult(AjaxResult.FAIL, "리스트가 없습니다.");
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
+  
   @RequestMapping("/mentoLike/list")
   public AjaxResult mentoList(@RequestParam(defaultValue="1") int pageNo,
           @RequestParam(defaultValue="4") int pageSize, int sno) throws Exception {
     List<Like> list = likeService.mentoList(pageNo, pageSize, sno);
     int totalCount = likeService.mentoGetSize(sno);
-    System.out.println("mentoCount"+totalCount);
-    
     
     HashMap<String,Object> resultMap = new HashMap<>();
     resultMap.put("list", list);

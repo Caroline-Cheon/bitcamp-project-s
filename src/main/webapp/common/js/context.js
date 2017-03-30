@@ -14,4 +14,5 @@ var slideState = false;
 var memberInfo; 
 var topicName;
 var hasLike;
+var sno;
 /*   /user session 정보   */

@@ -5,15 +5,10 @@ public class Mento extends Member {
   
   protected int mentoNo;
   protected String specialArea;
-  protected String defaultArea;
+  protected String detailArea;
   protected String career;
   
-//  public int getMentoNo() {
-//    return mentoNo;
-//  }
-//  public void setMentoNo(int mentoNo) {
-//    this.mentoNo = mentoNo;
-//  }
+
   public int getMentoNo() {
     return mentoNo;
   }
@@ -26,11 +21,11 @@ public class Mento extends Member {
   public void setSpecialArea(String specialArea) {
     this.specialArea = specialArea;
   }
-  public String getDefaultArea() {
-    return defaultArea;
+  public String getDetailArea() {
+    return detailArea;
   }
-  public void setDefaultArea(String defaultArea) {
-    this.defaultArea = defaultArea;
+  public void setDetailArea(String detailArea) {
+    this.detailArea = detailArea;
   }
   public String getCareer() {
     return career;
@@ -41,6 +36,6 @@ public class Mento extends Member {
   
   @Override
   public String toString() {
-    return "Mento [specialArea=" + specialArea + ", defaultArea=" + defaultArea + ", career=" + career + "]";
+    return "Mento [specialArea=" + specialArea + ", detailArea=" + detailArea + ", career=" + career + "]";
   }
 }

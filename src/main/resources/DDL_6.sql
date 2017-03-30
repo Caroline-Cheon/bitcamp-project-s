@@ -101,8 +101,8 @@ ALTER TABLE `TOPIC`
 -- 멘토
 CREATE TABLE `MENTO` (
   `eno`   INTEGER      NOT NULL COMMENT '멘토일련번호', -- 멘토일련번호
-  `sarea` VARCHAR(50)  NOT NULL COMMENT '전문분야', -- 전문분야
-  `darea` VARCHAR(50)  NULL     COMMENT '세부분야', -- 세부분야
+  `sarea` TEXT         NOT NULL COMMENT '전문분야', -- 전문분야
+  `darea` TEXT         NULL     COMMENT '세부분야', -- 세부분야
   `carr`  VARCHAR(100) NULL     COMMENT '경력' -- 경력
 )
 COMMENT '멘토';

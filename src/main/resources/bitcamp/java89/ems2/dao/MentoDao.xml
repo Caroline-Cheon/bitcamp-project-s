@@ -7,13 +7,8 @@
 
   <resultMap type="mento" id="mento-map">
     <id     column="mno"        property="memberNo"/>
-    <result column="email"      property="email"/>
-    <result column="name"       property="name"/>
-    <result column="pwd"        property="password"/>
-    <result column="age"        property="age"/>
-    <result column="mimg"       property="photoPath"/>
     <result column="sarea"       property="specialArea"/>
-    <result column="darea"       property="defaultArea"/>
+    <result column="darea"       property="detailArea"/>
     <result column="carr"       property="career"/>
   </resultMap>
   
@@ -26,9 +21,16 @@
   
   <insert id="insert" parameterType="mento" 
           useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
-    insert into mento(eno, sarea)
-    values(#{memberNo},#{specialArea})
+    insert into mento(eno, sarea, darea, carr)
+    values(#{memberNo},#{specialArea},#{detailArea},#{career})
   </insert> 
+  
+<!--   <insert id="insert" parameterType="mentee" 
+          useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
+    insert into mento(eno, sarea, darea, carr)
+    values(#{memberNo},#{specialArea},#{defaultArea},#{career})
+  </insert> 
+   -->
 <!--   <select id="getList" resultMap="member-map">
     select 
       mno, 

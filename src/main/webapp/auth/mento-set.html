@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="css/mento-set.css" />
-</head>
-<body>
-<div id="mento-set-wrap">
+<div id="mento-set-wrap" class="animated fadeInRight">
     
-  <form class="mento-set-form" method="post">
+  <div class="mento-set-form">
     <div class="mento-set-title">멘토 추가 정보 기입하기</div>
     <div class="mento-set-box">
     <div class="column">
@@ -16,124 +8,50 @@
     <fieldset>
         <ul class="mento-set-ul">
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
+                <label for="accounting" class="label-checkbox" >
+                <input type="checkbox" name="simple-area" value="accounting" id="accounting"/>
                     회계
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="study" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="study" id="study"/>
+                    연구원
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="astronomy" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="astronomy" id="astronomy"/>
+                    천문학
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="marketing" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="marketing" id="marketing"/>
+                    마케팅
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="journalism" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="journalism" id="journalism"/>
+                    언론
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="literature" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="literature" id="literature"/>
+                    문학
                 </label>
             </li>
             <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
-                </label>
-            </li>
-            <li>
-                <label for="something" class="label-checkbox">
-                <input type="checkbox" name="something" />
-                    회계
+                <label for="law" class="label-checkbox">
+                <input type="checkbox" name="simple-area" value="law" id="law"/>
+                    법
                 </label>
             </li>
         </ul>
     </fieldset>
     </div>
-    
-    
     
     <div class="column">
     <div class="mento-set-s-title">세부분야</div>
@@ -146,19 +64,16 @@
     <div class="column">
     <div class="mento-set-s-title">이력</div>
     <fieldset>
-      <textarea class="textarea" name="something" ></textarea>
+      <textarea class="career-area" name="something" ></textarea>
     </fieldset>
     </div>
     
+    
+    <button class="mento-set-btn">완료</button>
+    <button class="mento-set-cancel-btn">취소</button>
      
-    <button type="submit" class="change-submit-btn">완료</button>
     
     </div>  
       
-  </form>
+  </div>
 </div>
-<!--/ wrap --> 
-<script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="js/mento-set.js"></script>
-</body>
-</html>
