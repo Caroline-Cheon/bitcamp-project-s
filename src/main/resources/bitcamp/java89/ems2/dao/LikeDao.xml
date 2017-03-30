@@ -76,36 +76,25 @@
   
   
   
-   <select id="videoList" resultMap="video-like" parameterType="map">
-     select DISTINCT ctt.cono,vd.kotl,vd.entl,vd.voimg,vd.vodsc,vd.spnm,vd.sjob,vd.simg,vd.posted from video vd
-  inner join contents ctt on vd.cono = ctt.cono
-  inner join copic cp on ctt.cono = cp.cono
-  inner join topic tp on cp.tno = tp.tno
-  inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno 
-  inner join mentee mte on ret.sno = mte.sno
-  inner join lklst lk on ctt.cono = lk.cono
-  where lk.sno = #{sno}
-    limit #{startRowIndex}, #{rowSize}
+  <select id="videoList" resultMap="video-like" parameterType="map">
+    SELECT DISTINCT ctt.cono,vd.kotl,vd.entl,vd.voimg,vd.vodsc,vd.spnm,vd.sjob,vd.simg,vd.posted 
+    FROM video vd
+    INNER JOIN contents ctt on vd.cono = ctt.cono
+    INNER JOIN lklst lk on vd.cono = lk.cono
+    WHERE lk.sno = #{sno}
+    LIMIT #{startRowIndex}, #{rowSize}
   </select> 
-  
+
   <select id="mentoList" resultMap="mento-like" parameterType="map">
 	  SELECT DISTINCT pl.cono,pl.eno,name,sarea,plmap,plimg,mimg 
 	  FROM plan pl
 		  INNER JOIN mento mto on mto.eno = pl.eno
 		  INNER JOIN membs mb on mb.mno = mto.eno
 		  INNER JOIN contents ctt on pl.cono = ctt.cono
-		  INNER JOIN copic cp on ctt.cono = cp.cono
-		  INNER JOIN topic tp on cp.tno = tp.tno
-		  INNER JOIN snatr snt on tp.tno = snt.tno 
-		  INNER JOIN result ret on snt.reno = ret.reno 
-		  INNER JOIN mentee mte on ret.sno = mte.sno
-		  INNER JOIN lklst lk on ctt.cono = lk.cono
-	  WHERE ret.sno = #{sno}
+		  INNER JOIN lklst lk on pl.cono = lk.cono
+	  WHERE lk.sno = #{sno}
     LIMIT #{startRowIndex}, #{rowSize}
   </select>
-  
-  
 
 </mapper>
 

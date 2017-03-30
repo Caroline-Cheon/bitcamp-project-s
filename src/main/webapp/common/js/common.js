@@ -1,8 +1,113 @@
 function loadContorl() {
 	console.log('loadContorl 시작');
-//	console.log(memberInfo.memberNo);
-	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
+	console.log(memberInfo);
+	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
+}
+/*   like pgbtn click events   */
+$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
+	pageLoad('mento-like');
+});
+$(document.body).on( "click", ".video-like-btn", function() {
+	pageLoad('video-like');
+});
+$('#prevPgBtn').click(function() {
+	if (currPageNo > 1) {
+		currPageNo = --currPageNo;
+		if (pageSize == '4') {
+			likeMentoList();
+		} else if (pageSize == '15') {
+			likeVideoList();
+		}
+	}
+});
+$('#nextPgBtn').click(function() {
+	currPageNo = ++currPageNo;
+	if (pageSize == '4') {
+		likeMentoList();
+	} else if (pageSize == '15') {
+		likeVideoList();
+	}
+});
+/*   /like pgbtn click events   */
+function initPgBtn(choose, totalCount) {
+	if (choose == 'plan') {
+		currPageNo = 1;
+		pageSize = 4;
+		maxPageNo = parseInt(totalCount / pageSize);
+	} else if (choose == 'video') {
+		currPageNo = 1;
+		pageSize = 15;
+		maxPageNo = parseInt(totalCount / pageSize);
+	}
+	console.log('initPgBtn', 'choose', choose);
+	console.log('currPageNo', currPageNo, 'pageSize', pageSize, 'maxPageNo', maxPageNo);
+}
+function prepPgBtn(totalCount) {
+	if (currPageNo <= 1) {
+		$('#prevPgBtn').attr('disabled', true);
+	} else {
+		$('#prevPgBtn').attr('disabled', false);
+	}
+	maxPageNo = parseInt(totalCount / pageSize);
+	if ((totalCount % pageSize) > 0) {
+		maxPageNo++;
+	}
+	if (currPageNo >= maxPageNo) {
+		$('#nextPgBtn').attr('disabled', true); 
+	} else {
+		$('#nextPgBtn').attr('disabled', false);
+	}
+	$('#pageNo').text(currPageNo);
+}
+function likeMentoList() {
+	console.log("likeMentoList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/mentoLike/list.json', 
+		{
+		"pageNo": currPageNo,
+		"pageSize": pageSize,
+		"sno": memberInfo.memberNo
+		}, 
+			function(ajaxResult) {
+				var status = ajaxResult.status;
+				if (status != "success")
+					return;
+
+				var list = ajaxResult.data.list;
+				console.log(list);
+
+				var section = $('.mento-like-list');
+
+				var template = Handlebars.compile($('#mentoLike').html());
+				section.html(template({"list": list}));
+				mtHover(); // bottom gradient? 
+				prepPgBtn(ajaxResult.data.totalCount);
+			});
+}
+function likeVideoList() {
+	console.log("likeVideoList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/videoLike/list.json', 
+		{
+		"pageNo": pageNo,
+		"pageSize": pageSize,
+		"sno": memberInfo.memberNo
+		}, function(ajaxResult) {
+				var status = ajaxResult.status;
+				if (status != "success") return;
+
+				var list = ajaxResult.data.list;
+				console.log(list);
+
+				var section = $('.video-like-list');
+
+				var template = Handlebars.compile($('#videoLike').html());
+				section.html(template({"list": list}));
+				prepPgBtn(ajaxResult.data.totalCount);
+			});
 }
 function pageLoad(choose) {
 	if (choose == 'mystuff') {
@@ -54,12 +159,12 @@ function pageLoad(choose) {
 				    		});
 				      });
 				  	});  
-	//		멘토 슬라이드 
+			// 멘토 슬라이드 
 			$.getJSON(serverRoot + '/plan/list.json',
-					 {
-				  "pageNo": currPageNo,
-				  "pageSize": pageSize,
-				  "sno": memberInfo.memberNo
+				{
+				"pageNo": currPageNo,
+				"pageSize": pageSize,
+				"sno": memberInfo.memberNo
 				},
 				    function(ajaxResult) {
 				      var status = ajaxResult.status;
@@ -91,159 +196,36 @@ function pageLoad(choose) {
 				      }
 				  });  
 			});
-	} else if (choose == 'likes') {
 		
 	} else if (choose == 'seeds') {
 		$(".seeds").load("seeds/seeds-temp.html .seeds");
-	} else if (choose == 'mento-like') {
-		console.log('pageload/mento-like');
-		console.log(memberInfo.memberNo);
-		var currPageNo = 1;
-		var pageSize = 4;
+		
+	} else if (choose == 'likes' || choose == 'mento-like') {
+		console.log('pageload/mento-like', memberInfo.memberNo);
 		$.getJSON(serverRoot + '/mentoLike/Count.json', {"sno": memberInfo.memberNo}, 
 				function(ajaxResult) {
 					if (ajaxResult.status == 'success') {
 						console.log('/mentoLike/Count.json');
-						console.log(pageSize ,currPageNo);
+						initPgBtn('plan', ajaxResult.data.totalCount); 
 						$(".likes").load("likes/mento-like.html .dashboard", function() {
-							likeMentoList(currPageNo, pageSize);
+							likeMentoList();
 						});
 					}
 		});
-		
-		$(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
-		    	likeMentoList(currPageNo, pageSize);
-			});
-			$('#prevPgBtn').click(function() {
-				if (currPageNo > 1) {
-					likeMentoList(--currPageNo, 4);
-				}
-			});
-			$('#nextPgBtn').click(function() {
-				likeMentoList(++currPageNo, 4);
-			});
-			function mentoLikePreparePagingButton(totalCount) {
-				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
-				if (currPageNo <= 1) {
-					$('#prevPgBtn').attr('disabled', true);
-				} else {
-					$('#prevPgBtn').attr('disabled', false);
-				}
-
-				var maxPageNo = parseInt(totalCount / pageSize);
-				if ((totalCount % pageSize) > 0) {
-					maxPageNo++;
-				}
-
-				if (currPageNo >= maxPageNo) {
-					$('#nextPgBtn').attr('disabled', true); 
-				} else {
-					$('#nextPgBtn').attr('disabled', false);
-				}
-
-				// 현재 페이지 번호를 출력한다.
-				$('#pageNo').text(currPageNo);
-			}
-			function likeMentoList(currPageNo, pageSize) {
-				console.log("like 멘토 리스트 오는가");
-				console.log(memberInfo.memberNo);
-				$.getJSON(serverRoot + '/mentoLike/list.json', 
-					{
-					"pageNo": currPageNo,
-					"pageSize": pageSize,
-					"sno": memberInfo.memberNo
-					}, 
-						function(ajaxResult) {
-							var status = ajaxResult.status;
-							if (status != "success")
-								return;
-
-							var list = ajaxResult.data.list;
-							console.log(list);
-
-							var section = $('.mento-like-list');
-
-							var template = Handlebars.compile($('#mentoLike').html());
-							section.html(template({"list": list}));
-
-							mtHover();
-							mentoLikePreparePagingButton(ajaxResult.data.totalCount);
-							console.log(ajaxResult.data.totalCount);
-						});
-			}
 
 	} else if (choose == 'video-like') {
-		// 좋아하는 영상 클릭시.
-		$(document.body).on( "click", ".video-like-btn", function() {
-			var currPageNo = 1;
-			var pageSize = 15;
-			$.getJSON(serverRoot + '/videoLike/Count.json', memberInfo.memberNo, function(ajaxResult) {
-				if (ajaxResult.status == 'success') {
-					$(".likes").load("likes/video-like.html .dashboard", function() {
-						likeVideoList(currPageNo, pageSize);
-					});
-				}
-			});
-			$('#prevPgBtn').click(function() {
-				if (currPageNo > 1) {
-					likeVideoList(--currPageNo, 15);
-				}
-			});
-			$('#nextPgBtn').click(function() {
-				likeVideoList(++currPageNo, 15);
-			});
-			function preparePagingButton(totalCount) {
-				// 현재 페이지 번호가 1이면 이전 버튼을 비활성시킨다.
-				if (currPageNo <= 1) {
-					$('#prevPgBtn').attr('disabled', true);
-				} else {
-					$('#prevPgBtn').attr('disabled', false);
-				}
-
-				var maxPageNo = parseInt(totalCount / pageSize);
-				if ((totalCount % pageSize) > 0) {
-					maxPageNo++;
-				}
-
-				if (currPageNo >= maxPageNo) {
-					$('#nextPgBtn').attr('disabled', true); 
-				} else {
-					$('#nextPgBtn').attr('disabled', false);
-				}
-
-				// 현재 페이지 번호를 출력한다.
-				$('#pageNo').text(currPageNo);
+		console.log('pageload/video-like', memberInfo.memberNo);
+		$.getJSON(serverRoot + '/videoLike/Count.json', {"sno": memberInfo.memberNo}, function(ajaxResult) {
+			if (ajaxResult.status == 'success') {
+				console.log('/videoLike/Count.json');
+				initPgBtn('video', ajaxResult.data.totalCount); 
+				$(".likes").load("likes/video-like.html .dashboard", function() {
+					likeVideoList();
+				});
 			}
-
-			function likeVideoList(pageNo, pageSize, sno) {
-				$.getJSON(serverRoot + '/videoLike/list.json', 
-						{
-					"pageNo": pageNo,
-					"pageSize": pageSize,
-					"sno": memberInfo.memberNo
-						}, 
-						function(ajaxResult) {
-							var status = ajaxResult.status;
-							if (status != "success")
-								return;
-
-							var list = ajaxResult.data.list;
-							console.log(list);
-
-							var section = $('.video-like-list');
-
-							var template = Handlebars.compile($('#videoLike').html());
-							section.html(template({"list": list}));
-
-							console.log("like");
-							console.log(ajaxResult.data.totalCount);
-							preparePagingButton(ajaxResult.data.totalCount);
-						});
-			}
-		}); // 좋아하는 영상 클릭시 이벤트
+		});
 	}
 }
-
 
 /*   user session 정보 받아오는 함수   */
 function userInfo() {
@@ -252,12 +234,16 @@ function userInfo() {
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
+			if (memberInfo != undefined) sno = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
-			console.log(memberInfo);
-			console.log(topicName);
-			console.log(hasLike);
+			console.log("memberInfo", memberInfo);
+			console.log("topicName", topicName);
+			console.log("hasLike(has/none)", hasLike);
+			console.log("sno", sno);
 			eventControll();
-			loadControl();
+			setTimeout(function() {
+				loadContorl();
+			}, 3500);
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {

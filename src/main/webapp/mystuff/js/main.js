@@ -1,8 +1,8 @@
 $( function() { 
-	
+	// refresh;
 	userInfo();
 	setTimeout(function() {
-		loadContorl();
+		if (memberInfo != undefined) loadContorl();
 	}, 3500);
 })
 		        // 좋아요 버튼 눌렀을 때
