@@ -1,5 +1,6 @@
 package bitcamp.java89.ems2.control.json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,4 +87,58 @@ public class MessegeJsonControl {
     messageService.mentoSendMesg(message);
     return new AjaxResult(AjaxResult.SUCCESS, "success");
   }
+  
+  @RequestMapping("/message/mento-list")
+  public AjaxResult MentoMessageList(@RequestParam int sno) throws Exception {
+   
+   List<Integer> conoList = messageService.conoList(sno);
+   ArrayList<Message> list = new ArrayList<Message>();
+   System.out.println(conoList.get(0)); // 5
+   System.out.println(conoList.size()); // 1
+   
+    for (int i = 0; i < conoList.size(); i++) {
+      System.out.println(sno);
+      HashMap<String, Object> targetMento = new HashMap<>(); 
+      targetMento.put("sno", sno);
+      targetMento.put("cono", conoList.get(i));
+      list = messageService.mentoInfo(targetMento);
+      
+    }
+   
+    if (conoList == null || list == null) {
+      return new AjaxResult(AjaxResult.FAIL, "Fail");
+    }
+    else {
+      System.out.println("되거라"+list);
+      return new AjaxResult(AjaxResult.SUCCESS, list);
+     }
+   
+  }
+  
+  @RequestMapping("/message/isMsg")
+  public AjaxResult isMessage(@RequestParam int cono, @RequestParam int sno) throws Exception {
+    HashMap<String, Object> targetMento = new HashMap<>();
+    targetMento.put("sno", sno);
+    targetMento.put("cono", cono);
+    
+    int mswr = messageService.isMsg(targetMento);
+    
+    if (sno == mswr) {
+      return new AjaxResult(AjaxResult.FAIL, "최신답변이 없음.");
+    }
+    else {
+
+      Message message = messageService.mentoGetOne(targetMento);
+      return new AjaxResult(AjaxResult.SUCCESS, message);
+    }
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
 }

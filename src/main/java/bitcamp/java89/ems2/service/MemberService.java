@@ -14,6 +14,9 @@ public interface MemberService {
   int addMento(Mento mento) throws Exception;
   Member getOne(int memberNo) throws Exception;
   int update(Member member) throws Exception;
+  
+  
+  /*int beMento(Mentee mentee) throws Exception;*/
 }
 
 

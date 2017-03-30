@@ -535,7 +535,6 @@ font-size: 12px;
     color: chocolate;
     font-size: 10px;
     font-style: italic;
-    display:none;
 }
 
 .message-menu-toggle {
@@ -673,5 +672,24 @@ span.message-context {
     font-weight: 600;
     border-radius: 2em;
     font-size: 13px;
+}
+
+.nothing-message {
+	height:100%;
+}
+.nothing-message:before {
+    font-family: FontAwesome;
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content: "\f119";
+    font-size: 15px;
+    margin-left: 6px;
+}
+.nothing-context {
+    width: 160px;
+    margin-left: 8px;
+    font-size: 12px;
 }
 

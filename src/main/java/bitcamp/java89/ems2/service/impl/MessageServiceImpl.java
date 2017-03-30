@@ -1,5 +1,6 @@
 package bitcamp.java89.ems2.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,6 +45,28 @@ public class MessageServiceImpl implements MessageService {
     paramMap.put("sno", sno);
     
     return messageDao.messageList(paramMap);
+  }
+
+  @Override
+  public List<Integer> conoList(int sno) throws Exception {
+    
+    return messageDao.conoList(sno);
+  }
+
+  @Override
+  public ArrayList<Message> mentoInfo(HashMap<String, Object> targetMento) throws Exception {
+    return messageDao.mentoInfo(targetMento);
+  }
+
+  @Override
+  public int isMsg(HashMap<String, Object> targetMento) throws Exception {
+    
+    return messageDao.isMsg(targetMento);
+  }
+
+  @Override
+  public Message mentoGetOne(HashMap<String, Object> targetMento) throws Exception {
+    return messageDao.mentoGetOne(targetMento);
   }
 }
 

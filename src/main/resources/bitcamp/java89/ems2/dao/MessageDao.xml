@@ -6,12 +6,47 @@
 <mapper namespace="bitcamp.java89.ems2.dao.MessageDao">
   <resultMap type="message" id="message-map">
     <id     column="msno"       property="messageNo"/>
+    <id     column="cono"       property="contentsNo"/>
     <id     column="eno"       property="mentoNo"/>
     <result column="name"       property="name"/>
+    <result column="sarea"       property="specialArea"/>
     <result column="mimg"       property="photoPath"/>
     <result column="msge"       property="message"/>
     <result column="mswr"       property="writerNo"/>
   </resultMap>
+  
+  <select id="conoList" resultType="int" parameterType="int">
+select DISTINCT cono 
+    from messg 
+     where sno = #{sno}
+  </select>
+  
+  <select id="mentoGetOne" resultMap="message-map" parameterType="map">
+          select DISTINCT mto.eno, mto.sarea, pl.cono, name, mimg from messg msg
+          inner join qna on qna.cono = msg.cono
+          inner join plan pl on pl.cono = qna.cono
+          inner join mento mto on mto.eno = pl.eno
+          inner join membs mb on mb.mno = mto.eno
+          where msg.sno = #{sno} and msg.cono=#{cono}
+  </select>
+  
+  
+  <select id="isMsg" resultType="int" parameterType="map">
+select mswr 
+     from messg 
+     where sno = #{sno} and cono = #{cono} 
+     ORDER BY msno desc 
+     limit 1;
+  </select>
+  
+  <select id="mentoInfo" resultMap="message-map" parameterType="map">
+          select DISTINCT mto.eno, mto.sarea, pl.cono, name, mimg from messg msg
+          inner join qna on qna.cono = msg.cono
+          inner join plan pl on pl.cono = qna.cono
+          inner join mento mto on mto.eno = pl.eno
+          inner join membs mb on mb.mno = mto.eno
+          where msg.sno = #{sno} and msg.cono=#{cono}
+  </select>
 
   <select id="hasQnA" resultType="int" parameterType="message">
     select count(*)
@@ -22,17 +57,17 @@
   <select id="messageList" resultMap="message-map" parameterType="map">
 select msge, mswr 
     from messg
-    where cono = #{cono} and sno = #{sno};
+    where cono = #{cono} and sno = #{sno}
   </select>
   
   <insert id="menteeVisit" parameterType="message">
     update QNA set sdat = NOW()
-    where cono = #{contentsNo} and sno = #{memberNo};
+    where cono = #{contentsNo} and sno = #{memberNo}
   </insert>
   
   <insert id="mentoVisit" parameterType="message">
     update QNA set mdat = NOW()
-    where cono = #{contentsNo} and sno = #{memberNo};
+    where cono = #{contentsNo} and sno = #{memberNo}
   </insert>
 
   <insert id="menteeSendQnA" parameterType="message">
@@ -50,7 +85,7 @@ select msge, mswr
       #{memberNo},
       #{message},
       #{writerNo},
-      NOW());
+      NOW())
   </insert>
 
   <insert id="mentoSendMesg" parameterType="message">
@@ -60,7 +95,7 @@ select msge, mswr
       #{memberNo},
       #{message},
       #{writerNo},
-      NOW());
+      NOW())
   </insert>
 
 </mapper>
