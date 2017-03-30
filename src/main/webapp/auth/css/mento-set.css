@@ -23,26 +23,116 @@
   padding-left: 12px;
   font-size: 14px;
 }
+
+
+
+
+
+
+.mento-set-special-title {
+    font-family: 'Nanum Brush Script', serif;
+    position: absolute;
+    padding: 0 58px;
+    font-size: 30px;
+}
+.mento-set-detail-title{
+    font-family: 'Nanum Brush Script', serif;
+    position: absolute;
+    padding: 0 58px;
+    font-size: 30px;
+}
+.mento-set-career-title {
+  font-family: 'Nanum Brush Script', serif;
+    position: absolute;
+    padding: 0 58px;
+    font-size: 30px;
+  
+  
+}
+
+
+
+.pre-after-icons {
+  position: relative;
+  height: 64px;
+  margin-left: 203px;
+  margin-top: 10px;
+}
+
+.pre-quote {
+      position: absolute;
+      font-size: 25px;
+      left: 23px;
+      color: rgb(170,170,170);
+}
+.after-quote {
+  position: absolute;
+  font-size: 25px;
+  left: 324px;
+  top: 1px;
+  color: rgb(170,170,170);
+}
+.special-mento-wrapper {
+  border: 3px #33b1b9 solid;
+  border-radius: 33px;
+  /* margin: 4px 6px; */
+  /* width: 500px; */
+  margin-top: 10px;
+  margin-left: 10px;
+  /* z-index: 1010; */
+  height: 152px;
+}
+
+.detail-mento-wrapper {
+  border: 3px #33b1b9 solid;
+  border-radius: 33px;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 152px;
+}
+
+.career-mento-wrapper {
+  border: 3px #33b1b9 solid;
+  border-radius: 33px;
+  margin-top: 10px;
+  margin-left: 10px;
+  height: 191px;
+}
+
+
+
+
+
+
+
 .mento-set-box {
-  background-color: #fff;
-  margin-bottom: 20px;
-      height: 439px;
+      position: relative;
+      background-color: #fff;
+      margin-bottom: 20px;
+      height: 590px;
 }
 fieldset {
   background-color: #fff;
-  border-width: 1px 0;
-  border-style: solid;
-  border-color: #ccc;
-  padding: 10px;
-  margin-bottom: 10px;
-      border-top: transparent;
-      padding-top: 0;
+  border: 1px 0;
+  /* border-style: solid; */
+  /* border-color: #ccc; */
+  /* padding: 10px; */
+  /* margin-bottom: 10px; */
+  /* border-top: transparent; */
+  padding-top: 0;
+  /* margin-left: 6px; */
+  width: 734px;
+  /* left: 20px; */
+  position: absolute;
+  margin-left: 10px;
 }
 .mento-set-ul {
   list-style: none;
-  padding-left: 20px;
-      margin-top: 0;
-      margin-bottom: 0;
+  /* padding-left: 20px; */
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 20px;
+  width: 717px;
 }
 .mento-set-ul li {
   display: inline-block;
@@ -60,7 +150,7 @@ fieldset {
  font-weight: 700;
 }
 .column {
-  width: 800px;
+  width: 774px;
   display: inline-block;
 }
 .label-checkbox,
@@ -69,6 +159,7 @@ fieldset {
   cursor: pointer;
   overflow: hidden;
   display: inline-block;
+  font-size: 11px;
 }
 .label-checkbox input[type="checkbox"],
 .crbtn input[type="checkbox"] {
@@ -92,13 +183,14 @@ label.disabled * {
   border: 1px solid #ccc;
   background-color: transparent;
   transition: all 0.5s ease-in-out;
+  font-size: 13px;
 }
 .label-checkbox:hover span {
-  border-color: #25303c;
+  border-color: #33b1b9;
 }
 .label-checkbox.checked span {
-  border-color: #25303c;
-  background-color: #25303c;
+  border-color: #33b1b9;
+  background-color: #33b1b9;
 }
 
 label.label-checkbox.checked {
@@ -126,7 +218,7 @@ label.label-checkbox.checked {
 }
 
 .mento-set-cancel-btn {
-	cursor: pointer;
+  cursor: pointer;
   font-size: 19px;
   text-transform: uppercase;
   border: none;

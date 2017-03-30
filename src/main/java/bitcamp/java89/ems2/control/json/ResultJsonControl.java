@@ -16,19 +16,19 @@ public class ResultJsonControl {
   @Autowired ResultService resultService;
   
   @RequestMapping("/seeds/list")
-  public AjaxResult list(int menteeNo, String type) throws Exception {
-    Result result = new Result();
-    result.setMemberNo(menteeNo);
-    result.setType(type);
+  public AjaxResult list(int memberNo) throws Exception {
     
-    Result list = resultService.getList(result);
+    Result result = resultService.getDetail(memberNo);
     
-    if (list == null) {
+    String resultType = result.getResultResult();
+    
+    
+    if (resultType == null) {
       System.out.println("/seeds/list.FAIL");
       return new AjaxResult(AjaxResult.FAIL, "해당 결과가 없습니다.");
     }
     
-    return new AjaxResult(AjaxResult.SUCCESS, list);
+    return new AjaxResult(AjaxResult.SUCCESS, resultType);
   }
   
   @RequestMapping("/seeds/hasResult")

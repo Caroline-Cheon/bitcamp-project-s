@@ -33,7 +33,7 @@ $( function() {
 		
 		$('.user-change-modal').css('display','block');
 		
-		$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function(){
+		$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function() {
 			/*$('#mento-set-wrap').addClass('animated fadeIn');
 			setTimeout(function(){
 				$('#mento-set-wrap').css('display','block');

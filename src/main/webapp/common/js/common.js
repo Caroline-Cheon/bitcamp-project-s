@@ -1,6 +1,9 @@
 function loadContorl() {
 	console.log('loadContorl 시작');
 //	console.log(memberInfo.memberNo);
+	if (memberInfo != undefined) {
+		checkTestResult();
+	}
 	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
 }
@@ -258,6 +261,7 @@ function userInfo() {
 			console.log(hasLike);
 			eventControll();
 			loadControl();
+			checkTestResult();
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {
