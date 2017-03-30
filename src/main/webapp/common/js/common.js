@@ -92,7 +92,7 @@ function likeVideoList() {
 	console.log(currPageNo, pageSize);
 	$.getJSON(serverRoot + '/videoLike/list.json', 
 		{
-		"pageNo": pageNo,
+		"pageNo": currPageNo,
 		"pageSize": pageSize,
 		"sno": memberInfo.memberNo
 		}, function(ajaxResult) {
