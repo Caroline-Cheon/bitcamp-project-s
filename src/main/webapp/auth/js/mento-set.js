@@ -44,7 +44,7 @@ $( function() {
 			$(document.body).on('click', '.mento-set-btn', function() {
 				
 				
-				var totalCheckList="";
+				var totalCheckList=" ";
 				
 				console.log($('.mento-set-ul li:nth-child(1) label:nth-child(1)').hasClass('checked'));
 				console.log($('.mento-set-ul li:nth-child(1) input:nth-child(1)').val());
@@ -71,13 +71,28 @@ $( function() {
 					'career' : $('.career-area ').val()
 				}
 				
-				$.post(serverRoot + '/mento/add.json', param, function(ajaxResult) {
-					if (ajaxResult.status != "success") {
-						alert(ajaxResult.data);
-					}
-					console.log(ajaxResult.status);
+				/*전문분야가 널이면 값을 넣지 않게*/
+				if(totalCheckList != " ") {
 					
-				}, 'json');
+					$.post(serverRoot + '/mento/add.json', param, function(ajaxResult) {
+						if (ajaxResult.status != "success") {
+							alert(ajaxResult.data);
+						}
+						console.log(ajaxResult.status);
+						
+					}, 'json');
+					
+				} else {
+					alert("전문분야를 선택해주세요");
+				}
+					
+				
+				
+				
+				
+				
+				
+				
 				
 				$('#mento-set-wrap').css('display','none');
 				$('.user-change-modal').css('display','none');

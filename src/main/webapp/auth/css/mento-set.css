@@ -5,9 +5,8 @@
   display: none;
   top: 50%;
   left: 50%;
-  margin-top: -240px;
+  margin-top: -350px;
   margin-left: -400px;
-  /* background-color: #eeeff2; */
   z-index: 1000;
 }
 #mento-set-wrap {
@@ -23,11 +22,6 @@
   padding-left: 12px;
   font-size: 14px;
 }
-
-
-
-
-
 
 .mento-set-special-title {
     font-family: 'Nanum Brush Script', serif;
@@ -46,11 +40,7 @@
     position: absolute;
     padding: 0 58px;
     font-size: 30px;
-  
-  
 }
-
-
 
 .pre-after-icons {
   position: relative;
@@ -60,10 +50,10 @@
 }
 
 .pre-quote {
-      position: absolute;
-      font-size: 25px;
-      left: 23px;
-      color: rgb(170,170,170);
+  position: absolute;
+  font-size: 25px;
+  left: 23px;
+  color: rgb(170,170,170);
 }
 .after-quote {
   position: absolute;
@@ -73,7 +63,7 @@
   color: rgb(170,170,170);
 }
 .special-mento-wrapper {
-  border: 3px #33b1b9 solid;
+  border: 3px rgba(162, 217, 206, 0.61) solid;
   border-radius: 33px;
   /* margin: 4px 6px; */
   /* width: 500px; */
@@ -84,7 +74,7 @@
 }
 
 .detail-mento-wrapper {
-  border: 3px #33b1b9 solid;
+  border: 3px #cfecd0 solid;
   border-radius: 33px;
   margin-top: 10px;
   margin-left: 10px;
@@ -92,19 +82,12 @@
 }
 
 .career-mento-wrapper {
-  border: 3px #33b1b9 solid;
+  border: 3px #D0ECE7 solid;
   border-radius: 33px;
   margin-top: 10px;
   margin-left: 10px;
   height: 191px;
 }
-
-
-
-
-
-
-
 .mento-set-box {
       position: relative;
       background-color: #fff;
@@ -114,21 +97,13 @@
 fieldset {
   background-color: #fff;
   border: 1px 0;
-  /* border-style: solid; */
-  /* border-color: #ccc; */
-  /* padding: 10px; */
-  /* margin-bottom: 10px; */
-  /* border-top: transparent; */
   padding-top: 0;
-  /* margin-left: 6px; */
   width: 734px;
-  /* left: 20px; */
   position: absolute;
   margin-left: 10px;
 }
 .mento-set-ul {
   list-style: none;
-  /* padding-left: 20px; */
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 20px;
@@ -143,11 +118,12 @@ fieldset {
   text-align: center;
   padding: 10px 0;
   margin-bottom: 0;
-  color: #fff;
-  background-color: #F7DC6F;
+  color: rgba(51, 122, 183, 0.76);
+  background-color: #ffffff;
   height: 58px;
-   font-size: 18px;
- font-weight: 700;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: 'Jeju Gothic';
 }
 .column {
   width: 774px;
@@ -160,6 +136,7 @@ fieldset {
   overflow: hidden;
   display: inline-block;
   font-size: 11px;
+  width: 55px;
 }
 .label-checkbox input[type="checkbox"],
 .crbtn input[type="checkbox"] {
@@ -189,8 +166,8 @@ label.disabled * {
   border-color: #33b1b9;
 }
 .label-checkbox.checked span {
-  border-color: #33b1b9;
-  background-color: #33b1b9;
+  border-color: rgba(162, 217, 206, 0.99);
+  background-color: rgba(162, 217, 206, 0.99);
 }
 
 label.label-checkbox.checked {
@@ -199,42 +176,50 @@ label.label-checkbox.checked {
 .career-area {
   width: 722px;
   height: 100px;
-  margin-left: 20px;
+  margin-left: 13px;
   font-size: 12px;
+  border: transparent;
+  /* border: 3px #33b1b9 solid; */
+  /* border-radius: 33px; */
 }
 
 .mento-set-btn {
   cursor: pointer;
-  font-size: 19px;
+  font-size: 18px;
   text-transform: uppercase;
   border: none;
   border-radius: 4px;
-  background-color: #ea4d7c;
+  background-color: rgba(51, 122, 183, 0.76);
   color: white;
   width: 80px;
-  height: 43px;
-  margin: 0 12px;
+  height: 38px;
+  margin: 4px 12px;
   float: right;
 }
 
 .mento-set-cancel-btn {
   cursor: pointer;
-  font-size: 19px;
+  font-size: 18px;
   text-transform: uppercase;
   border: none;
   border-radius: 4px;
-  background-color: #ea4d7c;
+  background-color: rgba(51, 122, 183, 0.76);
   color: white;
   width: 80px;
-  height: 43px;
+  height: 38px;
+  margin: 4px 12px;
   float: right;
 }
 
 
 .detail-area {
-  margin-left: 20px;
+  margin-left: 12px;
   width: 722px;
   font-size: 12px;
+  /* border: 3px #33b1b9 solid; */
+  /* border-radius: 33px; */
+  border: transparent;
+  height: 58px;
 }
 
 
