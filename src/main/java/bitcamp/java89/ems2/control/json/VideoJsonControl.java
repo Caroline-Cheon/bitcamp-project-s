@@ -54,7 +54,13 @@ public class VideoJsonControl {
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
   
-  
+  @RequestMapping("/videoDetail/Count")
+  public AjaxResult videoCount(@RequestParam int sno) throws Exception {
+    int totalCount = videoService.getSize(sno);
+    HashMap<String,Object> resultMap = new HashMap<>();
+    resultMap.put("totalCount", totalCount);
+    return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+  }
   
   @RequestMapping("/videoDetail/list")
   public AjaxResult detailList(@RequestParam(defaultValue="1") int pageNo,
