@@ -1,19 +1,20 @@
+var stepCount;
+var stepChange;
+var hasStep;
+var mbti;
+var mbtiValues;
+var mbtiResult;
+
 function makembtizero() {
-    stepCount = 0; 
-    stepChange = 0;
-    hasStep = new Array(); 
-    mbti = [0, 0, 0, 0];
-    mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
-    mbtiResult = {};
+	stepCount = 0; 
+	stepChange = 0;
+	hasStep = new Array(); 
+	mbti = [0, 0, 0, 0];
+	mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
+	mbtiResult = {};
 }
 $(function() {
-    var stepCount = 0; 
-    var stepChange = 0;
-    var hasStep = new Array(); 
-    var mbti = [0, 0, 0, 0];
-    var mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
-    var mbtiResult = {};
-    
+	makembtizero();
     if (stepCount != 0) $(".progress-bar").css("border-radius", "0 100px 100px 0");
     $(document.body).on("click", ".button-two", function() {
       stepCount++;
@@ -52,25 +53,19 @@ $(function() {
         var resultValues = mbtiValues[0] +","+ mbtiValues[1] +","+ mbtiValues[2] +","+ mbtiValues[3] +","+ 
         mbtiValues[4] +","+ mbtiValues[5] +","+ mbtiValues[6] +","+ mbtiValues[7];
 
-        console.log('검사결과 DB or Session 분기 처리'); 
-        console.log(memberInfo == null);
-        
+        console.log('검사결과 DB or Session 분기 처리', memberInfo == null); 
         if (memberInfo == null) {
-        	console.log("비로그인 상태 : Session 전송 후 저장된 데이터 확인");
+            console.log("비로그인 상태 : Session 전송 후 저장된 데이터 확인");
             window.sessionStorage.setItem('result', resultMsg);
-            console.log(window.sessionStorage.getItem('result'));   // istp
+            console.log(window.sessionStorage.getItem('result'));
             window.sessionStorage.setItem('resultValues', resultValues);
             console.log(window.sessionStorage.getItem('resultValues'));
-            $('.seeds').load('seeds/seeds-temp.html','.seeds-wrapper',function(){
-            	console.log('들어왔니 펑션 안으로?  11');
-            	$('.seeds-modal-call').addClass('seeds-modal',function(){
-            		console.log('modal 추가 됐다.');
-            		$('.seeds-modal').load('seeds/chart-test.html','.chart-result', function() {
-                        chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
-                                mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
-                        makembtizero();
-            		});
-            	});
+            $('.frame-area-out').switchClass('frame-area-out','frame-area-center', 2000, 'easeInOutBack');
+            $('.seeds-modal-call').css('display', 'block');
+            $('.seeds-modal-call').load('seeds/chart-test.html','.chart-result', function() {
+                chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
+                        mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
+                makembtizero();
             });
         } else {
         	console.log("로그인 상태 : DB 전송할 데이터");
@@ -88,23 +83,16 @@ $(function() {
                 }
             });
                 $('.frame-area-out').switchClass('frame-area-out','frame-area-center', 2000, 'easeInOutBack');
-                $('.seeds').load('seeds/seeds-temp.html','.seeds-wrapper',function(){
-                	console.log('들어왔니 펑션 안으로?  22');
-                	$('.seeds-modal-call').addClass('seeds-modal',function() {
-                		console.log('modal 추가 됐다.');
-                		$('.seeds-modal').load('seeds/chart-test.html','.chart-result', function() {
-                            chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
-                                    mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
-                            makembtizero();
-                		});
-                	});
+                $('.seeds-modal-call').css('display', 'block');
+                $('.seeds-modal-call').load('seeds/chart-test.html','.chart-result', function() {
+                    chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
+                            mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
+                    makembtizero();
                 });
-	          
-	        }
-
-	      }
+            }
+          }
       });
-        
+
     $(document.body).on("change", ".radio input", function() {
         for (var i = 0; i < hasStep.length; i++) {
           if (hasStep[i] == $(this).attr('setanswer')) return; 

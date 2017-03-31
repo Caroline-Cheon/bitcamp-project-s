@@ -4,17 +4,20 @@ $( function() {
 		userInfo(); // 세션 정보 획득 
 		console.log(memberInfo); 
 	if (memberInfo == undefined) {
-	  $(".seeds").removeClass("seeds-call");
-	  $(".seeds").load("seeds/json.mbti.html #container");
+		$(".seeds").removeClass("seeds-call");
+		if ($('.seeds').hasClass('frame-area-center')) {
+			$('.seeds').switchClass('frame-area-center', 'frame-area-out', 1200, 'easeInOutBack',
+					function() {
+						$(".json-mbti").load("seeds/json.mbti.html #container");
+			});
+		}
 	} else {
 		
 		console.log('memberInfo.resultNo 테스트 결과 존재유무');
 		console.log(memberInfo.resultNo);
 	  if(memberInfo.resultNo != undefined) {
 	      /*$(".seeds").load("seeds/seeds-temp.html .seeds-call",function(){*/
-	    	  $('.seeds-modal-call')/*.addClass('seeds-modal',function(){
-          		console.log('modal 추가 됐다.');
-          		$('.seeds-modal')*/.load('seeds/chart-test.html','.chart-result', function() {
+	    	  $('.seeds-modal-call').load('seeds/chart-test.html','.chart-result', function() {
           			var eare = memberInfo.eachResult.split(',');
           			console.log('로그인한 회원의 테스트 결과가 존재하는 경우');
           			console.log('chartCreater 생성을 위한 eare');
