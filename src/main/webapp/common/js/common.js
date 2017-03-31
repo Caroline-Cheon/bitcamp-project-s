@@ -1,3 +1,10 @@
+$( function() { 
+	// refresh;
+	userInfo();
+	setTimeout(function() {
+		if (memberInfo != undefined) loadContorl();
+	}, 3500);
+});
 function loadContorl() {
 	console.log('loadContorl 시작');
 //	console.log(memberInfo.memberNo);
@@ -10,34 +17,44 @@ function loadContorl() {
 	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
 }
-/*   like pgbtn click events   */
+$(document.body).on("click", ".video-box .fpc_page-tip", function() {
+	pageLoad('video');
+});
+$(document.body).on("click", ".mento-box .fpc_page-tip", function() {
+	pageLoad('plan');
+});
 $(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
 	pageLoad('mento-like');
 });
 $(document.body).on( "click", ".video-like-btn", function() {
 	pageLoad('video-like');
 });
-$('#prevPgBtn').click(function() {
+/*   pgbtn click events   */
+$(document.body).on('click', '.prevPgBtn', function() {
 	if (currPageNo > 1) {
 		currPageNo = --currPageNo;
 		if (pageSize == '4') {
-			likeMentoList();
+			if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+			if ($('frame-area-center').hasClass('likes')) likeMentoList();
 		} else if (pageSize == '15') {
-			likeVideoList();
+			if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+			if ($('frame-area-center').hasClass('likes')) likeMentoList();
 		}
 	}
 });
-$('#nextPgBtn').click(function() {
+$(document.body).on('click', '.nextPgBtn', function() {
 	currPageNo = ++currPageNo;
 	if (pageSize == '4') {
-		likeMentoList();
+		if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+		if ($('frame-area-center').hasClass('likes')) likeMentoList();
 	} else if (pageSize == '15') {
-		likeVideoList();
+		if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+		if ($('frame-area-center').hasClass('likes')) likeMentoList();
 	}
 });
-/*   /like pgbtn click events   */
+/*   /pgbtn click events   */
 function initPgBtn(choose, totalCount) {
-	if (choose == 'plan') {
+	if (choose == 'plan' || choose == 'person') {
 		currPageNo = 1;
 		pageSize = 4;
 		maxPageNo = parseInt(totalCount / pageSize);
@@ -66,6 +83,78 @@ function prepPgBtn(totalCount) {
 	}
 	$('#pageNo').text(currPageNo);
 }
+function loadPlanList() {
+	console.log("loadPlanList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/planDetail/list.json',
+		{
+		"pageNo": pageNo,
+		"pageSize": pageSize,
+		"sno": sno
+		}, function(ajaxResult) {
+				var status = ajaxResult.status;
+				if (status != "success") return;
+				console.log(ajaxResult.data.totalCount);
+				var list = ajaxResult.data.list;
+				$.each(list, function(k, v) {
+					$.getJSON(serverRoot + '/video/isLike.json', 
+						{
+						"cono": v.contentsNo,
+						"sno": sno
+						}, function(ajaxResult) {
+								var status = ajaxResult.status;
+								if (status != "success") return;
+								var isLike = ajaxResult.data.isLike;
+								if (isLike == 1) {
+									list[k].isLike = true;
+								} else {
+									list[k].isLike = false;
+								}
+								var section = $('.mento-detail-list');
+								var template = Handlebars.compile($('#mentoDetail').html());
+								section.html(template({"list": list}));
+								prepPgBtn(ajaxResult.data.totalCount);
+								mtDetailHover();
+							});
+				});
+			});
+}
+function loadVideoList() {
+	console.log("loadVideoList CALL");
+	console.log(memberInfo.memberNo);
+	console.log(currPageNo, pageSize);
+	$.getJSON(serverRoot + '/videoDetail/list.json', 
+		{
+		"pageNo": currPageNo,
+		"pageSize": pageSize,
+		"sno": sno
+		}, function(ajaxResult) {
+				var status = ajaxResult.status;
+				if (status != "success") return;
+				var list = ajaxResult.data.list;
+				$.each(list, function(k, v) {
+					 $.getJSON(serverRoot + '/video/isLike.json', 
+						{
+						"cono": v.contentsNo,
+						"sno": sno
+						}, function(ajaxResult) {
+								var status = ajaxResult.status;
+								if (status != "success") return;
+								var isLike = ajaxResult.data.isLike;
+								if (isLike == 1) {
+									list[k].isLike = true;
+								} else {
+									list[k].isLike = false;
+								}
+								var section = $('.video-detail-list');
+								var template = Handlebars.compile($('#videoDetail').html());
+								section.html(template({"list": list}));
+								prepPgBtn(ajaxResult.data.totalCount);
+							});
+				});
+			});
+}
 function likeMentoList() {
 	console.log("likeMentoList CALL");
 	console.log(memberInfo.memberNo);
@@ -78,14 +167,10 @@ function likeMentoList() {
 		}, function(ajaxResult) {
 			console.log(ajaxResult);
 			var status = ajaxResult.status;
-			if (status != "success")
-				return;
-
+			if (status != "success") return;
 			var list = ajaxResult.data.list;
 			console.log(list);
-
 			var section = $('.mento-like-list');
-
 			var template = Handlebars.compile($('#mentoLike').html());
 			section.html(template({"list": list}));
 			mtHover(); // bottom gradient? 
@@ -105,15 +190,34 @@ function likeVideoList() {
 			console.log(ajaxResult);
 			var status = ajaxResult.status;
 			if (status != "success") return;
-
 			var list = ajaxResult.data.list;
 			console.log(list);
-
 			var section = $('.video-like-list');
-
 			var template = Handlebars.compile($('#videoLike').html());
 			section.html(template({"list": list}));
 			prepPgBtn(ajaxResult.data.totalCount);
+		});
+}
+function loadPersonList() {
+	$.getJSON(serverRoot + '/person/list.json', 
+		{
+			"pageNo": currPageNo,
+			"pageSize": pageSize,
+			"sno": sno
+		}, function(ajaxResult) {
+				var status = ajaxResult.status;
+				if (status != "success") return;
+				console.log("person");
+				var list = ajaxResult.data.list;
+				var section = $('.persons');
+				var template = Handlebars.compile($('#personDetail').html());
+				section.html(template({"list": list}));
+				/***
+				 * 적절한 타임아웃 필요. 페이지 로드 전 함수 호출 시 예기치 않은 오류 발생 
+				 */
+				setTimeout(function() {
+					listPlay();
+				},5000);
 		});
 }
 function pageLoad(choose) {
@@ -206,6 +310,45 @@ function pageLoad(choose) {
 		
 	} else if (choose == 'seeds') {
 		$(".seeds").load("seeds/seeds-temp.html .seeds");
+		
+	} else if (choose == 'plan') {
+		console.log('pageload/plan', memberInfo.memberNo);
+		$.getJSON(serverRoot + '/planDetail/Count.json', {"sno": memberInfo.memberNo}, 
+				function(ajaxResult) {
+					if (ajaxResult.status == 'success') {
+						console.log('/planDetail/Count.json');
+						initPgBtn('plan', ajaxResult.data.totalCount); 
+						 $(".mystuff").load("mystuff/detail/mento-detail.html .dashboard", function() {
+							loadPlanList();
+						});
+					}
+		});
+		
+	} else if (choose == 'video') {
+		console.log('pageload/video', memberInfo.memberNo);
+		$.getJSON(serverRoot + '/videoDetail/Count.json', {"sno": memberInfo.memberNo}, 
+				function(ajaxResult) {
+					if (ajaxResult.status == 'success') {
+						console.log('/videoDetail/Count.json');
+						initPgBtn('video', ajaxResult.data.totalCount); 
+						$(".mystuff").load("mystuff/detail/video-detail.html .dashboard", function() {
+							loadVideoList();
+						});
+					}
+		});
+		
+	} else if (choose == 'person') {
+		console.log('pageload/person', memberInfo.memberNo);
+		$.getJSON(serverRoot + '/person/count.json', {"sno": memberInfo.memberNo}, 
+				function(ajaxResult) {
+					if (ajaxResult.status == 'success') {
+						console.log('/person/count.json');
+						initPgBtn('person', ajaxResult.data.totalCount); 
+						$(".mystuff").load("likes/person.html .dashboard", function() {
+							loadPersonList();
+						});
+					}
+		});
 		
 	} else if (choose == 'likes' || choose == 'mento-like') {
 		console.log('pageload/mento-like', memberInfo.memberNo);
@@ -347,18 +490,18 @@ $(function() {
 
 						    	console.log(date.getTime())
 						    	console.log(location.href); 
-						    	
-//						    	refresh();			    		
-//						    	function refresh() {
-//						  		  $.ajax({
-//						                type: 'POST',
-//						                url: 'http://localhost:8080/bitcamp-project-s/main.html', 
-//						                success: function(msg) {
-//						                	$('.profile-img').removeAttr('src').attr('src', clientRoot + '/mystuff/img/' + photoPath);
-//						                }
-//						            });
-//						  		} 
-						    		
+/*						    	
+						    	refresh();
+						    	function refresh() {
+						  		$.ajax({
+						              type: 'POST',
+						              url: 'http://localhost:8080/bitcamp-project-s/main.html', 
+						              success: function(msg) {
+						              	$('.profile-img').removeAttr('src').attr('src', clientRoot + '/mystuff/img/' + photoPath);
+						              }
+						          });
+						  		}
+*/	
 
 							    	
 						    }, 'json'); // 새 파일 업로드 post 요청. update 요청.

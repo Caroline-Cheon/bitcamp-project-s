@@ -44,6 +44,14 @@ public class PlanJsonControl {
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
   
+  @RequestMapping("/planDetail/Count")
+  public AjaxResult planCount(@RequestParam int sno) throws Exception {
+    int totalCount = planService.getSize();
+    HashMap<String,Object> resultMap = new HashMap<>();
+    resultMap.put("totalCount", totalCount);
+    return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+  }
+  
   @RequestMapping("/planDetail/list")
   public AjaxResult detailList(@RequestParam(defaultValue="1") int pageNo,
       @RequestParam(defaultValue="4") int pageSize, @RequestParam int sno) throws Exception {
