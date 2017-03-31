@@ -391,14 +391,10 @@ function userInfo() {
 			console.log("hasLike(has/none)", hasLike);
 			console.log("sno", sno);
 			eventControll();
-<<<<<<< HEAD
-			loadControl();
 			checkTestResult();
-=======
 			setTimeout(function() {
 				loadContorl();
 			}, 3500);
->>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {
