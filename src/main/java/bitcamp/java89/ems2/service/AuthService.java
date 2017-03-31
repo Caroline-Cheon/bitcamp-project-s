@@ -9,6 +9,7 @@ import bitcamp.java89.ems2.domain.Topic;
 public interface AuthService {
   Member getMemberInfo(String email, String password) throws Exception;
   Mento getMentoInfo(String email, String password) throws Exception;
+  int hasMento(int memberNo) throws Exception;
   Topic getResult(int memberNo) throws Exception;
   List<String> getResultNames(int memberNo) throws Exception;
   int getOne(int memberNo) throws Exception;

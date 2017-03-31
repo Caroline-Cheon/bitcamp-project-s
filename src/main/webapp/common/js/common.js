@@ -1,4 +1,4 @@
-$( function() { 
+$(function() { 
 	// refresh;
 	userInfo();
 	setTimeout(function() {
@@ -7,14 +7,11 @@ $( function() {
 });
 function loadContorl() {
 	console.log('loadContorl 시작');
-//	console.log(memberInfo.memberNo);
+	console.log(memberInfo);
 	if (memberInfo != undefined) {
 		checkTestResult();
+		pageLoad('mystuff'); 
 	}
-	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
-	
-	console.log(memberInfo);
-	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
 }
 $(document.body).on("click", ".video-box .fpc_page-tip", function() {
@@ -309,7 +306,7 @@ function pageLoad(choose) {
 			});
 		
 	} else if (choose == 'seeds') {
-		$(".seeds").load("seeds/seeds-temp.html .seeds");
+		$(".seeds").load("seeds/seeds-temp.html .seeds-call");
 		
 	} else if (choose == 'plan') {
 		console.log('pageload/plan', memberInfo.memberNo);
@@ -381,14 +378,19 @@ function pageLoad(choose) {
 function userInfo() {
 	console.log('userInfo().start');
 	  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
+		  if (ajaxResult.status != 'success') return;
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
-			if (memberInfo != undefined) sno = ajaxResult.data.topic.memberNo;
+			if (ajaxResult.data.hasMento == 'none') 
+				sno = ajaxResult.data.topic.memberNo;
+			if (ajaxResult.data.hasMento == 'has') 
+				eno = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
 			console.log("hasLike(has/none)", hasLike);
+			console.log("hasMento(has/none)", ajaxResult.data.hasMento);
 			console.log("sno", sno);
 			eventControll();
 			checkTestResult();
@@ -558,11 +560,8 @@ $(function() {
 	      if (target.hasClass("header-icon-message")) { // 멘토 답변 업데이트 알림 아이콘.
 	        if (!isopen_messagemenu) {
 	        $(".user-menu").hide();
-	        
 	        $('.message-menu').load('common/header.html .message-info', function() {
-
 	        $(".message-menu").css("display","block");
-	        
 				$.getJSON(serverRoot + '/message/mento-list.json', // 새로 올라온 멘토들의 답변 리스트
 						{
 					"sno": memberInfo.memberNo
