@@ -13,7 +13,7 @@ var memberInfo;
 var topicName;
 var hasLike;
 var sno;
-var eno;
+var expertNo;
 
 /*   pageBtn 제어 변수   */
 var currPageNo;

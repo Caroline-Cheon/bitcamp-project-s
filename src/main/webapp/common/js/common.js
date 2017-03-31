@@ -385,7 +385,7 @@ function userInfo() {
 			if (ajaxResult.data.hasMento == 'none') 
 				sno = ajaxResult.data.topic.memberNo;
 			if (ajaxResult.data.hasMento == 'has') 
-				eno = ajaxResult.data.topic.memberNo;
+				expertNo = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
