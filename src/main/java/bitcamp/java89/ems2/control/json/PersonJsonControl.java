@@ -19,6 +19,14 @@ public class PersonJsonControl {
   @Autowired ServletContext sc;
   @Autowired PersonService personService;
   
+  @RequestMapping("/person/count")
+  public AjaxResult count(int sno) throws Exception {
+    int totalCount = personService.getSize();
+    HashMap<String,Object> resultMap = new HashMap<>();
+    resultMap.put("totalCount", totalCount);
+    return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+  }
+  
   @RequestMapping("/person/list")
   public AjaxResult list(
       @RequestParam(defaultValue="1") int pageNo,

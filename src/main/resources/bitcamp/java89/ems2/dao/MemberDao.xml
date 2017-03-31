@@ -20,6 +20,11 @@
     where email=#{value}
   </select>
   
+  <select id="hasMento" parameterType="int" resultType="int">
+    SELECT count(*) 
+    FROM mento
+    WHERE eno = #{memberNo}
+  </select>
   
   <insert id="insert" parameterType="member"
           useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">

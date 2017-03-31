@@ -32,8 +32,6 @@ public class ResultServiceImpl implements ResultService {
     return resultDao.hasResult(memberNo);
   }
   
-  
-  
 
 }
 

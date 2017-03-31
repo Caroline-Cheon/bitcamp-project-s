@@ -12,7 +12,9 @@ var slideState = false;
 var memberInfo; 
 var topicName;
 var hasLike;
+var memsType;
 var sno;
+var expertNo;
 
 /*   pageBtn 제어 변수   */
 var currPageNo;
