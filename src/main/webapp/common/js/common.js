@@ -7,6 +7,12 @@ $( function() {
 });
 function loadContorl() {
 	console.log('loadContorl 시작');
+//	console.log(memberInfo.memberNo);
+	if (memberInfo != undefined) {
+		checkTestResult();
+	}
+	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
+	
 	console.log(memberInfo);
 	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
@@ -385,9 +391,14 @@ function userInfo() {
 			console.log("hasLike(has/none)", hasLike);
 			console.log("sno", sno);
 			eventControll();
+<<<<<<< HEAD
+			loadControl();
+			checkTestResult();
+=======
 			setTimeout(function() {
 				loadContorl();
 			}, 3500);
+>>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
 			if(memberInfo != undefined) {
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {

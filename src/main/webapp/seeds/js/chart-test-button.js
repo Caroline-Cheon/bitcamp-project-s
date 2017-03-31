@@ -13,10 +13,7 @@ $(document.body).on('click', '.fa-share-alt', function(e){
 });
 
 
-
-
 $(document.body).on("click", ".fa-times", function() {
-	userInfo(); // 세션 정보 획득
 	
 	$('.seeds-modal-call').addClass('animated fadeOut');
 	setTimeout(function() {
@@ -29,16 +26,26 @@ $(document.body).on("click", ".fa-times", function() {
 	
 	
 	 /*검사하고 씨드 내용이 검사 결과를 반영하도록~*/
-	/*if (memberInfo != undefined) {
-		var mbtiType;
+	if (memberInfo != undefined) {
+		var mbtiType = memberInfo.resultResult;
+
+        $('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
 		
-		
-		
-		console.log(memberInfo.memberNo);
-		$('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
-	}*/
-	
+	}
 	
 });
+
+function checkTestResult(){
+	
+	 /*검사하고 씨드 내용이 검사 결과를 반영하도록~*/
+	if (memberInfo != undefined) {
+		var mbtiType = memberInfo.resultResult;
+		
+		if (memberInfo.resultNo != null) {
+			$('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
+		}
+	}
+}
+
 
 
