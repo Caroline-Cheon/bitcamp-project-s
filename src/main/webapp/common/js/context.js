@@ -12,6 +12,7 @@ var slideState = false;
 var memberInfo; 
 var topicName;
 var hasLike;
+var memsType;
 var sno;
 var expertNo;
 

@@ -382,15 +382,16 @@ function userInfo() {
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
-			if (ajaxResult.data.hasMento == 'none') 
+			memsType = ajaxResult.data.memsType;
+			if (memsType == 'mentee') 
 				sno = ajaxResult.data.topic.memberNo;
-			if (ajaxResult.data.hasMento == 'has') 
+			if (memsType == 'mento') 
 				expertNo = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
 			console.log("hasLike(has/none)", hasLike);
-			console.log("hasMento(has/none)", ajaxResult.data.hasMento);
+			console.log("memsType(tee/to)", memsType);
 			console.log("sno", sno);
 			eventControll();
 			checkTestResult();
