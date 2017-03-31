@@ -13,10 +13,10 @@
     margin-bottom: 10px;
 } 
 
-.mento-btn {
+/* .mento-btn {
 	  position: absolute;
     bottom: -50px;
-}
+} */
 .mento-detail-list {
     margin: 7px;
     margin-top: 25px;
@@ -26,8 +26,8 @@
 .app {
     position: relative;
     margin: 0 auto;
-    /* top: 43%; */
-    /* left: 50%; */
+    top: 50%;
+    left: 50%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     width: 100%;
@@ -83,6 +83,10 @@
     margin-top: 5px;
 }
 
+.pageNo {
+	display:none;
+}
+
 .pageBtn {
     margin-top: 20px;
     margin-left: 591px;
@@ -91,6 +95,52 @@
     height: 30px;
 	
 }
+
+
+.pageBtn .prevPgBtn,
+.pageBtn .nextPgBtn,
+.pageBtn .prevPgBtn:hover,
+.pageBtn .nextPgBtn:hover {
+	    background: transparent;
+    border: 1px solid transparent;
+
+	}
+	
+	.pageBtn .prevPgBtn:before {
+   font-family: FontAwesome;
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content: "\f100";
+    font-size: 70px;
+    position: absolute;
+    left: -75px;
+    top: 270px;
+    color: darkgray;
+  }
+	.pageBtn .nextPgBtn	 {
+    background: transparent;
+    border: 1px solid transparent;
+
+  }
+  
+  .pageBtn .nextPgBtn:before {
+    font-family: FontAwesome;
+    font-weight: 400;
+    font-style: normal;
+    display: inline-block;
+    text-decoration: inherit;
+    content:"\f101";
+    font-size: 70px;
+    position: absolute;
+    right: -75px;
+    top: 270px;
+    color: darkgray;
+
+  }
+
+
 
 .like-mt-photo, .detail-mt-photo {
     border-radius: 100%;

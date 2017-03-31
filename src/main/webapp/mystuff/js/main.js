@@ -102,14 +102,14 @@ $( function() {
 			var cono; // 멘티가 멘토에게 메세지를 보내기 위해 필요한 해당 설계도 컨텐츠 번호
             var sno; // 접속한 학생 번호
             var eno; // 해당 설계도 관한 멘토 일련번호
-			$(document.body).on( "click", ".map-img", function() {
+			$(document.body).on( "click", ".map-img, .detail-map-img", function() {
 				
 				console.log("-----------------------------------------------");
 				console.log("멘토 모달창");
-				console.log($(this).parents(".mento-slide"));
+				console.log($(this).parents(".mt-modal"));
 				
 				
-				cono = $(this).parents(".mento-slide").children('.mento-conts').children('.buttonHolder').attr('data-no');
+				cono = $(this).parents(".mt-modal").children('.mt-cono').children('.buttonHolder').attr('data-no');
 				sno = memberInfo.memberNo;
 				console.log(cono);
 				console.log(sno);
@@ -165,7 +165,7 @@ $( function() {
 								 
 							 }) // mystuff-modal 창에 로드 시키기.
 				
-			})
+			  }) // messageList getJson
 			
 			})
 			
@@ -202,7 +202,7 @@ $( function() {
 
 // 영상 모달 띄우기
 			
-	$(document.body).on( "click", ".rec-video1", function() {
+	$(document.body).on( "click", ".rec-video1, .vdoConts", function() {
 		console.log("테스트중입.")
 		var videoAddr = $(this).parent('.video-conts').children('.video-btm').attr('iframe-addr').replace('www.ted.com','embed.ted.com');
 		var cono = $(this).parent('.video-conts').children('.video-btm').children('.buttonHolder').attr('data-no');

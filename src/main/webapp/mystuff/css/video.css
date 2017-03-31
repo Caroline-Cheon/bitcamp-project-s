@@ -15,16 +15,6 @@
 }
 
 
-.pageBtn {
-    margin-top: 20px;
-    margin-left: 591px;
-    display: inline-block;
-    width: 100px;
-    height: 30px;
-	
-}
-
-
 .tab:hover {
 	cursor:pointer;
 }

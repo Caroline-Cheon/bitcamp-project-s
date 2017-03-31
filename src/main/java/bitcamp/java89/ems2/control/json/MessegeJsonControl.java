@@ -134,9 +134,48 @@ public class MessegeJsonControl {
     
   }
   
+  @RequestMapping("/message/count")
+  public AjaxResult newMessageCount(@RequestParam int sno) throws Exception {
+    
+    int msno = messageService.getMessageNo(sno);
+    
+    if (msno == 0) {
+      return new AjaxResult(AjaxResult.FAIL, "최신 답변이 없습니다.");
+    }
+    else {
+      
+    int count = messageService.newMsgCount(msno, sno);
+    
+    return new AjaxResult(AjaxResult.SUCCESS, count);
+    }
+    
+    
+    
+  }
   
-  
-  
+  @RequestMapping("/message/menteeMessageCount")
+  public AjaxResult menteeMessageCount(@RequestParam int cono, @RequestParam int mswr) throws Exception {
+    HashMap<String, Object> intMap = new HashMap<>();
+    intMap.put("cono", cono);
+    intMap.put("mswr", mswr);
+    
+    String msno = messageService.mentoGetMessageNo(intMap);
+    System.out.println("msno"+msno);
+    
+    if (msno == null) {
+      return new AjaxResult(AjaxResult.FAIL, "최신 답변이 없습니다.");
+    }
+    else {
+      intMap.put("msno", msno);
+    int count = messageService.nodeNewMsgCount(intMap);
+    System.out.println("멘토 node new message"+count);
+    
+    return new AjaxResult(AjaxResult.SUCCESS, count);
+    }
+    
+    
+    
+  }
   
   
   
