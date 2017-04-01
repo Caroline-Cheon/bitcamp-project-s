@@ -538,7 +538,12 @@ function warnModalStart(comn) {
         $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
         $('.warn-modal-comment').append("<h3>전문분야를 선택해주세요.</h3>"
             + "<div class='modal-confirm-btn'>확인</div>");
-  }
+  } else if (comn == 'alreadyMento-check') {
+      console.log("main 콘솔 몇번");
+      $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+      $('.warn-modal-comment').append("<h3>이미 멘토전환을 하였습니다.</h3>"
+          + "<div class='modal-confirm-btn'>확인</div>");
+}
     $('.warn-modal').addClass('animated fadeInRight');
     $('.warn-modal-page-wrapper').addClass('warn-modal-blur-it');
     $('.warn-modal-wrapper').addClass('warn-modal-open');

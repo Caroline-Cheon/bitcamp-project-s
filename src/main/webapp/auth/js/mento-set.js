@@ -32,18 +32,26 @@ $( function() {
 	$(document.body).on('click', '.user-change', function() {
 		
 		$(".user-menu").hide();
-		$('.user-change-modal').css('display','block');
 		
-		$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function() {
-			/*$('#mento-set-wrap').addClass('animated fadeIn');
-			setTimeout(function(){
-				$('#mento-set-wrap').css('display','block');
-			},500);*/
-			$('#mento-set-wrap').css('display','block');
+		
+		/*이미 멘토전환을 한 멘티는 멘토페이지로 가는 버튼으로 수정하기*/
+		console.log("memsType은? " + memsType);
+		if(memsType == "mento") {
+			warnModalStart('alreadyMento-check');
 			
-			$('.mento-set-form').cf();
+		} else if(memsType != "mento") {
+			$('.user-change-modal').css('display','block');
+			
+			$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function() {
+				/*$('#mento-set-wrap').addClass('animated fadeIn');
+				setTimeout(function(){
+					$('#mento-set-wrap').css('display','block');
+				},500);*/
+				$('#mento-set-wrap').css('display','block');
+				$('.mento-set-form').cf();
 
-		});
+			});
+		}
 		
 	
 	});
@@ -92,8 +100,6 @@ $( function() {
 			$('.user-change-modal').css('display','none');
 			
 		}	else if(totalCheckList == " ") {
-			console.log("몇번이나나오니");
-			console.log(totalCheckList);
 			warnModalStart('specialArea-check');
 		}
 		
