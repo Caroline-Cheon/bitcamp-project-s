@@ -28,7 +28,7 @@ $(function() {
 	setTimeout(function() {
 		if (memberInfo != undefined) loadContorl();
 	}, 3500);
-	
+});
 	
 function loadContorl() {
 	console.log('loadContorl 시작');
@@ -555,6 +555,7 @@ $(function() {
 				}); // 업로드 컴플릿 펑션 
 			  }); // loginUser
 	});
+});
 	
 	/*   /header 호출 스크립트 및 로그인 유저 로그인 상태 확인.   */
 	
@@ -813,7 +814,6 @@ $(function() {
 		/*$(".main-frame").css("height", windowHeigth + "px");*/
 	});
 	/*   /window 사이즈 구하기   */
-});
 
 
 //<!-- eventControll -->
