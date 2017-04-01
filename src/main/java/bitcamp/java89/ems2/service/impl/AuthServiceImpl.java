@@ -16,7 +16,6 @@ import bitcamp.java89.ems2.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
-  
   @Autowired MemberDao memberDao;
   @Autowired MentoDao mentoDao;
   @Autowired TopicDao topicDao;
@@ -53,7 +52,6 @@ public class AuthServiceImpl implements AuthService {
 @Override
 public int getOne(int memberNo) throws Exception {
    return mentoDao.getOne(memberNo);
-    
 }
 
 @Override
@@ -62,6 +60,11 @@ public List<Mento> getList(int memberNo) throws Exception {
     paramMap.put("memberNo",memberNo);
     
     return mentoDao.getList(paramMap);
+}
+
+@Override
+public int hasMento(int memberNo) throws Exception {
+   return memberDao.hasMento(memberNo);
 }
 
 @Override

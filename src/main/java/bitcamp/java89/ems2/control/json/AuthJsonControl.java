@@ -60,6 +60,7 @@ public class AuthJsonControl {
     if (member == null) { // 로그인이 되지 않은 상태
       return new AjaxResult(AjaxResult.FAIL, "로그인을 하지 않았습니다.");
     } else {
+      int memsType = authService.hasMento(member.getMemberNo());
       Topic topic = authService.getResult(member.getMemberNo());
       System.out.println("/auth/loginUser.topic :" + topic);
       List<String> topicName = authService.getResultNames(member.getMemberNo());
@@ -73,6 +74,8 @@ public class AuthJsonControl {
         resultMap.put("topic", topic);
         resultMap.put("topicName", topicName);
       }
+      if (memsType != 0) resultMap.put("memsType", "mento");
+      if (memsType == 0) resultMap.put("memsType", "mentee");
       if (likeCount != 0) resultMap.put("hasLike", "has");
       if (likeCount == 0) resultMap.put("hasLike", "none");
       return new AjaxResult(AjaxResult.SUCCESS, resultMap);

@@ -16,6 +16,7 @@ public interface MemberDao {
   Member getOne(String email) throws Exception;*/
   int insert(Member member) throws Exception;
   int count(String email) throws Exception;
+  int hasMento(int memberNo) throws Exception;
   int add(Member member) throws Exception;
   Member getOneByEmailPassword(Map<String,String> paramMap) throws Exception;
  Member getOne(int memberNo) throws Exception;

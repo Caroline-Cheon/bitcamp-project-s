@@ -21,6 +21,36 @@ select DISTINCT cono
      where sno = #{sno}
   </select>
   
+    <select id="getMessageNo" resultType="int" parameterType="int">
+select msno
+     from messg 
+     where mswr = #{sno} 
+     ORDER BY msno desc 
+     limit 1
+  </select>
+  
+    <select id="mentoGetMessageNo" resultType="String" parameterType="map">
+select msno
+     from messg 
+     where mswr = #{mswr} and cono = #{cono} 
+     ORDER BY msno desc 
+     limit 1
+  </select>
+  
+  <select id="newMsgCount" resultType="int" parameterType="int">
+		select count(*)
+		     from messg
+		     where sno = #{sno} and msno > #{msno}
+  </select>
+  
+  <select id="nodeNewMsgCount" resultType="int" parameterType="map">
+    select count(*) 
+       from messg 
+       where cono = #{cono} and msno > #{msno}
+  </select>
+  
+  
+  
   <select id="mentoGetOne" resultMap="message-map" parameterType="map">
           select DISTINCT mto.eno, mto.sarea, pl.cono, name, mimg from messg msg
           inner join qna on qna.cono = msg.cono

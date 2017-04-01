@@ -1,21 +1,44 @@
-$( function() { 
+	      // 뱃지에 넣을 새로 올라온 답변 카운트
+ function newMessageCount() {
+	 $.getJSON(serverRoot + '/message/count.json', // 새로 올라온 멘토들의 답변 리스트
+			 {
+		 "sno": memberInfo.memberNo
+			 }, 
+			 function(ajaxResult) {
+				 var status = ajaxResult.status;
+				 if (status != "success") {
+					 console.log("카운트 없음.");
+					 return;
+				 }
+				 console.log(ajaxResult.data);
+				 if (ajaxResult.data == 0) {
+					 return;
+				 }
+				 else {
+					 console.log("들어와랏");
+					 $('.new-count').css('display','block');
+					 $('.new-count').text(ajaxResult.data);
+				 }
+			 })
+ } // newMessageCount() 	
+
+$(function() { 
 	// refresh;
 	userInfo();
 	setTimeout(function() {
 		if (memberInfo != undefined) loadContorl();
 	}, 3500);
-});
+	
+	
 function loadContorl() {
 	console.log('loadContorl 시작');
-//	console.log(memberInfo.memberNo);
+	console.log(memberInfo);
 	if (memberInfo != undefined) {
 		checkTestResult();
+		pageLoad('mystuff'); 
 	}
-	if (memberInfo.memberNo != null) pageLoad('mystuff'); 
-	
-	console.log(memberInfo);
-	if (memberInfo != undefined) pageLoad('mystuff'); 
 	if (hasLike == 'has') pageLoad('mento-like'); 
+
 }
 $(document.body).on("click", ".video-box .fpc_page-tip", function() {
 	pageLoad('video');
@@ -29,6 +52,7 @@ $(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
 $(document.body).on( "click", ".video-like-btn", function() {
 	pageLoad('video-like');
 });
+
 /*   pgbtn click events   */
 $(document.body).on('click', '.prevPgBtn', function() {
 	if (currPageNo > 1) {
@@ -309,7 +333,7 @@ function pageLoad(choose) {
 			});
 		
 	} else if (choose == 'seeds') {
-		$(".seeds").load("seeds/seeds-temp.html .seeds");
+		$(".seeds").load("seeds/seeds-temp.html .seeds-call");
 		
 	} else if (choose == 'plan') {
 		console.log('pageload/plan', memberInfo.memberNo);
@@ -381,14 +405,20 @@ function pageLoad(choose) {
 function userInfo() {
 	console.log('userInfo().start');
 	  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
+		  if (ajaxResult.status != 'success') return;
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
-			if (memberInfo != undefined) sno = ajaxResult.data.topic.memberNo;
+			memsType = ajaxResult.data.memsType;
+			if (memsType == 'mentee') 
+				sno = ajaxResult.data.topic.memberNo;
+			if (memsType == 'mento') 
+				expertNo = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
 			console.log("hasLike(has/none)", hasLike);
+			console.log("memsType(tee/to)", memsType);
 			console.log("sno", sno);
 			eventControll();
 			checkTestResult();
@@ -415,6 +445,7 @@ $(function() {
 		console.log("header 호출");
 		  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
 				$('#header').html(result);
+				
 					if (ajaxResult.status == "fail") { // 로그인 되지 않았으면,
 						$('.header-icon-power').css("display", "inline-block");
 						return;
@@ -432,6 +463,7 @@ $(function() {
 						eventControll();
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
+//						newMessageCount();
 					}
 				memberNo = memberInfo.memberNo;
 				
@@ -444,10 +476,14 @@ $(function() {
 					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
 				}
 				$('.user-info h3').text(memberInfo.name);
-				/* topicName length 만큼 반복문 돌려서 생성해야 함 */ 
+				/* topicName length 만큼 반복문 돌려서 생성해야 함 */
+//				console.log(topicName.length);
+				
+				if (topicName != undefined) {
 				$('.recommand-info .one').text(topicName[0]);
 				$('.recommand-info .two').text(topicName[1]);
 				$('.recommand-info .three').text(topicName[2]);
+				}
 				/*   /topicName length 만큼 반복문 돌려서 생성해야 함   */ 
 				$('.result-info .test-name').text(memberInfo.type);
 				$('.result-info .test-result').text(memberInfo.resultResult);
@@ -555,14 +591,14 @@ $(function() {
 	          }
 	      }
 	      
+	      var count = 0;
+	      
 	      if (target.hasClass("header-icon-message")) { // 멘토 답변 업데이트 알림 아이콘.
 	        if (!isopen_messagemenu) {
+//	        	 newMessageCount();
 	        $(".user-menu").hide();
-	        
 	        $('.message-menu').load('common/header.html .message-info', function() {
-
 	        $(".message-menu").css("display","block");
-	        
 				$.getJSON(serverRoot + '/message/mento-list.json', // 새로 올라온 멘토들의 답변 리스트
 						{
 					"sno": memberInfo.memberNo
@@ -593,10 +629,11 @@ $(function() {
 					    	  return;
 					      }
 					      else {
+					    	  count++
 					    	  $('.nothing-message').hide();
 					    	  console.log(ajaxResult.data);
 					    	  
-					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
 					    	 
 					      }
 
@@ -615,16 +652,74 @@ $(function() {
 	            $(".message-menu").hide();
 	            isopen_messagemenu = false;
 	        }
-	      }
+	      } // 멘토 답변 업데이트 알림 아이콘 클릭 이벤트
 	      
-	      /*function msgListCall() {
-	    	  var section = $('.message-info');
-	    	  console.log(section);
-	    	  console.log(msgList);
-	    	  var template = Handlebars.compile($('#message-menu').html());
-	    	  section.html(template({"list": msgList}));
-	      }*/
 	      
+	      
+	      $(document.body).on( "click", ".message-info li", function() { // 메세지 info에서 해당 new 메세지 눌렀을 때 이벤트
+	    	
+	    	  console.log($(this));
+	    	 var cono = $(this).children('.job-sort').attr('data-no');
+	    	
+	    	 
+				$.getJSON(serverRoot + '/message/list.json', 
+						{
+					"cono": cono,
+					"sno": memberInfo.memberNo,
+					"mno": memberInfo.memberNo
+						}, 
+						function(ajaxResult) {
+							var status = ajaxResult.status;
+							if (status != "success") {
+								return;
+							}
+							
+							console.log("common-modal 멘토와의 채팅");
+							
+							console.log(ajaxResult.data.list);
+							console.log(ajaxResult.data.mento);
+							    var list = ajaxResult.data.list;
+							    eno = ajaxResult.data.mento.mentoNo;
+								var mteName = ajaxResult.data.mento.name;
+								var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
+								console.log(mteName);
+								console.log(mtePhoto);
+								
+							 $('.common-modal').load('mystuff/plan-modal.html .plan-modal', function() {
+									
+							        $('#mystuff-messenger').submit(function () {
+									   return false;
+									  });
+									  $("#mystuff-chat-msg").attr("autocomplete", "off");
+								
+							        $.each(list, function(k, v) {
+								          var text   = list[k].message;
+								          var writer = list[k].writerNo;
+								          if (writer == memberInfo.memberNo) {
+								        	  console.log("본인이 쓴것")
+								              $('.mystuff-chatwindow').append('<div class="right">' + text + '</div>');
+								          } else {
+								        	  console.log("상대방이 쓴것")
+								              $('.mystuff-chatwindow').append('<div class="left bye">' + text + '</div>');
+								          }
+								        }); // 메세지 리스트 div 영역으로 나타내기
+								 
+                                  console.log("모달창 들어왔다.")
+                                  
+                                  $('.mystuff-chat-bot h3').text(mteName);
+                                  $('.mystuff-chat-bot img').attr('src',mtePhoto);
+								 
+							 }) // mystuff-modal 창에 로드 시키기.
+				
+			  }) // messageList getJson
+	    	 
+	    	 
+	      }) // 메세지 info에서 해당 new 메세지 눌렀을 때 이벤트
+	      
+	      
+	
+						
+						
 	      
 	      if (target.hasClass("header-icon-power")) {
 				$('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {

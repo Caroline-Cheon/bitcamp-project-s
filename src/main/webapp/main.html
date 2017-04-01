@@ -265,13 +265,14 @@ h3.warn-modal-testInfo {
 <div id="header"></div>
 
 <div class="user-change-modal"></div>
+<div class="common-modal"></div>
 
 <div class="all-container">
 	<div class="contents">
 	  <div class="frame-area frame-area-center seeds">
 	  </div>
 	  <div class="json-mbti"></div>
-	  <div class="frame-area frame-area-right   mystuff">
+	  <div class="frame-area frame-area-right  mystuff">
       <div class="mystuff-call dashboard">
         <div class="mystuff-explain">로그인하셔야 추천 정보를 드릴 수 있어요.</div>
       </div>
@@ -384,8 +385,8 @@ h3.warn-modal-testInfo {
 </script>
 <script id="mentoList" type="text/x-handlebars-template">
 {{#each list}}
-<div class="mento-slide mentoBox"><a class=""><img class="map-img" src="mystuff/img/map1.jpg" width="495" height="360" alt=""></a>
-  <div class="mento-conts">
+<div class="mento-slide mentoBox mt-modal"><a class=""><img class="map-img" src="mystuff/img/map1.jpg" width="495" height="360" alt=""></a>
+  <div class="mento-conts mt-cono">
    <button type="button" class="buttonHolder" data-no="{{contentsNo}}" style="top: 50px;">
  {{#if isLike}}
    <a href="#" class="btn heart checked"></a>
@@ -407,8 +408,8 @@ h3.warn-modal-testInfo {
 </script>
   <script id="mentoDetail" type="text/x-handlebars-template">
 {{#each list}}
-<div class="mt-list">
-  <div class="mt-conts">
+<div class="mt-list mt-modal">
+  <div class="mt-conts mt-cono">
     <button type="button" class="buttonHolder" data-no="{{contentsNo}}">
        {{#if isLike}}
           <a href="#" class="btn heart checked"></a>
@@ -416,8 +417,7 @@ h3.warn-modal-testInfo {
           <a href="#" class="btn heart"></a>
       {{/if}}
     </button>
-     
-       <img clas="map-img" src="mystuff/img/map1.jpg">
+       <img clas="map-img detail-map-img" src="mystuff/img/map1.jpg">
   </div>
     <div class="mt-btm">
      <div class="detail-mt-photo"><img src='mystuff/img/lee.jpg'></div>
