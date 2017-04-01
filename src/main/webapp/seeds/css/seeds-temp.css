@@ -160,7 +160,8 @@ div#test4 {}
     color: #686e74;
     text-align: center;
     width: 800px;
-    margin: 20px 0px 155px 230px;
+    left: 50%;
+    margin: 20px 0px 155px -400px;
 
 }
 
