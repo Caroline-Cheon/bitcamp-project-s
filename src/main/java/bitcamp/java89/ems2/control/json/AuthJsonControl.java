@@ -68,10 +68,6 @@ public class AuthJsonControl {
       int likeCount = likeService.hasLike(member.getMemberNo());
       if (topic == null) {
         resultMap.put("topic", member);
-<<<<<<< HEAD
-=======
-        /*return new AjaxResult(AjaxResult.SUCCESS, resultMap);*/
->>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
       } else {
         resultMap.put("topic", topic);
         resultMap.put("topicName", topicName);
