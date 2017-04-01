@@ -80,14 +80,26 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public int newMsgCount(int msno, int sno) throws Exception {
-    return messageDao.newMsgCount(msno, sno);
+  public int newMsgCount(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.newMsgCount(intMap);
   }
   
   @Override
   public int nodeNewMsgCount(HashMap<String, Object> intMap) throws Exception {
     return messageDao.nodeNewMsgCount(intMap);
   }
+
+  @Override
+  public String nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.nodeGetMessageNo(intMap);
+  }
+  
+  @Override
+  public int menteeNewMsgCount(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.menteeNewMsgCount(intMap);
+  }
+  
+  
 }
 
 

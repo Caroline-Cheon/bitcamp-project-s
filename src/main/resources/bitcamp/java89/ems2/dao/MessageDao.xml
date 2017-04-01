@@ -37,7 +37,7 @@ select msno
      limit 1
   </select>
   
-  <select id="newMsgCount" resultType="int" parameterType="int">
+  <select id="newMsgCount" resultType="int" parameterType="map">
 		select count(*)
 		     from messg
 		     where sno = #{sno} and msno > #{msno}
@@ -47,6 +47,22 @@ select msno
     select count(*) 
        from messg 
        where cono = #{cono} and msno > #{msno}
+  </select>
+  
+    <select id="menteeNewMsgCount" resultType="int" parameterType="map">
+    select count(*) 
+       from messg 
+       where cono = #{cono} and sno = #{sno} and msno > #{msno}
+  </select>
+  
+  
+  
+    <select id="nodeGetMessageNo" resultType="String" parameterType="map">
+select msno
+     from messg 
+     where cono = #{cono} and sno = #{sno} and mswr = #{mswr} 
+     ORDER BY msno desc 
+     limit 1
   </select>
   
   
