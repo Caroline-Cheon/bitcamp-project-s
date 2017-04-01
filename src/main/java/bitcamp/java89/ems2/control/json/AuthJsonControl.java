@@ -69,11 +69,13 @@ public class AuthJsonControl {
       int likeCount = likeService.hasLike(member.getMemberNo());
       if (topic == null) {
         resultMap.put("topic", member);
-        return new AjaxResult(AjaxResult.SUCCESS, resultMap);
+        /*return new AjaxResult(AjaxResult.SUCCESS, resultMap);*/
       } else {
         resultMap.put("topic", topic);
         resultMap.put("topicName", topicName);
       }
+      System.out.println(memsType);
+      System.out.println(likeCount);
       if (memsType != 0) resultMap.put("memsType", "mento");
       if (memsType == 0) resultMap.put("memsType", "mentee");
       if (likeCount != 0) resultMap.put("hasLike", "has");
