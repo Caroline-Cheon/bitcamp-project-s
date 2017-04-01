@@ -31,6 +31,7 @@ $.fn.cf = function () {
 $( function() {
 	$(document.body).on('click', '.user-change', function() {
 		
+		$(".user-menu").hide();
 		$('.user-change-modal').css('display','block');
 		
 		$('.user-change-modal').load('auth/mento-set.html #mento-set-wrap',function() {
@@ -41,72 +42,75 @@ $( function() {
 			$('#mento-set-wrap').css('display','block');
 			
 			$('.mento-set-form').cf();
-			$(document.body).on('click', '.mento-set-btn', function() {
-				
-				
-				var totalCheckList=" ";
-				
-				console.log($('.mento-set-ul li:nth-child(1) label:nth-child(1)').hasClass('checked'));
-				console.log($('.mento-set-ul li:nth-child(1) input:nth-child(1)').val());
-				console.log($('.mento-set-ul li:nth-child(2) label:nth-child(1)').hasClass('checked'));
-				console.log($('.mento-set-ul li:nth-child(2) input:nth-child(1)').val());
-				
-				$.each([1,2,3,4,5,6,7], function(index, value) {
-					
-					if($('.mento-set-ul li:nth-child(' + value +') label:nth-child(1)').hasClass('checked')) {
-						totalCheckList += $('.mento-set-ul li:nth-child(' + value +') input:nth-child(1)').val() + ",";
-					}
-				});
-				console.log("totalCheckList: " + totalCheckList);
-				console.log(".detail-area:"  + $('.detail-area ').val());
-				console.log(".career-area:"  + $('.career-area ').val());
-				
-				userInfo();
-				console.log("멤버번호? " + memberInfo.memberNo);
-				
-				var param = {
-					'mentoNo' :	memberInfo.memberNo,
-					'specialArea' : totalCheckList,
-					'detailArea' : $('.detail-area ').val(),
-					'career' : $('.career-area ').val()
-				}
-				
-				/*전문분야가 널이면 값을 넣지 않게*/
-				if(totalCheckList != " ") {
-					
-					$.post(serverRoot + '/mento/add.json', param, function(ajaxResult) {
-						if (ajaxResult.status != "success") {
-							alert(ajaxResult.data);
-						}
-						console.log(ajaxResult.status);
-						
-					}, 'json');
-					
-				} else {
-					alert("전문분야를 선택해주세요");
-				}
-					
-				
-				
-				
-				
-				
-				
-				
-				
-				$('#mento-set-wrap').css('display','none');
-				$('.user-change-modal').css('display','none');
-			});
-			
-			$(document.body).on('click', '.mento-set-cancel-btn', function() {
-				$('#mento-set-wrap').css('display','none');
-				$('.user-change-modal').css('display','none');
-			});
+
 		});
 		
 	
 	});
+	$(document.body).on('click', '.mento-set-btn', function() {
+		
+		
+		var totalCheckList=" ";
+		
+		console.log($('.mento-set-ul li:nth-child(1) label:nth-child(1)').hasClass('checked'));
+		console.log($('.mento-set-ul li:nth-child(1) input:nth-child(1)').val());
+		console.log($('.mento-set-ul li:nth-child(2) label:nth-child(1)').hasClass('checked'));
+		console.log($('.mento-set-ul li:nth-child(2) input:nth-child(1)').val());
+		
+		$.each([1,2,3,4,5,6,7], function(index, value) {
+			
+			if($('.mento-set-ul li:nth-child(' + value +') label:nth-child(1)').hasClass('checked')) {
+				totalCheckList += $('.mento-set-ul li:nth-child(' + value +') input:nth-child(1)').val() + ",";
+			}
+		});
+		console.log("totalCheckList: " + totalCheckList);
+		console.log(".detail-area:"  + $('.detail-area ').val());
+		console.log(".career-area:"  + $('.career-area ').val());
+		
+		userInfo();
+		console.log("멤버번호? " + memberInfo.memberNo);
+		
+		var param = {
+			'mentoNo' :	memberInfo.memberNo,
+			'specialArea' : totalCheckList,
+			'detailArea' : $('.detail-area ').val(),
+			'career' : $('.career-area ').val()
+		}
+		
+		/*전문분야가 널이면 값을 넣지 않게*/
+		if(totalCheckList != " ") {
+			
+			$.post(serverRoot + '/mento/add.json', param, function(ajaxResult) {
+				if (ajaxResult.status != "success") {
+					alert(ajaxResult.data);
+				}
+				console.log(ajaxResult.status);
+				
+			}, 'json');
+			
+			$('#mento-set-wrap').css('display','none');
+			$('.user-change-modal').css('display','none');
+			
+		}	else if(totalCheckList == " ") {
+			console.log("몇번이나나오니");
+			console.log(totalCheckList);
+			warnModalStart('specialArea-check');
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	});
 	
+	$(document.body).on('click', '.mento-set-cancel-btn', function() {
+		$('#mento-set-wrap').css('display','none');
+		$('.user-change-modal').css('display','none');
+	});
 	
 });
  
