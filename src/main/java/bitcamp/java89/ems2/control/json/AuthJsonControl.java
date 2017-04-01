@@ -20,7 +20,6 @@ import bitcamp.java89.ems2.service.LikeService;
 
 @RestController
 public class AuthJsonControl {
-  
   @Autowired AuthService authService;
   @Autowired LikeService likeService;
   @Autowired MentoDao mentoDao;
@@ -69,7 +68,6 @@ public class AuthJsonControl {
       int likeCount = likeService.hasLike(member.getMemberNo());
       if (topic == null) {
         resultMap.put("topic", member);
-        return new AjaxResult(AjaxResult.SUCCESS, resultMap);
       } else {
         resultMap.put("topic", topic);
         resultMap.put("topicName", topicName);

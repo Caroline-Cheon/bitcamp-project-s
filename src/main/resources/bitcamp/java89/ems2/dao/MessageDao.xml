@@ -16,9 +16,9 @@
   </resultMap>
   
   <select id="conoList" resultType="int" parameterType="int">
-select DISTINCT cono 
-    from messg 
-     where sno = #{sno}
+    SELECT DISTINCT cono 
+    FROM messg 
+    WHERE sno = #{sno}
   </select>
   
   <select id="mentoGetOne" resultMap="message-map" parameterType="map">
