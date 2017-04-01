@@ -28,15 +28,15 @@ $(function() {
 	setTimeout(function() {
 		if (memberInfo != undefined) loadContorl();
 	}, 3500);
-});
 	
 function loadContorl() {
 	console.log('loadContorl 시작');
 	console.log(memberInfo);
-	if (memberInfo != undefined) {
+	if (memsType != undefined && memsType == 'mentee') {
 		checkTestResult();
 		pageLoad('mystuff'); 
 	}
+	
 	if (hasLike == 'has') pageLoad('mento-like'); 
 
 }
@@ -421,7 +421,6 @@ function userInfo() {
 			console.log("memsType(tee/to)", memsType);
 			console.log("sno", sno);
 			eventControll();
-			checkTestResult();
 			setTimeout(function() {
 				loadContorl();
 			}, 3500);
@@ -438,8 +437,7 @@ function userInfo() {
 
 $(function() {
 	/*   header 호출 스크립트 및 로그인 유저 로그인 상태 확인.   */
-	var memberNo = 0;
-	var date = new Date();
+//	var memberNo = 0;
 	var photoPath;
 	$.get(clientRoot + '/common/header.html', function(result) {
 		console.log("header 호출");
@@ -461,11 +459,16 @@ $(function() {
 						console.log(topicName);
 						console.log(hasLike);
 						eventControll();
+						if (memsType == 'mentee') {
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
-//						newMessageCount();
+						newMessageCount();
+						}
+						else {
+							$('.header-icon-user').css("display", "inline-block");	
+						}
 					}
-				memberNo = memberInfo.memberNo;
+//				memberNo = memberInfo.memberNo;
 				
 				// 로그인 되었으면
 				setInterval(function(){

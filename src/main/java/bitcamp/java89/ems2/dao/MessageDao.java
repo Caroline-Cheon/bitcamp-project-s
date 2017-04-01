@@ -13,8 +13,10 @@ public interface MessageDao {
   int mentoSendMesg(Message message) throws Exception;
   int getMessageNo(int sno) throws Exception;
   String mentoGetMessageNo(HashMap<String, Object> intMap) throws Exception;
-  int newMsgCount(int msno, int sno) throws Exception;
+  String nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception;
+  int newMsgCount(HashMap<String, Object> intMap) throws Exception;
   int nodeNewMsgCount(HashMap<String, Object> intMap) throws Exception;
+  int menteeNewMsgCount(HashMap<String, Object> intMap) throws Exception;
   int hasQnA(Message message) throws Exception;
   int isMsg(HashMap<String, Object> targetMento) throws Exception;
   ArrayList<Message> messageList(Map<String,Object> paramMap) throws Exception; 

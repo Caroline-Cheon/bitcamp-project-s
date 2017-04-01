@@ -154,6 +154,7 @@ $(function() {
 	  <!-- /expert service load -->
 	  
 	   var eno = 6;
+	   console.log(eno);
 	   setTimeout(function() {
 	      $.getJSON(serverRoot + '/expert/board.json',
 	            {
@@ -176,8 +177,14 @@ $(function() {
 	                      var status = ajaxResult.status;
 	                    if (ajaxResult.status != "success") {return};
 	                    var mteNewMsg = ajaxResult.data;
-	                    console.log(mteNewMsg);
-	                      list[k].newCount = mteNewMsg;
+// 	                    console.log(mteNewMsg);
+                         list[k].newCount = mteNewMsg; 
+                       if (list[k].newCount != 0) {
+	                      list[k].isCount = true;
+                       } 
+                       else {
+                    	   list[k].isCount = false;
+                       }
 
 
 	                    var board = $('.board-call');
@@ -185,6 +192,7 @@ $(function() {
 	                    board.html(template({'list': list}));
 	                    
 	                    if (list[k].newCount != 0) {
+	                    	console.log($(this));
 	                    	$('.new-count').css('display','block');
 	                    }
 	                    
@@ -236,13 +244,41 @@ $(function() {
     		          
     		          var list = ajaxResult.data.list;
     		           console.log(list);
-    		           var section = $('.detail-mentee-area .mentee-info-area');
-    		           console.log(section);
-    		           var template = Handlebars.compile($('#QnaMentee').html());
-    		           section.html(template({"list": list}));
-    		        }); // 해당 설계도에 질의응답한 멘티 정보들 가져오기 
-      });
-    });
+    		           
+    		           $.each(list, function(k, v) {
+    		               $.getJSON(serverRoot + '/message/nodeMessageCount.json', 
+    		               {
+    		                 "cono": v.contentsNo,
+    		                 "sno" : v.memberNo,
+    		                 "mswr": v.mentoNo
+    		               }, function(ajaxResult) {
+    		                   var status = ajaxResult.status;
+    		                 if (ajaxResult.status != "success") {return};
+    		                 var nodeNewCount = ajaxResult.data;
+   		                  console.log(nodeNewCount);
+    		                  list[k].newCount = nodeNewCount; 
+    		                if (list[k].newCount != 0) {
+    		                   list[k].isCount = true;
+    		                } 
+    		                else {
+    		                  list[k].isCount = false;
+    		                }
+
+
+    		                var section = $('.detail-mentee-area .mentee-info-area');
+    		                console.log(section);
+    		                var template = Handlebars.compile($('#QnaMentee').html());
+    		                section.html(template({"list": list}));
+    		                 
+    		                 
+    		               });
+    		             }); // each 문
+    		             
+    		        }); // 해당 설계도에 질의응답한 멘티 정보들 가져오기 json
+    		        
+      }); // detail 페이지 로드 이벤트
+      
+    }); // node 클릭시  이벤트
     <!-- /board에서 node 선택 시 across 이벤트 -->
 	  
 	  <!-- wheel & click 슬라이딩 이벤트 --> 
@@ -414,9 +450,13 @@ $(function() {
     <div id="node" cono="{{contentsNo}}" class="nodes animated fadeIn">
       <div class="node-img">
        <img class="node-img" alt="" src="{{planImage}}">
-        <label class="new-count" for="msgCount">{{newCount}}</label>
-        <div class="animated fadeIn" id="node-modify">수정</div>
-        <div class="animated fadeIn" id="node-delete">삭제</div>
+        {{#if isCount}}
+          <label class="plan-new-count" for="msgCount">{{newCount}}</label>
+        {{else}}
+          <label class="not-count" for="msgCount">{{newCount}}</label>
+        {{/if}}
+       <div class="animated fadeIn" id="node-modify">수정</div>
+       <div class="animated fadeIn" id="node-delete">삭제</div>
       </div>
       <div id="title">{{topicName}}<br/>{{planName}}</div>
     </div>
@@ -426,6 +466,11 @@ $(function() {
 {{#each list}}
    <div class="mentee-info" sno={{memberNo}}>
           <img alt="" src="../mystuff/img/lee.jpg">
+      {{#if isCount}}
+            <label class="plan-new-count" for="msgCount">{{newCount}}</label>
+         {{else}}
+            <label class="not-count" for="msgCount">{{newCount}}</label>
+       {{/if}}
           <div class="mentee-info-name">{{name}}</div>
         </div>
 {{/each}}
