@@ -147,8 +147,13 @@
   display:inline-block;
   cursor: pointer;
 }
+.common-modal {
+    position: absolute;
+    margin-left: 500px;
+}
 
-.mystuff-modal .plan-modal {
+.mystuff-modal .plan-modal,
+.common-modal .plan-modal {
 	  width: 1068px;
     height: 800px;
     position: absolute;
@@ -157,7 +162,8 @@
     top: 18px;
 }
 
-.mystuff-modal .plan-modal .mystuff-chat-modal {
+.mystuff-modal .plan-modal .mystuff-chat-modal,
+.common-modal .plan-modal .mystuff-chat-modal {
 	    width: 33.4%;
     height: 98%;
     border-left: 1px solid rgba(158, 158, 158, 0.25);
@@ -170,7 +176,8 @@
 	}
 
 
-.mystuff-modal .plan-modal .mystuff-chat-modal .window {
+.mystuff-modal .plan-modal .mystuff-chat-modal .window,
+.common-modal .plan-modal .mystuff-chat-modal .window {
 	  font-family: "Muli", sans-serif;
     color: #555;
     width: 100%;

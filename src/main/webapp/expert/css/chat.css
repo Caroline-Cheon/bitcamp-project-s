@@ -286,7 +286,7 @@ Right triangle, left side slightly down
 }
   .window .enter {
     position: fixed;
-    bottom: 72px;
+    bottom: 94px;
     z-index: 1;
     width: 428px;
     /* left: 0; */
@@ -313,7 +313,7 @@ Right triangle, left side slightly down
     display: block;
     position: fixed;
     z-index: 3;
-    bottom: 74px;
+    bottom: 96px;
     margin-left: 404px;
 }
   .window .send:before {
@@ -329,7 +329,7 @@ Right triangle, left side slightly down
 }
   .window .chatwindow {
     position: absolute;
-    height: 629px;
+    height: 582px;
     width: 450px;
     top: 80px;
     overflow-y: scroll;

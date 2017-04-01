@@ -68,6 +68,38 @@ public class MessageServiceImpl implements MessageService {
   public Message mentoGetOne(HashMap<String, Object> targetMento) throws Exception {
     return messageDao.mentoGetOne(targetMento);
   }
+
+  @Override
+  public int getMessageNo(int sno) throws Exception {
+    return messageDao.getMessageNo(sno);
+  }
+  
+  @Override
+  public String mentoGetMessageNo(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.mentoGetMessageNo(intMap);
+  }
+
+  @Override
+  public int newMsgCount(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.newMsgCount(intMap);
+  }
+  
+  @Override
+  public int nodeNewMsgCount(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.nodeNewMsgCount(intMap);
+  }
+
+  @Override
+  public String nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.nodeGetMessageNo(intMap);
+  }
+  
+  @Override
+  public int menteeNewMsgCount(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.menteeNewMsgCount(intMap);
+  }
+  
+  
 }
 
 

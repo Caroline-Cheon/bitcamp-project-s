@@ -9,8 +9,24 @@ $(function() {
 			if (status != "success") return; 
 			
 			var list = ajaxResult.data.list; 
-			var board = $('.board');
-			var template = Handlebars.compile($('#boardTemp').html()); 
-			board.html(template({'list': list})); 
+			
+		      $.each(list, function(k, v) {
+		    	  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
+		    		{
+		    		  "cono": v.contentsNo,
+		    		  "mswr": memberInfo.memberNo
+		    		}, function(ajaxResult) {
+		  		      var status = ajaxResult.status;
+				      if (ajaxResult.data == 0) {return};
+				      var mteNewMsg = ajaxResult.data;
+				      console.log(mteNewMsg);
+				    	  list[k].newCount = mteNewMsg;
+
+				      var board = $('.board');
+				      var template = Handlebars.compile($('#boardTemp').html()); 
+				      board.html(template({'list': list})); 
+		    		});
+		      }); // each 문
+		      
 	});
 });

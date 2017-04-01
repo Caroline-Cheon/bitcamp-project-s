@@ -133,7 +133,75 @@ public class MessegeJsonControl {
     
   }
   
+  @RequestMapping("/message/count")
+  public AjaxResult newMessageCount(@RequestParam int sno) throws Exception { // 멘티 입장에서 main 화면 헤더 부분 카운트 표시를 위한~
+  HashMap<String, Object> intMap = new HashMap<String, Object>();
+  intMap.put("sno", sno);
+    int msno = messageService.getMessageNo(sno);
+    
+    if (msno == 0) {
+      return new AjaxResult(AjaxResult.FAIL, "최신 답변이 없습니다.");
+    }
+    else {
+      intMap.put("msno", msno);
+    int count = messageService.newMsgCount(intMap);
+    
+    return new AjaxResult(AjaxResult.SUCCESS, count);
+    }
+    
+    
+    
+  }
   
+  @RequestMapping("/message/menteeMessageCount")
+  public AjaxResult menteeMessageCount(@RequestParam int cono, @RequestParam int mswr) throws Exception {
+    HashMap<String, Object> intMap = new HashMap<>();
+    intMap.put("cono", cono);
+    intMap.put("mswr", mswr);
+    
+    String msno = messageService.mentoGetMessageNo(intMap);
+    System.out.println("msno"+msno);
+    
+    if (msno == null) {
+      return new AjaxResult(AjaxResult.FAIL, "대화중인 학생이 없습니다.");
+    }
+    else {
+      intMap.put("msno", msno);
+    int count = messageService.nodeNewMsgCount(intMap);
+    System.out.println("멘토 node new message"+count);
+    
+    return new AjaxResult(AjaxResult.SUCCESS, count);
+    }
+    
+    
+    
+  }
+ 
+  
+  @RequestMapping("/message/nodeMessageCount")
+  public AjaxResult nodeMessageCount(@RequestParam int cono, @RequestParam int sno, @RequestParam int mswr) throws Exception {
+    HashMap<String, Object> intMap = new HashMap<>();
+    intMap.put("cono", cono);
+    intMap.put("sno", sno);
+    intMap.put("mswr", mswr);
+    
+    String msno = messageService.nodeGetMessageNo(intMap);
+    System.out.println("node msno"+ msno);
+    
+    if (msno == null) {
+      return new AjaxResult(AjaxResult.FAIL, "대화중인 학생이 없습니다.");
+    }
+    else {
+      intMap.put("msno", msno);
+    int count = messageService.menteeNewMsgCount(intMap);
+    System.out.println("학생 node new message"+count);
+    
+    return new AjaxResult(AjaxResult.SUCCESS, count);
+    }
+    
+    
+    
+  }
   
   
   

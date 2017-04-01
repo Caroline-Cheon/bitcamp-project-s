@@ -1,3 +1,4 @@
+
 .user-change-modal {
   position: fixed;
   width: 800px;
@@ -7,13 +8,13 @@
   left: 50%;
   margin-top: -350px;
   margin-left: -400px;
-  z-index: 1000;
+  z-index: 13;
 }
 #mento-set-wrap {
   width: 800px;
   margin: 0 auto;
   font-family: Malgun Gothic;
-  /* display: none; */
+  box-shadow: 0px 400px 80px 800px rgba(0,0,0,0.8)
 }
 .mento-set-s-title{
   font-weight: 400;
