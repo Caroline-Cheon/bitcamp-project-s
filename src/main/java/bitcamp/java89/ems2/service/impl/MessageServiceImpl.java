@@ -90,7 +90,7 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public String nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception {
+  public Message nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception {
     return messageDao.nodeGetMessageNo(intMap);
   }
   

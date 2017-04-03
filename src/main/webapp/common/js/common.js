@@ -1,4 +1,4 @@
-	      // 뱃지에 넣을 새로 올라온 답변 카운트
+	      // 멘티 메인 페이지 뱃지에 넣을 새로 올라온 답변 카운트
  function newMessageCount() {
 	 $.getJSON(serverRoot + '/message/count.json', // 새로 올라온 멘토들의 답변 리스트
 			 {
@@ -405,11 +405,12 @@ function pageLoad(choose) {
 function userInfo() {
 	console.log('userInfo().start');
 	  $.getJSON(serverRoot + '/auth/loginUser.json', function(ajaxResult) {
-		  if (ajaxResult.status != 'success') return;
+		  if (ajaxResult.status != 'success') {return;}
 			memberInfo = ajaxResult.data.topic;
 			topicName = ajaxResult.data.topicName;
 			hasLike = ajaxResult.data.hasLike;
 			memsType = ajaxResult.data.memsType;
+			console.log(memsType)
 			if (memsType == 'mentee') 
 				sno = ajaxResult.data.topic.memberNo;
 			if (memsType == 'mento') 
@@ -462,10 +463,12 @@ $(function() {
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
 						newMessageCount();
-										}
-										else {
-											$('.header-icon-user').css("display", "inline-block");	
-										}
+					    }
+					     else { // 접속자 멘토일 때
+						$('.header-icon-user').css("display", "inline-block");
+						$('.mentee-service').css('display', 'none');
+
+						}
 					}
 				memberNo = memberInfo.memberNo;
 				
@@ -578,18 +581,28 @@ $(function() {
 	    }
 	    if (!target.parents().hasClass("header-icons")) {
 	      $(".user-menu").hide();
+	      $(".mento-menu").hide();
 	      $(".message-menu").hide();
 		  isopen_usermenu = false;
 		  isopen_messagemenu = false;
 	    } else {
 	      if (target.hasClass("header-icon-user")) { // 사용자 정보 창
 	        if (!isopen_usermenu) {
+	        	if (memsType == 'mentee') {
 		        $(".message-menu").hide();
 		        $(".user-menu").show(); // 사용자 정보 창 div
 		        isopen_usermenu = true;
 	            isopen_messagemenu = false;
+	        	} // 멘티라면
+	        	else {
+	        		$(".message-menu").hide();
+			        $(".mento-menu").show(); // 멘토 정보 창 div
+			        isopen_usermenu = true;
+		            isopen_messagemenu = false;
+	        	}
 		      } else {
 	    		  $(".user-menu").hide();
+	    		  $(".mento-menu").hide();
 	    		  isopen_usermenu = false;
 	          }
 	      }
@@ -600,6 +613,7 @@ $(function() {
 	        if (!isopen_messagemenu) {
 //	        	 newMessageCount();
 	        $(".user-menu").hide();
+	        $(".mento-menu").hide();
 	        $('.message-menu').load('common/header.html .message-info', function() {
 	        $(".message-menu").css("display","block");
 				$.getJSON(serverRoot + '/message/mento-list.json', // 새로 올라온 멘토들의 답변 리스트
@@ -742,6 +756,7 @@ $(function() {
 		    	$('.header-icon-user').css("display", "none");
 		    	$('.header-icon-message').css("display", "none");
 				  $(".user-menu").hide();
+				  $(".mento-menu").hide();
 				  $(".message-menu").hide();
 				  isopen_usermenu = false;
 				  isopen_messagemenu = false;
@@ -766,6 +781,8 @@ $(function() {
 			        	  		$('.dashboard').removeClass('animated fadeOut');
 			        	  		$('.dashboard').remove();
 			        	  		});
+			        } else if ($(".frame-area-center").hasClass("board") || $(".frame-area-center").hasClass("across")) {
+			        	location.href = serverRoot + '/main.html';
 			        }
 			});
 	      }
