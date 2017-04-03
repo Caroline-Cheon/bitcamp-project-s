@@ -263,7 +263,7 @@ label.label-checkbox.checked {
   width: 397px;
   font-size: 12px;
   /* border: 3px #33b1b9 solid; */
-  border-radius: 33px;
+  /* border-radius: 33px; */
   border: transparent;
   height: 246px;
   resize: none;
