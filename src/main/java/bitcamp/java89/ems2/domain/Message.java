@@ -3,7 +3,7 @@ package bitcamp.java89.ems2.domain;
 public class Message extends Plan{
   private static final long serialVersionUID = 1L;
   
-  protected int messageNo;
+  protected int messageNo=0;
   protected String message; 
   protected int writerNo;
   
