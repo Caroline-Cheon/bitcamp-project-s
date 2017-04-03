@@ -73,7 +73,6 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
 	});
 	
 // 멘토 모달 띄우기 
-
 	var cono; // 멘티가 멘토에게 메세지를 보내기 위해 필요한 해당 설계도 컨텐츠 번호
     var eno; // 해당 설계도 관한 멘토 일련번호
 	$(document.body).on("click", ".map-img", function() {
@@ -145,7 +144,6 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
 	});
 
 // 영상 모달 띄우기
-
 	$(document.body).on( "click", ".rec-video1", function() {
 		var videoAddr = $(this).parent('.video-conts').children('.video-btm').attr('iframe-addr').replace('www.ted.com','embed.ted.com');
 		var cono = $(this).parent('.video-conts').children('.video-btm').children('.buttonHolder').attr('data-no');

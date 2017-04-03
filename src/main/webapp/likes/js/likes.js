@@ -47,15 +47,11 @@ function loadList() {
 //	    {
 //		  "pageNo": pageNo,
 //		  "pageSize": pageSize
-			"sno": sno
+//			"sno": sno
 //		}, 
 		function(ajaxResult) {
 		  var status = ajaxResult.status;
-		  if (status != "success")
-			  return;
-		  
-		  
-		  
+		  if (status != "success") return;
 		  var list = ajaxResult.data.list;
 		  var section = $('.persons');
 		  var template = Handlebars.compile($('#trTemplate').html());
@@ -63,7 +59,7 @@ function loadList() {
 		  
 		  console.log(list);
 		  setTimeout(function() {
-		  listPlay();
+			listPlay();
 		  },5000);
 		  
 //		  $('.name-link').click(function(event) {

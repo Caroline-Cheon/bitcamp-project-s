@@ -598,8 +598,14 @@ $(function() {
 	      } else if($(".frame-area-center").hasClass("likes")) {
 	        $(".likes").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
 	        $(".mystuff").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack");
-	      } else if(!$(".frame-area-center dashboard").hasClass("mystuff-call")) {
-	    	  alert("복귀 테스트");
+	      } else if($(".frame-area-out").hasClass("mystuff")) {
+	    	  $('.detail-contents').switchClass('fadeInLeft', 'fadeOutLeft', function() {
+	    		  setTimeout(function() {
+		    		  $('.detail-contents').remove(); 
+	    		  }, 900);
+	    		  $('.frame-area-out').switchClass('frame-area-out', 'frame-area-center', 2000, 'easeInOutBack');
+	    	  });
+	    	  
 	      }
     	} else {
     		modalConnector();
@@ -671,6 +677,29 @@ $(function() {
 	             $(".likes").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
 	             $(".mystuff").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack");
 	         }
+      } else if ($('.frame-area').hasClass('frame-area-out')) {
+    	  console.log("$('.frame-area').hasClass('frame-area-out')", $('.frame-area').hasClass('frame-area-out'));
+          if (wheelType < 0) {
+        	  if (currPageNo > 1) {
+        		    currPageNo = --currPageNo;
+        		    if (pageSize == '4') {
+        		      if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+        		      if ($('frame-area-center').hasClass('likes')) likeMentoList();
+        		    } else if (pageSize == '15') {
+        		      if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+        		      if ($('frame-area-center').hasClass('likes')) likeMentoList();
+        		    }
+        		  }
+          } else {
+        	  currPageNo = ++currPageNo;
+        	  if (pageSize == '4') {
+        	    if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+        	    if ($('frame-area-center').hasClass('likes')) likeMentoList();
+        	  } else if (pageSize == '15') {
+        	    if ($('frame-area-center').hasClass('mystuff')) loadVideoList();
+        	    if ($('frame-area-center').hasClass('likes')) likeMentoList();
+        	  }
+          }
       }
     };
       

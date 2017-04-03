@@ -23,7 +23,6 @@
  } // newMessageCount() 	
 
 $(function() { 
-	// refresh;
 	userInfo();
 	setTimeout(function() {
 		if (memberInfo != undefined) loadContorl();
@@ -113,7 +112,7 @@ function loadPlanList() {
 	console.log(currPageNo, pageSize);
 	$.getJSON(serverRoot + '/planDetail/list.json',
 		{
-		"pageNo": pageNo,
+		"pageNo": currPageNo,
 		"pageSize": pageSize,
 		"sno": sno
 		}, function(ajaxResult) {
@@ -342,9 +341,13 @@ function pageLoad(choose) {
 					if (ajaxResult.status == 'success') {
 						console.log('/planDetail/Count.json');
 						initPgBtn('plan', ajaxResult.data.totalCount); 
-						 $(".mystuff").load("mystuff/detail/mento-detail.html .dashboard", function() {
-							loadPlanList();
-						});
+						$('.mystuff').switchClass('frame-area-center', 'frame-area-out', 2000, 'easeInOutBack');
+						setTimeout(function() {
+							$('.contents').append("<div class='detail-contents animated fadeInLeft'></div>");
+							$(".detail-contents").load("mystuff/detail/mento-detail.html .dashboard", function() {
+								loadPlanList();
+							});
+						}, 1200);
 					}
 		});
 		

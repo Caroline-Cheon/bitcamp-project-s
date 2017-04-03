@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="bitcamp.java89.ems2.dao.EditorDao">
+
+<insert id="insert" parameterType="editor" useGeneratedKeys="true" keyColumn="cono" keyProperty="contentsNo">
+  insert into contents(type) values('plan')
+</insert>
+
+<insert id="mindInsert" parameterType="editor">
+  insert into plan(cono,plnm,eno,plmap,plimg) values(#{contentsNo}, #{title}, #{writer}, #{data}, #{thumbnail})
+</insert>
+
+</mapper>

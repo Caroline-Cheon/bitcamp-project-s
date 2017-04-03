@@ -77,8 +77,6 @@ $('.tooltip-viewport-bottom').tooltip({
 	viewport: {selector: '.container-viewport', padding: 2}
 });
 
-
-
 $( function() {
     $(document.body).on( "click", ".rec-btn", function() { // 추천목록 눌렀을 때
     	 
@@ -92,29 +90,22 @@ $( function() {
     });
 
     $(document.body).on( "click", ".like-btn", function() {// 좋아요 목록 눌렀을 때
-    	
     	$("#like-list").css("border-bottom", "2px solid blue");
     	$("#rec-list").css("border-bottom", "none");
     	$(".like-btn").css("text-decoration", "none");
 	    $("#all-like-list").css("display", "block");
         $("#all-rec-list").css("display", "none");
 //        $(".all-rec-model, .job-all, .all-rec-mento, video-all").css("display", "inline-block");
-   
     });
-    
 
     $(".hover").mouseleave(
     	    function () {
     	      $(this).removeClass("hover");
     	    }
     	  );
-    
     $(".video").hover(function() { // 비디오 hover효과
-    	
     	$(".video").css("background-color", "rgba(240, 128, 128, 0.27)");
-    	
     })
-    
     $(".video").mouseleave(
     	    function () {
     	      $(".video").css("background-color", "transparent");
@@ -122,10 +113,7 @@ $( function() {
     	  );
     //
     
-    
-    
     //  추천영상 더보기 버튼.
-    
     $(".videoBox").hover(function(){
     	$(this).children(".video-box").css({"height":"20px", "width":"20px"});
     })
@@ -134,7 +122,6 @@ $( function() {
     	    	$(this).children(".video-box").css({"height":"0px", "width":"0px"});
     	    }
     	  );
-    
     $(".video-box").hover(function(){
     	$(this).css({"height":"50px", "width":"50px"});
     })
@@ -143,8 +130,6 @@ $( function() {
     	      $(this).css({"height":"20px", "width":"20px"});
     	    }
     	  );
-    
-    
     $(".jobBox").hover(function(){
     	$(this).children(".job-box").css({"height":"20px", "width":"20px"});
     })
@@ -153,7 +138,6 @@ $( function() {
     	    	$(this).children(".job-box").css({"height":"0px", "width":"0px"});
     	    }
     	  );
-    
     $(".job-box").hover(function(){
     	$(this).css({"height":"50px", "width":"50px"});
     })

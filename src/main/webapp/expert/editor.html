@@ -3,37 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <title>DREAMTREE editor</title>
-<link rel="stylesheet" href="../common/css/common.css">
-<link rel="stylesheet" href="css/editor.css">
-<link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+<script>
+var nodePart; // 각 노드를 찾기 위한 오브젝트 저장용 전역 변수
 
-</head>
-<body>
-
-<div id="header"></div>
-
-<script src="../node_modules/jquery/dist/jquery.js"></script>
-<script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-<script src="../common/js/common.js"></script>
-<script src="js/go.js"></script>
-<script id="code">
+// 마인드 맵 설정용 스크립트
   function init() {
-    if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
-    var $ = go.GraphObject.make;  // for conciseness in defining templates
+    var $ = go.GraphObject.make;
     myDiagram =
-      $(go.Diagram, "myDiagramDiv",  // must name or refer to the DIV HTML element
+      $(go.Diagram, "myDiagramDiv",
         {
-          initialContentAlignment: go.Spot.Center,
-          allowDrop: true,  // must be true to accept drops from the Palette
-          "LinkDrawn": showLinkLabel,  // this DiagramEvent listener is defined below
-          "LinkRelinked": showLinkLabel,
-          "animationManager.duration": 800, // slightly longer than default (600ms) animation
-          "undoManager.isEnabled": true  // enable undo & redo
+    //마인맵 영역 설정
+          "commandHandler.copiesTree": true, //복사 가능한 트리 구조
+          "commandHandler.deletesTree": true, //삭제 가능한 트리 구조
+          "draggingTool.dragsTree": true, // 드래그 가능한 트리 구조
+          initialContentAlignment: go.Spot.Center,  // 최초 로드시 마인드 맵 중앙 위치
+          "undoManager.isEnabled": false // undo/redo 기능 
         });
-    // when the document is modified, add a "*" to the title and enable the "Save" button
+    
+    // 수정이 되었을경우 브라우저 title 뒤쪽게  '*'을 추가
     myDiagram.addDiagramListener("Modified", function(e) {
       var button = document.getElementById("SaveButton");
-      if (button) button.disabled = !myDiagram.isModified;
+//       if (button) button.disabled = !myDiagram.isModified;
       var idx = document.title.indexOf("*");
       if (myDiagram.isModified) {
         if (idx < 0) document.title += "*";
@@ -41,250 +31,459 @@
         if (idx >= 0) document.title = document.title.substr(0, idx);
       }
     });
-    // helper definitions for node templates
-    function nodeStyle() {
-      return [
-        // The Node.location comes from the "loc" property of the node data,
-        // converted by the Point.parse static method.
-        // If the Node.location is changed, it updates the "loc" property of the node data,
-        // converting back using the Point.stringify static method.
-        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-        {
-          // the Node.location is at the center of each node
-          locationSpot: go.Spot.Center,
-          //isShadowed: true,
-          //shadowColor: "#888",
-          // handle mouse enter/leave events to show/hide the ports
-          mouseEnter: function (e, obj) { showPorts(obj.part, true); },
-          mouseLeave: function (e, obj) { showPorts(obj.part, false); }
-        }
-      ];
-    }
-    // Define a function for creating a "port" that is normally transparent.
-    // The "name" is used as the GraphObject.portId, the "spot" is used to control how links connect
-    // and where the port is positioned on the node, and the boolean "output" and "input" arguments
-    // control whether the user can draw links from or to the port.
-    function makePort(name, spot, output, input) {
-      // the port is basically just a small circle that has a white stroke when it is made visible
-      return $(go.Shape, "Circle",
-               {
-                  fill: "transparent",
-                  stroke: null,  // this is changed to "white" in the showPorts function
-                  desiredSize: new go.Size(8, 8),
-                  alignment: spot, alignmentFocus: spot,  // align the port on the main Shape
-                  portId: name,  // declare this object to be a "port"
-                  fromSpot: spot, toSpot: spot,  // declare where links may connect at this port
-                  fromLinkable: output, toLinkable: input,  // declare whether the user may draw links to/from here
-                  cursor: "pointer"  // show a different cursor to indicate potential link point
-               });
-    }
-    // define the Node templates for regular nodes
-    var lightText = 'whitesmoke';
-    myDiagram.nodeTemplateMap.add("",  // the default category
-      $(go.Node, "Spot", nodeStyle(),
-        // the main object is a Panel that surrounds a TextBlock with a rectangular Shape
-        $(go.Panel, "Auto",
-          $(go.Shape, "Rectangle",
-            { fill: "#00A9C9", stroke: null },
-            new go.Binding("figure", "figure")),
-          $(go.TextBlock,
+    
+    // 각 요소를 규정하는 스크립트 (텍스트와 사각형 /아이콘 으로 구정되어있음)
+    
+    myDiagram.nodeTemplate =
+      $(go.Node, "Vertical", // 세로구조
+        { selectionObjectName: "TEXT" },
+        
+      //텍스트와  사각형을 묶어서 하나로 보여줌
+      $(go.Panel, "Auto",   
+       //사각형 부분   //코드상 아래 있을수록 Z-inex상 위에 표시 되므로 사각형 부터
+       $(go.Shape, "RoundedRectangle", //라운드 사각형모양
             {
-              font: "bold 11pt Helvetica, Arial, sans-serif",
-              stroke: lightText,
-              margin: 8,
-              maxSize: new go.Size(160, NaN),
-              wrap: go.TextBlock.WrapFit,
-              editable: true
+            name:"brush",
+            stroke:"black", // 기본 선색
+            fill:"black", //기본 내부 색
+            stretch: go.GraphObject.Horizontal,
+              strokeWidth: 1,
+              
+              //라인 포트를 규정함 (현재는 좌우 포트로 선이 연결됨)
+              portId: "", fromSpot: go.Spot.LeftRightSides, toSpot: go.Spot.LeftRightSides
             },
-            new go.Binding("text").makeTwoWay())
-        ),
-        // four named ports, one on each side:
-        makePort("T", go.Spot.Top, false, true),
-        makePort("L", go.Spot.Left, true, true),
-        makePort("R", go.Spot.Right, true, true),
-        makePort("B", go.Spot.Bottom, true, false)
-      ));
-    myDiagram.nodeTemplateMap.add("Start",
-      $(go.Node, "Spot", nodeStyle(),
+                   
+            new go.Binding("stroke", "brush").makeTwoWay(), // 선색을 저장함
+            new go.Binding("fill", "color").makeTwoWay(), // 내부색을 저장함
+            
+            //선의 출발지와 도착지에 대한 규정
+            new go.Binding("fromSpot", "dir", function(d) { return spotConverter(d, true); }),
+            new go.Binding("toSpot", "dir", function(d) { return spotConverter(d, false); })),
+            
+          //텍스트 부분
+            $(go.TextBlock,
+              { margin:2,
+                name: "TEXT",
+                stroke:"white", 
+                minSize: new go.Size(30, 15),
+                maxSize: new go.Size(200, NaN),
+                editable: true
+              },
+              
+              //글자의 크기와 글꼴을 기억하게 함
+              new go.Binding("text", "text").makeTwoWay(),
+              new go.Binding("scale", "scale").makeTwoWay(),
+              new go.Binding("font", "font").makeTwoWay())
+           
+            
+         ),
+        //아이콘에 대한 부분 //아이콘을 아래에 따로 표시 하기 위해 패널을 따로 묶고 가로로 배치 하기 위해 테이블을 사용
+        $(go.Panel, "Table", //테이블 구조        
+          $(go.Picture, "/img/pic.png",
+                  {name:"pic",
+                row: 0, column: 0, margin: 2, //테이블 상 위치 지정
+                maxSize: new go.Size(20, 17), //사이즈
+                  visible: false , //기본적으로 표시하지 않음
+                  click: function(e, obj) { imgpopup(obj.part.data.key); }}, //클릭 이벤트
+                  
+                new go.Binding("visible", "pic", function(i) { return i ? true : false; }).makeTwoWay()), //아이콘을 표시설정 상항연산 이용 상태가 전환되도록 구성 
+          
+            
+            $(go.Picture, "/img/mov.png",
+                  {name:"video",
+                row: 0, column: 1, margin: 2,
+                maxSize: new go.Size(20, 17),
+                  visible: false,
+                  click: function(e, obj) { videopopup(obj.part.data.key); }},
+            
+                  new go.Binding("visible", "video", function(i) { return i ? true : false; }).makeTwoWay()),
+          
+            
+            $(go.Picture, "/img/url.png",
+                  {name:"link",
+                row: 0, column: 2, margin: 2,
+                maxSize: new go.Size(20, 17),
+                  visible: false,
+                  click: function(e, obj) { linkpopup(obj.part.data.key); } },                    
+            
+                  new go.Binding("visible", "link", function(i) { return i ? true : false; }).makeTwoWay())            
+            ),
+            //위치 정보를 기억함 (중앙 기준)
+            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),        
+            new go.Binding("locationSpot", "dir", function(d) { return spotConverter(d, false); })
+      );
+    
+    
+
+    
+    
+    // 각 요소에 선택시 표시되는 부분을 규정하는 스크립트
+    
+    myDiagram.nodeTemplate.selectionAdornmentTemplate =
+      $(go.Adornment, "Spot",
         $(go.Panel, "Auto",
-          $(go.Shape, "Circle",
-            { minSize: new go.Size(40, 40), fill: "#79C900", stroke: null }),
-          $(go.TextBlock, "Start",
-            { font: "bold 11pt Helvetica, Arial, sans-serif", stroke: lightText },
-            new go.Binding("text"))
+          // 선택시 dodgerblue색 사각형이 형성됨 
+          $(go.Shape, { fill: null, stroke: "dodgerblue", strokeWidth: 3 }),
+          $(go.Placeholder)
         ),
-        // three named ports, one on each side except the top, all output only:
-        makePort("L", go.Spot.Left, true, false),
-        makePort("R", go.Spot.Right, true, false),
-        makePort("B", go.Spot.Bottom, true, false)
-      ));
-    myDiagram.nodeTemplateMap.add("End",
-      $(go.Node, "Spot", nodeStyle(),
-        $(go.Panel, "Auto",
-          $(go.Shape, "Circle",
-            { minSize: new go.Size(40, 40), fill: "#DC3C00", stroke: null }),
-          $(go.TextBlock, "End",
-            { font: "bold 11pt Helvetica, Arial, sans-serif", stroke: lightText },
-            new go.Binding("text"))
-        ),
-        // three named ports, one on each side except the bottom, all input only:
-        makePort("T", go.Spot.Top, false, true),
-        makePort("L", go.Spot.Left, false, true),
-        makePort("R", go.Spot.Right, false, true)
-      ));
-    myDiagram.nodeTemplateMap.add("Comment",
-      $(go.Node, "Auto", nodeStyle(),
-        $(go.Shape, "File",
-          { fill: "#EFFAB4", stroke: null }),
-        $(go.TextBlock,
+        
+        //선택시 표시되는 버튼 규정
+        $(go.Panel, "Horizontal", // 가로 구조
+          { alignment: go.Spot.Top, alignmentFocus: go.Spot.Bottom }, //상단에 표시 함
+          //요소 추가 버튼
+          $("Button",
+            { click: addNodeAndLink }, //클릭 이벤트  
+            $(go.TextBlock, "+", //글자 표시 부분
+              { font: "nomal 12pt", desiredSize: new go.Size(12, 12), textAlign: "center" })
+          ),
+          //색 변경 버튼
+          $("Button",
+            { click: changeColor, "_buttonFillOver": "transparent" },  //클릭 이벤트 / 마우스 오버시 투명화
+            new go.Binding("ButtonBorder.fill", "brush", nextColor), // 다음으로 변경될 색을 표시
+            $(go.Shape,
+              { fill: null, stroke: null, desiredSize: new go.Size(11, 11) })
+          )
+        )
+        
+      );
+      
+      
+    //색 변경시 사용될 색 배열
+    var myColors = ["lightgray", "lightblue", "lightgreen", "yellow", "orange", "pink" , "black"];
+
+    //현재 색을 이용 다음 색을 리턴하는 함수
+    function nextColor(c) {
+      var idx = myColors.indexOf(c);
+      if (idx < 0) return "lightgray";
+      if (idx >= myColors.length-1) idx = 0;
+      return myColors[idx+1];
+    }
+
+    //색을 변경해 주는 함수
+    function changeColor(e, button) {
+      
+      var node = button.part.adornedPart;
+      var brush = node.findObject("brush"); // 색이 변경 되야 하는 선부분을 찾는다      
+      if (brush === null) return;
+      
+      //undo / redo 에 사용 되는 스크립트 시작부분 (버그로 인해 주석 처리 함)
+//       node.diagram.startTransaction("Change brush"); 
+      
+      brush.stroke = nextColor(brush.stroke);//선색 변경
+      brush.fill = brush.stroke;// 내부 색을 변경  
+      
+      button["_buttonFill"] = nextColor(brush.stroke);  //버튼의 색도 같이 변경해줌
+      
+    //undo / redo 에 사용 되는 스크립트 끝부분 (버그로 인해 주석 처리 함) - 사용시  시작과 끝 사이에 있는 부분이 undo/redo 로 삭제/복원 됨
+//       node.diagram.commitTransaction("Change brush");
+      
+   // 연결되는 링크의 색을 같이 변경 해 주기 위해 저장하고 불러옴 
+      save(); 
+      load();
+    }
+      
+      
+      
+    
+    //각 요소에 종속되는 contextMenu 정의
+    myDiagram.nodeTemplate.contextMenu =
+      $(go.Adornment, "Vertical", // 세로 구조
+        $("ContextMenuButton",
+          $(go.TextBlock, "글자키우기"),
+          { click: function(e, obj) { changeTextSize(obj, 1.1); } }),
+        $("ContextMenuButton",
+          $(go.TextBlock, "글자 줄이기"),
+          { click: function(e, obj) { changeTextSize(obj, 1/1.1); } }),
+        $("ContextMenuButton",
+          $(go.TextBlock, "굵게/일반"),
+          { click: function(e, obj) { toggleTextWeight(obj); } }),        
+        $("ContextMenuButton",
+          $(go.TextBlock, "아이템 추가/삭제"),
+          { click: function(e, obj) {           
+            nodePart = obj.part.adornedPart;  // 각 요소를 찾기 위해 필요한 노드 부분을 전역 변수로 저장한다
+            var key = obj.part.data.key;  // DB에서 데이터를 받아 오기 위한 각 요소의 키를 받아 온다
+            popup(key);  // 팝업을 열어 줌
+          } }),
+        $("ContextMenuButton",
+          $(go.TextBlock, "자동정렬"),
           {
-            margin: 5,
-            maxSize: new go.Size(200, NaN),
-            wrap: go.TextBlock.WrapFit,
-            textAlign: "center",
-            editable: true,
-            font: "bold 12pt Helvetica, Arial, sans-serif",
-            stroke: '#454545'
-          },
-          new go.Binding("text").makeTwoWay())
-        // no ports, because no links are allowed to connect with a comment
-      ));
-    // replace the default Link template in the linkTemplateMap
-    myDiagram.linkTemplate =
-      $(go.Link,  // the whole link panel
-        {
-          routing: go.Link.AvoidsNodes,
-          curve: go.Link.JumpOver,
-          corner: 5, toShortLength: 4,
-          relinkableFrom: true,
-          relinkableTo: true,
-          reshapable: true,
-          resegmentable: true,
-          // mouse-overs subtly highlight links:
-          mouseEnter: function(e, link) { link.findObject("HIGHLIGHT").stroke = "rgba(30,144,255,0.2)"; },
-          mouseLeave: function(e, link) { link.findObject("HIGHLIGHT").stroke = "transparent"; }
-        },
-        new go.Binding("points").makeTwoWay(),
-        $(go.Shape,  // the highlight shape, normally transparent
-          { isPanelMain: true, strokeWidth: 8, stroke: "transparent", name: "HIGHLIGHT" }),
-        $(go.Shape,  // the link path shape
-          { isPanelMain: true, stroke: "gray", strokeWidth: 2 }),
-        $(go.Shape,  // the arrowhead
-          { toArrow: "standard", stroke: null, fill: "gray"}),
-        $(go.Panel, "Auto",  // the link label, normally not visible
-          { visible: false, name: "LABEL", segmentIndex: 2, segmentFraction: 0.5},
-          new go.Binding("visible", "visible").makeTwoWay(),
-          $(go.Shape, "RoundedRectangle",  // the label shape
-            { fill: "#F8F8F8", stroke: null }),
-          $(go.TextBlock, "Yes",  // the label
-            {
-              textAlign: "center",
-              font: "10pt helvetica, arial, sans-serif",
-              stroke: "#333333",
-              editable: true
-            },
-            new go.Binding("text").makeTwoWay())
+            click: function(e, obj) {
+                var adorn = obj.part;
+//                 adorn.diagram.startTransaction("Subtree Layout");
+                layoutTree(adorn.adornedPart);
+//                 adorn.diagram.commitTransaction("Subtree Layout");
+              }
+          }
         )
       );
-    // Make link labels visible if coming out of a "conditional" node.
-    // This listener is called by the "LinkDrawn" and "LinkRelinked" DiagramEvents.
-    function showLinkLabel(e) {
-      var label = e.subject.findObject("LABEL");
-      if (label !== null) label.visible = (e.subject.fromNode.data.figure === "Diamond");
-    }
-    // temporary links used by LinkingTool and RelinkingTool are also orthogonal:
-    myDiagram.toolManager.linkingTool.temporaryLink.routing = go.Link.Orthogonal;
-    myDiagram.toolManager.relinkingTool.temporaryLink.routing = go.Link.Orthogonal;
-    load();  // load an initial diagram from some JSON text
-    // initialize the Palette that is on the left side of the page
-    myPalette =
-      $(go.Palette, "myPaletteDiv",  // must name or refer to the DIV HTML element
+    
+    
+ 
+    
+    
+    
+    
+    
+    // 선과 선을 연결 하는 링크 규정 스크립트
+    myDiagram.linkTemplate =
+      $(go.Link,
         {
-          "animationManager.duration": 800, // slightly longer than default (600ms) animation
-          nodeTemplateMap: myDiagram.nodeTemplateMap,  // share the templates used by myDiagram
-          model: new go.GraphLinksModel([  // specify the contents of the Palette
-            { category: "Start", text: "Start" },
-            { text: "Step" },
-            { text: "???", figure: "Diamond" },
-            { category: "End", text: "End" },
-            { category: "Comment", text: "Comment" }
-          ])
+        curve: go.Link.Bezier,
+          fromShortLength: -2,
+          toShortLength: -2,
+          selectable: false
+        },
+        $(go.Shape, // 기본적으로 선의 색을 따라 간다 선의 색이 규정되지 않으면 기본 검정
+          { name:"link",strokeWidth: 3},
+          new go.Binding("stroke", "toNode", function(n) {
+            if (n.data.brush) return n.data.brush;
+            return "black";
+          }).ofObject())
+      );
+    
+    
+    
+    
+    
+    // 디스플레이 영역 전체에 작동 하는 contextMenu 
+    myDiagram.contextMenu =
+      $(go.Adornment, "Vertical", // 세로 구조
+          //undo/redo 기능을 제한 하기 위해 주석 처리 함
+//         $("ContextMenuButton",
+//           $(go.TextBlock, "Undo"),
+//           { click: function(e, obj) { e.diagram.commandHandler.undo(); } },
+//           new go.Binding("visible", "", function(o) { return o.diagram && o.diagram.commandHandler.canUndo(); }).ofObject()),
+//         $("ContextMenuButton",
+//           $(go.TextBlock, "Redo"),
+//           { click: function(e, obj) { e.diagram.commandHandler.redo(); } },
+//           new go.Binding("visible", "", function(o) { return o.diagram && o.diagram.commandHandler.canRedo(); }).ofObject()),
+//         $("ContextMenuButton",
+//           $(go.TextBlock, "Save"),
+//           { click: function(e, obj) { save(); } }),
+//         $("ContextMenuButton",
+//           $(go.TextBlock, "Load"),
+//           { click: function(e, obj) { load(); } }),
+        $("ContextMenuButton",
+          $(go.TextBlock, "자동정렬"),
+        { click: function(e, obj) { layoutAll(); } })
+      );
+    
+    
+    //선택된 요소의 이동을 규정한 스크립트 / 좌우로 이동 했을 경우 시작되는 root 부분을 규정 한다
+    myDiagram.addDiagramListener("SelectionMoved", function(e) {
+      var rootX = myDiagram.findNodeForKey(0).location.x;
+      myDiagram.selection.each(function(node) {
+          if (node.data.parent !== 0) return;  
+          var nodeX = node.location.x;
+          if (rootX < nodeX && node.data.dir !== "right") {
+            updateNodeDirection(node, "right");
+          } else if (rootX > nodeX && node.data.dir !== "left") {
+            updateNodeDirection(node, "left");
+          }
+          layoutTree(node);
         });
+    });
+    // 페이지에 저장된 json 형식의 데이터를 불러와 디스플레이 영역에 표시 한다
+    load();
   }
-  // Make all ports on a node visible when the mouse is over the node
-  function showPorts(node, show) {
-    var diagram = node.diagram;
-    if (!diagram || diagram.isReadOnly || !diagram.allowLink) return;
-    node.ports.each(function(port) {
-        port.stroke = (show ? "white" : null);
+  
+  
+  
+  //선의 출발지와 도착지를 리턴하는 함수
+  function spotConverter(dir, from) {
+    if (dir === "left") {
+      return (from ? go.Spot.Left : go.Spot.Right);
+    } else {
+      return (from ? go.Spot.Right : go.Spot.Left);
+    }
+  }
+  
+  
+  //텍스트의 사이즈를 변경 해 주는 함수 (배율은 1.1)
+  function changeTextSize(obj, factor) {
+  var adorn = obj.part;
+//     adorn.diagram.startTransaction("Change Text Size");
+    var node = adorn.adornedPart;
+    console.log(node);
+    var tb = node.findObject("TEXT");
+    tb.scale *= factor;
+//     adorn.diagram.commitTransaction("Change Text Size");
+  }
+  
+  
+  //텍스트의 볼드/노멀을 변경하는 스크립트
+  function toggleTextWeight(obj) {
+    var adorn = obj.part;
+//     adorn.diagram.startTransaction("Change Text Weight");
+    var node = adorn.adornedPart;
+    var tb = node.findObject("TEXT");
+    // 해당 라이브러리는 볼드여부가 텍스트의 맨 앞부분에 규정되어있다.
+    var idx = tb.font.indexOf("bold");
+    if (idx < 0) {
+      tb.font = "bold " + tb.font;
+    } else {
+      tb.font = tb.font.substr(idx + 5);
+    }
+//     adorn.diagram.commitTransaction("Change Text Weight");
+  }
+  
+  
+  //각 자식 요소의 방향을 갱신 하는 함수
+  function updateNodeDirection(node, dir) {
+    myDiagram.model.setDataProperty(node.data, "dir", dir);
+    // 자식 요소의 방향을 재귀적으로 갱신한다
+    var chl = node.findTreeChildrenNodes(); //자식 요소의 반복자
+    while(chl.next()) {
+      updateNodeDirection(chl.value, dir);
+    }
+  }
+  
+  
+  
+  
+  //요소를 추가 해 주는 함수
+  function addNodeAndLink(e, obj) {
+    var adorn = obj.part;
+    var diagram = adorn.diagram;
+//     diagram.startTransaction("Add Node");
+    var oldnode = adorn.adornedPart;
+    var olddata = oldnode.data;
+    var oldBrush = olddata.brush; 
+    // 방향과 선의 색을 상속 받는다
+    var newdata = { text: "입력해주세요", brush: oldBrush,color:oldBrush, dir: olddata.dir, parent: olddata.key, pic:false , video:false, link:false};
+    diagram.model.addNodeData(newdata);
+    layoutTree(oldnode);
+//     diagram.commitTransaction("Add Node");
+  }
+  
+  
+  //트리 구조에서 해당 요소를 어디에 추가 할지를 선택하는  함수
+  function layoutTree(node) {
+    if (node.data.key === 0) { //root에서 시작인지  
+      layoutAll();  
+    } else { // 아니면 부모에서 시작인지
+      var parts = node.findTreeParts();
+      layoutAngle(parts, node.data.dir === "left" ? 180 : 0);
+    }
+  }
+  
+  
+  
+  function layoutAngle(parts, angle) {
+    var layout = go.GraphObject.make(go.TreeLayout,
+        { angle: angle,
+          arrangement: go.TreeLayout.ArrangementFixedRoots,
+          nodeSpacing: 5,
+          layerSpacing: 20,
+          setsPortSpot: false, // 따로 함수을 분기함 기본이true이므로 false로 규정함 수정 불가!
+          setsChildPortSpot: false });
+    layout.doLayout(parts);
+  }
+  
+  
+  //자동 정렬용 함수
+  function layoutAll() {
+    var root = myDiagram.findNodeForKey(0);
+    if (root === null) return;
+//     myDiagram.startTransaction("Layout");
+    
+    var rightward = new go.Set(go.Part);
+    var leftward = new go.Set(go.Part);
+    root.findLinksConnected().each(function(link) {
+        var child = link.toNode;
+        if (child.data.dir === "left") {
+          leftward.add(root);  
+          leftward.add(link);
+          leftward.addAll(child.findTreeParts());
+        } else {
+          rightward.add(root);
+          rightward.add(link);
+          rightward.addAll(child.findTreeParts());
+        }
       });
+        layoutAngle(rightward, 0);
+    layoutAngle(leftward, 180);
+//     myDiagram.commitTransaction("Layout");
   }
-  // Show the diagram's model in JSON format that the user may edit
+  
+  
+  
+  // 다이어그램 전체 데이터를 json형식으로 페이지에만 저장하는 함수
   function save() {
-    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
-    myDiagram.isModified = false;
+  document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+//     myDiagram.isModified = false;
   }
+  
+  //다이어그램 전체 데이터를 json형식으로 서버에 저장하는 함수
+  function serversave() {
+    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+      myDiagram.isModified = false;
+      capture();//화면 캡쳐와 서버 저장용 함수
+  }
+  
+  //전체 데이터 수정 함수
+  function servermodify() {
+    if(check()){
+    document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+      myDiagram.isModified = false;
+      modify(); //새로운 화면 캡쳐 및 수정용 함수
+    }
+  }  
+  
+  //json를 화면에 그려주는 함수
   function load() {
     myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
-  }
-  // add an SVG rendering of the diagram at the end of this page
-  function makeSVG() {
-    var svg = myDiagram.makeSvg({
-        scale: 0.5
-      });
-    svg.style.border = "1px solid black";
-    obj = document.getElementById("SVGArea");
-    obj.appendChild(svg);
-    if (obj.children.length > 0) {
-      obj.replaceChild(svg, obj.children[0]);
-    }
   }
 </script>
 </head>
 <body onload="init()">
-<div id="container" class="editor dashboard">
-<!-- style="width: 100%; text-align:center" -->
-<!-- -left:-480px; position: relative; left: 50%; -->
-<div id="sample" style="width: 960px; margin: 0 auto;">
-<!--   <h3>GoJS Flowchart</h3> -->
-  <div style="width:100%; white-space:nowrap;">
-    <span style="display: inline-block; vertical-align: top; padding: 5px; width:150px">
-      <div id="myPaletteDiv" style="background-color: #C5C5C5; height: 820px"></div>
-    </span>
+<!-- 다이어그램 영역 시작 -->
+  <div id="myDiagramDiv" style="border: solid 1px black; width:100%; height:300px;"></div>
+<!-- 다이어그램 영역 끝  -->
 
-    <span style="display: inline-block; vertical-align: top; padding: 5px; width:90%">
-      <div id="myDiagramDiv" style="background-color: #D5D5D5; height: 820px"></div>
-    </span>
-  </div>
 
-  <button id="SaveButton" onclick="save()" style="margin-left: 10px">Save</button>
-  <button onclick="load()">Load</button>
-<!--   Diagram Model saved in JSON format: -->
-  <textarea id="mySavedModel" style="margin: 0 auto; width:100%; height:300px">
-{ "class": "go.GraphLinksModel",
-  "linkFromPortIdProperty": "fromPort",
-  "linkToPortIdProperty": "toPort",
-  "nodeDataArray": [ 
-{"key":-1, "category":"Start", "loc":"155.99999999999991 -1.0000000000000036", "text":"Start"},
-{"text":"IT 전문가가 되고 싶은가?", "figure":"Diamond", "key":-3, "loc":"155.890625 100"},
-{"text":"비트캠프를 방문한다.", "key":-2, "loc":"156.890625 208"},
-{"text":"good-bye", "key":-4, "loc":"-40.109375 196"},
-{"text":"엄진영 강사님을 만난다.", "key":-5, "loc":"156.890625 267"},
-{"category":"Comment", "text":"이땐 쩌는게 핵심이다.", "key":-6, "loc":"304.890625 265"},
-{"text":"그럼, 연봉 1억을 찍는다.", "key":-7, "loc":"156.890625 350"},
-{"category":"End", "text":"End", "key":-8, "loc":"156.890625 418"}
- ],
-  "linkDataArray": [ 
-{"from":-3, "to":-2, "fromPort":"B", "toPort":"T", "visible":true, "points":[155.890625,147.7,155.890625,157.7,155.890625,169.7,156.890625,169.7,156.890625,181.7,156.890625,191.7], "text":"예"},
-{"from":-3, "to":-4, "fromPort":"L", "toPort":"T", "visible":true, "points":[28.390625,100,18.390625,100,-40.109375,100,-40.109375,134.85,-40.109375,169.7,-40.109375,179.7], "text":"아니오"},
-{"from":-1, "to":-3, "fromPort":"B", "toPort":"T", "points":[156,24.209302325581397,156,34.2093023255814,156,38.254651162790694,155.890625,38.254651162790694,155.890625,42.3,155.890625,52.3]},
-{"from":-2, "to":-5, "fromPort":"B", "toPort":"T", "points":[156.890625,224.29999999999998,156.890625,234.29999999999998,156.890625,234.29999999999998,156.890625,232.89999999999998,156.890625,232.89999999999998,156.890625,242.89999999999998]},
-{"from":-5, "to":-7, "fromPort":"B", "toPort":"T", "points":[156.890625,291.09999999999997,156.890625,301.09999999999997,156.890625,308.5,156.890625,308.5,156.890625,315.9,156.890625,325.9]},
-{"from":-7, "to":-8, "fromPort":"B", "toPort":"T", "points":[156.890625,374.09999999999997,156.890625,384.09999999999997,156.890625,385.62558139534883,156.890625,385.62558139534883,156.890625,387.1511627906977,156.890625,397.1511627906977]}
- ]}
 
+<button id="SaveButton" onclick="serversave()">저장</button>
+
+
+
+<!--   페이지에 데이터를 저장하는 텍스트에어리어 시작 -->
+
+<!-- 수정인지 저장인지 판단 기존 데이터 표시 또는 기본 데이터 표시 분기 -->
+<!--   <textarea id="mySavedModel" style="width:100%;height:400px;display: none;"> -->
+<!--    ${minddata.data} -->
+<!--   </textarea> -->
+  
+  <textarea id="mySavedModel" style="width:100%;height:400px;display: none;">
+   { "class": "go.TreeModel",
+     "nodeDataArray": [ {"key":0, "text":"직  업", "loc":"0 0" ,"brush":"black" , "pic":"" , "video":""} ]}
   </textarea>
-</div>
-</div>
+
+
+<script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="js/go.js"></script>
+<script type="text/javascript" src="js/html2canvas.js"></script>
+<script type="text/javascript" src="../common/js/context.js"></script>
+<script>
+function capture() {
+  html2canvas($("#myDiagramDiv"), { // 해당 영역만 스크린샷 생성
+       onrendered: function(canvas) {
+         $.post(serverRoot + "/expert/save.json", 
+         	{
+         	"title" : "설계도 타이틀",
+         	"writer" : 6, 
+          "data" : $("#mySavedModel").val(),
+          "thumbnail" : canvas.toDataURL("image/png")
+         	}, function(ajaxResult) {
+         		if (ajaxResult.status == 'fail') {
+         			alert ('실패', ajaxResult.data); 
+         		} else {
+         			alert ('성공', ajaxResult.data);
+         		}
+         	});
+       }
+   });
+}
+</script>
 </body>
 </html>

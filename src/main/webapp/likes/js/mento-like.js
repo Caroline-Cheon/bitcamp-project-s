@@ -118,8 +118,7 @@ $(".mt-list").mouseleave(
     
     
     
-    //  추천영상 bottom 허버시 이벤트
-    
+//  추천영상 bottom 허버시 이벤트
     $(".videoBox").hover(function(){
     	$(this).children(".video-box").css({"height":"20px", "width":"20px"});
     })
