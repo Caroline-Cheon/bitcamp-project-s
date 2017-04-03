@@ -144,9 +144,7 @@
 $(function() {
 	  <!-- header load -->
 userInfo();
-setTimeout(function() {
-console.log(expertNo);
-},600);
+
 	  <!-- /header load -->
 	  
 	  <!-- expert service loader -->
@@ -156,12 +154,13 @@ console.log(expertNo);
 	  <!-- /expert service load -->
 	  
 	  var count = 0;
+	  var mteNewMsg = 0;
 	   setTimeout(function() {
 	      $.getJSON(serverRoot + '/expert/board.json',
 	            {
 	              'pageNo': 1,
 	              'pageSize': 6, 
-	              'eno': expertNo
+	              'eno': memberInfo.memberNo
 	            }, function(ajaxResult) {
 	              var status = ajaxResult.status;
 	              if (status != "success") return; 
@@ -169,15 +168,20 @@ console.log(expertNo);
 	              var list = ajaxResult.data.list;
 	              console.log(list);
 	              
+	              var count = new Array();
 	              $.each(list, function(k, v) {
 	                  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
 	                  {
 	                    "cono": v.contentsNo,
-	                    "mswr": expertNo
+	                    "mswr": memberInfo.memberNo
 	                  }, function(ajaxResult) {
 	                      var status = ajaxResult.status;
 	                    if (ajaxResult.status != "success") {return};
-	                    var mteNewMsg = ajaxResult.data;
+	                    console.log(ajaxResult.data);
+	                     mteNewMsg = ajaxResult.data;
+	                    if (mteNewMsg != 0) {
+	                    	mteNewMsg++;
+	                    }
 	                    console.log(mteNewMsg);
                          list[k].newCount = mteNewMsg;
                        if (list[k].newCount != 0) {
@@ -195,9 +199,9 @@ console.log(expertNo);
 	                    if (list[k].newCount != 0) {
 	                    	console.log($(this));
 	                    	$('.new-count').css('display','block');
-	                    	list[k].isCount = true;
+	                    /* 	list[k].isCount = true;
 	                    	count = count + list[k].newCount;
-	                    	$('.new-count').text(count);
+	                    	$('.new-count').text(count); */
 	                    }
 	                    
 	                  });

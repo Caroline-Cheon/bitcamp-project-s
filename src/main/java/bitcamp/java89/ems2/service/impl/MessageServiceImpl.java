@@ -75,6 +75,13 @@ public class MessageServiceImpl implements MessageService {
   }
   
   @Override
+  public ArrayList<Integer> getMenteeNo(HashMap<String, Object> intMap) throws Exception {
+   
+    return messageDao.getMenteeNo(intMap);
+  }
+  
+  
+  @Override
   public String mentoGetMessageNo(HashMap<String, Object> intMap) throws Exception {
     return messageDao.mentoGetMessageNo(intMap);
   }
@@ -98,6 +105,13 @@ public class MessageServiceImpl implements MessageService {
   public int menteeNewMsgCount(HashMap<String, Object> intMap) throws Exception {
     return messageDao.menteeNewMsgCount(intMap);
   }
+
+  @Override
+  public Message getMessageWriter(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.getMessageWriter(intMap);
+  }
+
+
   
   
 }
