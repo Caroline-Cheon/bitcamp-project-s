@@ -6,15 +6,16 @@
   display: none;
   top: 50%;
   left: 50%;
-  margin-top: -350px;
-  margin-left: -400px;
+  margin-top: -400px;
+  margin-left: -450px;
   z-index: 13;
 }
 #mento-set-wrap {
-  width: 800px;
+  width: 935px;
+  height: 816px;
   margin: 0 auto;
   font-family: Malgun Gothic;
-  box-shadow: 0px 400px 80px 800px rgba(0,0,0,0.8)
+  box-shadow: 0px 400px 80px 800px rgba(0,0,0,0.8);
 }
 .mento-set-s-title{
   font-weight: 400;
@@ -22,6 +23,7 @@
   margin: 10px 0;
   padding-left: 12px;
   font-size: 14px;
+  /* margin-left: 2px; */
 }
 
 .mento-set-special-title {
@@ -29,6 +31,7 @@
     position: absolute;
     padding: 0 58px;
     font-size: 30px;
+    width: 400px;
 }
 .mento-set-detail-title{
     font-family: 'Nanum Brush Script', serif;
@@ -38,15 +41,16 @@
 }
 .mento-set-career-title {
   font-family: 'Nanum Brush Script', serif;
-    position: absolute;
-    padding: 0 58px;
-    font-size: 30px;
+  position: absolute;
+  padding: 0 58px;
+  font-size: 30px;
+  /* padding-left: 63px; */
 }
 
 .pre-after-icons {
   position: relative;
   height: 64px;
-  margin-left: 203px;
+  margin-left: 29px;
   margin-top: 10px;
 }
 
@@ -59,7 +63,7 @@
 .after-quote {
   position: absolute;
   font-size: 25px;
-  left: 324px;
+  left: 337px;
   top: 1px;
   color: rgb(170,170,170);
 }
@@ -68,48 +72,88 @@
   border-radius: 33px;
   /* margin: 4px 6px; */
   /* width: 500px; */
-  margin-top: 10px;
+  margin-top: -5px;
   margin-left: 10px;
   /* z-index: 1010; */
   height: 152px;
+  width: 450px;
+  height: 713px;
+  /* position: absolute; */
+  webkit-scrollbar: width:2px;
+  /* overflow: scroll; */
 }
 
 .detail-mento-wrapper {
   border: 3px #cfecd0 solid;
   border-radius: 33px;
-  margin-top: 10px;
+  margin-top: -5px;
   margin-left: 10px;
   height: 152px;
+  left: 461px;
+  position: absolute;
+  width: 450px;
+  height: 350px;
 }
 
 .career-mento-wrapper {
   border: 3px #D0ECE7 solid;
   border-radius: 33px;
-  margin-top: 10px;
+  margin-top: -19px;
   margin-left: 10px;
-  height: 191px;
+  height: 350px;
+  left: 460px;
+  position: absolute;
+  top: 377px;
+  width: 450px;
 }
 .mento-set-box {
       position: relative;
       background-color: #fff;
       margin-bottom: 20px;
-      height: 590px;
+      height: 754px;
 }
 fieldset {
   background-color: #fff;
   border: 1px 0;
   padding-top: 0;
-  width: 734px;
+  width: 200px;
   position: absolute;
   margin-left: 10px;
 }
 .mento-set-ul {
   list-style: none;
-  margin-top: 0;
+  margin-top: 50px;
   margin-bottom: 0;
   margin-left: 20px;
-  width: 717px;
+  width: 408px;
+  height: 552px;
+  overflow-y: scroll;
 }
+
+.mento-set-ul::-webkit-scrollbar {
+width: 8px; 
+height: 8px; 
+border: 3px solid #fff;
+display: block;
+}
+.mento-set-ul::-webkit-scrollbar-button:start:decrement, .mento-set-ul::-webkit-scrollbar-button:end:increment{
+display: block;
+height:10px;
+background:#efefef;
+}
+.mento-set-ul::-webkit-scrollbar-track {
+  background: #efefef;
+  -webkit-scrollbar-radius: 10px;
+}
+.mento-set-ul::-webkit-scrollbar-thumb {
+  height: 50px;
+  width: 50px;
+  background: rgba(0,0,0,0.2);
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+}
+
 .mento-set-ul li {
   display: inline-block;
   margin-right: 21px;
@@ -127,7 +171,7 @@ fieldset {
   font-family: 'Jeju Gothic';
 }
 .column {
-  width: 774px;
+  /* width: 774px; */
   display: inline-block;
 }
 .label-checkbox,
@@ -136,8 +180,8 @@ fieldset {
   cursor: pointer;
   overflow: hidden;
   display: inline-block;
-  font-size: 11px;
-  width: 55px;
+  font-size: 16px;
+  width: 170px;
 }
 .label-checkbox input[type="checkbox"],
 .crbtn input[type="checkbox"] {
@@ -151,9 +195,9 @@ label.disabled * {
 
 /* ############[ Checkbox ]############ */
 .label-checkbox span {
-  top: 1px;
-  width: 16px;
-  height: 16px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
   float: left;
   margin: 0 5px 0 0;
   position: relative;
@@ -175,13 +219,14 @@ label.label-checkbox.checked {
   color: black;
 }
 .career-area {
-  width: 722px;
-  height: 100px;
+  width: 397px;
+  height: 246px;
   margin-left: 13px;
   font-size: 12px;
   border: transparent;
   /* border: 3px #33b1b9 solid; */
-  /* border-radius: 33px; */
+  /* border-radius: 50px; */
+  resize: none;
 }
 
 .mento-set-btn {
@@ -194,7 +239,7 @@ label.label-checkbox.checked {
   color: white;
   width: 80px;
   height: 38px;
-  margin: 4px 12px;
+  margin: 713px 12px;
   float: right;
 }
 
@@ -208,19 +253,20 @@ label.label-checkbox.checked {
   color: white;
   width: 80px;
   height: 38px;
-  margin: 4px 12px;
+  margin: 713px 12px;
   float: right;
 }
 
 
 .detail-area {
   margin-left: 12px;
-  width: 722px;
+  width: 397px;
   font-size: 12px;
   /* border: 3px #33b1b9 solid; */
-  /* border-radius: 33px; */
+  border-radius: 33px;
   border: transparent;
-  height: 58px;
+  height: 246px;
+  resize: none;
 }
 
 
