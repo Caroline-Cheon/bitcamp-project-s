@@ -47,10 +47,10 @@ var nodePart; // 각 노드를 찾기 위한 오브젝트 저장용 전역 변�
             stroke:"black", // 기본 선색
             fill:"black", //기본 내부 색
             stretch: go.GraphObject.Horizontal,
-              strokeWidth: 1,
+            strokeWidth: 1,
               
-              //라인 포트를 규정함 (현재는 좌우 포트로 선이 연결됨)
-              portId: "", fromSpot: go.Spot.LeftRightSides, toSpot: go.Spot.LeftRightSides
+            //라인 포트를 규정함 (현재는 좌우 포트로 선이 연결됨)
+            portId: "", fromSpot: go.Spot.LeftRightSides, toSpot: go.Spot.LeftRightSides
             },
                    
             new go.Binding("stroke", "brush").makeTwoWay(), // 선색을 저장함
@@ -447,16 +447,15 @@ var nodePart; // 각 노드를 찾기 위한 오브젝트 저장용 전역 변�
 
 
 
-<!--   페이지에 데이터를 저장하는 텍스트에어리어 시작 -->
-
-<!-- 수정인지 저장인지 판단 기존 데이터 표시 또는 기본 데이터 표시 분기 -->
-<!--   <textarea id="mySavedModel" style="width:100%;height:400px;display: none;"> -->
+<!--  페이지에 데이터를 저장하는 텍스트에어리어 시작 -->
+<!--  수정인지 저장인지 판단 기존 데이터 표시 또는 기본 데이터 표시 분기 -->
+<!--  <textarea id="mySavedModel" style="width:100%;height:400px;display: none;"> -->
 <!--    ${minddata.data} -->
-<!--   </textarea> -->
+<!--  </textarea> -->
   
   <textarea id="mySavedModel" style="width:100%;height:400px;display: none;">
-   { "class": "go.TreeModel",
-     "nodeDataArray": [ {"key":0, "text":"직  업", "loc":"0 0" ,"brush":"black" , "pic":"" , "video":""} ]}
+    { "class": "go.TreeModel",
+      "nodeDataArray": [ {"key":0, "text":"직  업", "loc":"0 0" ,"brush":"black" , "pic":"" , "video":""} ]}
   </textarea>
 
 
