@@ -7,6 +7,7 @@
 
 
   <resultMap type="bitcamp.java89.ems2.domain.Plan" id="plan-map" extends="mento-map">
+    <id     column="mno"        property="memberNo"/>
     <id     column="cono"        property="contentsNo"/>
     <id     column="eno"        property="mentoNo"/>
     <result column="name"       property="name"/>
@@ -14,6 +15,7 @@
     <result column="plmap"       property="planMap"/>
     <result column="plnm"      property="planName"/>
     <result column="plimg"      property="planImage"/>
+    <result column="sarea"       property="specialArea"/>
   </resultMap>
   
   <resultMap type="bitcamp.java89.ems2.domain.Mento" id="mento-map">
@@ -138,11 +140,18 @@
   </select>
   
   <select id="boardList" resultMap="plan-map" parameterType="map">
-    select cono, plnm, plimg
-    from plan 
-    where cono != 4
-    <!--  where eno = eno -->
-    limit 6
+select name, 
+       mb.mno,
+       mto.eno,
+       pl.cono, 
+       plnm, 
+       plimg, 
+       sarea
+    from plan pl
+     inner join mento mto on mto.eno = pl.eno
+     inner join membs mb on mb.mno = mto.eno
+      where pl.eno = #{eno}
+      limit 6
     <!--  limit #{startRowIndex}, #{rowSize} -->
   </select>
   

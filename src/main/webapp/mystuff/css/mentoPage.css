@@ -169,7 +169,7 @@
     width: 100px;
     height: 90px;
     position: absolute;
-    z-index: 2000;
+/*     z-index: 2000; */
     top: -15px;
     left: 390px;
     padding: 6px;
@@ -248,7 +248,7 @@ border-radius: 50%;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 700;
+/*     z-index: 700; */
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
     background-color: transparent;

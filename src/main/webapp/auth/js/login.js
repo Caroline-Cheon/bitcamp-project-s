@@ -38,11 +38,15 @@ $(function() {
 			console.log(param);
 		}
 		$.post(serverRoot + '/auth/login.json', param, function(ajaxResult) {
+			userInfo(); 
+			
 			if (ajaxResult.status != "success") {
 				alert(ajaxResult.data);
 			}
 				console.log('logIn().ajaxResult');
 				console.log(ajaxResult.status);
+				console.log(ajaxResult.data.mento);
+				console.log(memsType);
 				eventControll();
 				// 서비스 대상에 따른 페이지 분기점
 				$('.login-form-container').removeClass("animated fadeInRight");
@@ -50,16 +54,37 @@ $(function() {
 		    	setTimeout(function() {
 		    		$('.auth-login-form').css("display", "none");
 		    		$('.login-form-container').removeClass("animated fadeOutRight");
+		    		if (memsType == 'mentee') {
+		    			console.log("멘티");
+		    			$('.header-icon-user').css("display", "inline-block");
+		    			$('.header-icon-message').css("display", "inline-block");
+		    			location.href=serverRoot + '/main.html';
+		                $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
+				    		setTimeout(function() {
+				    			loadContorl();
+				    		}, 3500);
+				    	});
+		    			
+		    		}
+		    		else {
+		    			console.log("멘토");
+		    			$('.header-icon-user').css("display", "inline-block");
+		    			location.href=serverRoot + '/expert/driver.html';
+		                $('.mento-menu').load(clientRoot + '/common/header.html .mento-menu-call', function() {
+				    		setTimeout(function() {
+				    			loadContorl();
+				    		}, 3500);
+				    	});
+		    		}
 		    	}, 600);
 		    	$('.header-icon-power').css("display", "none");
-		    	$('.header-icon-user').css("display", "inline-block");
-		    	$('.header-icon-message').css("display", "inline-block");
-		    	$('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
-		    		userInfo();
+		    	
+		    	
+/*                $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
 		    		setTimeout(function() {
 		    			loadContorl();
 		    		}, 3500);
-		    	});
+		    	});*/
 		}, 'json');
 	}
 	$(document.body).on('keypress', '.login-button-go', function(event) {

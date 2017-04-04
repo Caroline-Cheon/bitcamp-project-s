@@ -75,6 +75,7 @@
     height: 640px;
 }
 .mentee-info {
+    position: relative;
     width: 140px;
     display: inline-block;
     text-align: center;
@@ -142,9 +143,8 @@
 <script>
 $(function() {
 	  <!-- header load -->
-	  $.get("../common/header.html", function(result) {
-		  $('#header').html(result);
-	  });
+userInfo();
+
 	  <!-- /header load -->
 	  
 	  <!-- expert service loader -->
@@ -153,14 +153,14 @@ $(function() {
 	  });
 	  <!-- /expert service load -->
 	  
-	   var eno = 6;
-	   console.log(eno);
+	  var count = 0;
+	  var mteNewMsg = 0;
 	   setTimeout(function() {
 	      $.getJSON(serverRoot + '/expert/board.json',
 	            {
 	              'pageNo': 1,
 	              'pageSize': 6, 
-	              'eno': eno
+	              'eno': memberInfo.memberNo
 	            }, function(ajaxResult) {
 	              var status = ajaxResult.status;
 	              if (status != "success") return; 
@@ -168,17 +168,22 @@ $(function() {
 	              var list = ajaxResult.data.list;
 	              console.log(list);
 	              
+	              var count = new Array();
 	              $.each(list, function(k, v) {
 	                  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
 	                  {
 	                    "cono": v.contentsNo,
-	                    "mswr": eno
+	                    "mswr": memberInfo.memberNo
 	                  }, function(ajaxResult) {
 	                      var status = ajaxResult.status;
 	                    if (ajaxResult.status != "success") {return};
-	                    var mteNewMsg = ajaxResult.data;
-// 	                    console.log(mteNewMsg);
-                         list[k].newCount = mteNewMsg; 
+	                    console.log(ajaxResult.data);
+	                     mteNewMsg = ajaxResult.data;
+	                    if (mteNewMsg != 0) {
+	                    	mteNewMsg++;
+	                    }
+	                    console.log(mteNewMsg);
+                         list[k].newCount = mteNewMsg;
                        if (list[k].newCount != 0) {
 	                      list[k].isCount = true;
                        } 
@@ -194,6 +199,9 @@ $(function() {
 	                    if (list[k].newCount != 0) {
 	                    	console.log($(this));
 	                    	$('.new-count').css('display','block');
+	                    /* 	list[k].isCount = true;
+	                    	count = count + list[k].newCount;
+	                    	$('.new-count').text(count); */
 	                    }
 	                    
 	                  });
@@ -321,10 +329,6 @@ $(function() {
 			  $('.bot img').attr('src', mteImg);
 			  
 			  
-			  
-			  console.log("ddasd");
-			  
-			  
 			  $.getJSON(serverRoot + '/message/list.json', 
 			      {
 			        "cono": cono, 
@@ -360,7 +364,7 @@ $(function() {
 			             "msge": text, 
 			             "cono": cono,
 			             "sno" : sno, 
-			             "eno" : memberInfo.memberNo
+			             "eno" : expertNo
 			           }, function(ajaxResult) {
 			             var status = ajaxResult.status;
 			             if (status != "success") return;
@@ -444,6 +448,8 @@ $(function() {
 	  }, 250);
 	  <!-- /wheel & click 슬라이딩 이벤트 -->
 });
+
+
 </script>
 <script id="boardTemp" type="text/x-handlebars-template">
 {{#each list}}
@@ -465,7 +471,7 @@ $(function() {
 <script id="QnaMentee" type="text/x-handlebars-template">
 {{#each list}}
    <div class="mentee-info" sno={{memberNo}}>
-          <img alt="" src="../mystuff/img/lee.jpg">
+          <img alt="" src="../mystuff/img/{{photoPath}}">
       {{#if isCount}}
             <label class="plan-new-count" for="msgCount">{{newCount}}</label>
          {{else}}
