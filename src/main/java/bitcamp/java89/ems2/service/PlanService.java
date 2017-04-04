@@ -6,6 +6,7 @@ import bitcamp.java89.ems2.domain.Plan;
 
 public interface PlanService {
   int getSize() throws Exception;
+  Plan getOnePlan(int cono) throws Exception;
   Plan getOne(int cono) throws Exception;
   int boardSize(int eno) throws Exception;
   List<Plan> boardList(int pageNo, int pageSize, int eno) throws Exception;

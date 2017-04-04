@@ -40,7 +40,7 @@
     where s.sno=#{value}
   </select> -->
   
-     <select id="getOne" resultMap="plan-map">
+  <select id="getOne" resultMap="plan-map">
     select pl.eno, name, mimg
         from plan pl
          inner join mento mte on mte.eno = pl.eno
@@ -48,7 +48,13 @@
         where pl.cono = #{cono}
   </select>
   
-  
+  <select id="getOnePlan" parameterType="int" resultMap="plan-map">
+    SELECT pl.plmap
+    FROM plan pl
+     inner join mento mte on mte.eno = pl.eno
+     inner join membs mb on mb.mno = mte.eno
+    WHERE pl.cono = #{cono}
+  </select>
   
    <select id="countAll" resultType="int">
     select 
@@ -138,12 +144,10 @@
   </select>
   
   <select id="boardList" resultMap="plan-map" parameterType="map">
-    select cono, plnm, plimg
-    from plan 
-    where cono != 4
-    <!--  where eno = eno -->
-    limit 6
-    <!--  limit #{startRowIndex}, #{rowSize} -->
+    SELECT cono, plnm, plimg
+    FROM plan 
+    WHERE eno = #{eno}
+    LIMIT #{startRowIndex}, #{rowSize}
   </select>
   
 </mapper>

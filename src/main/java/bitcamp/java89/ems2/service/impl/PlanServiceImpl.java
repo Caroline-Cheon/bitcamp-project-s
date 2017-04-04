@@ -56,6 +56,11 @@ public class PlanServiceImpl implements PlanService {
     
     return planDao.detailList(paramMap); 
   }
+  
+  @Override
+  public Plan getOnePlan(int cono) throws Exception {
+    return planDao.getOnePlan(cono);
+  }
 
   @Override
   public Plan getOne(int cono) throws Exception {

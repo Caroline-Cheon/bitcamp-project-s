@@ -1,6 +1,7 @@
 package bitcamp.java89.ems2.control.json;
 
 import java.io.FileOutputStream;
+import org.apache.tomcat.util.codec.binary.Base64;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class EditorJsonControl {
     int rno=0;
     try {
       binaryData = binaryData.replaceAll("data:image/png;base64,", "");
-      byte[] file = binaryData.getBytes(); //전송 되어 오는 데이터가 base64인코딩된 바이너리 데이터임 디코더 해줌
+      byte[] file = Base64.decodeBase64(binaryData); //전송 되어 오는 데이터가 base64인코딩된 바이너리 데이터임 디코더 해줌
       String fileName = UUID.randomUUID().toString(); //랜덤 파일명 생성
       stream = new FileOutputStream(sc.getRealPath("/upload/"+ fileName + ".png"));
       stream.write(file);
