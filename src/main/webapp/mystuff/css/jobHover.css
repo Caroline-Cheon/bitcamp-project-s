@@ -33,17 +33,15 @@ figure.snip1190 figcaption {
   top: 0;
 }
 figure.snip1190 h2 {
-	    font-size: 23px;
-  font-weight: 400;
-  left: 0;
-  right: 0;
-  letter-spacing: -1px;
-  margin: 0 auto;
-  position: absolute;
-  text-transform: uppercase;
-  bottom: 50%;
-  -webkit-transform: translateY(50%);
-  transform: translateY(50%);
+    font-size: 23px;
+    font-weight: 400;
+    left: 0;
+    right: 0;
+    letter-spacing: -1px;
+    margin: 0 auto;
+    position: absolute;
+    text-transform: uppercase;
+    bottom: 50%;
 }
 figure.snip1190 h2 span {
   font-weight: 800;
@@ -56,7 +54,7 @@ figure.snip1190 .fig-p {
   margin: 0 auto;
   top: 50%;
   opacity: 0;
-  font-size: 14px;
+  font-size: 12px;
   -webkit-transform: translateY(-20%) scale(0.7);
   transform: translateY(-20%) scale(0.7);
 }
@@ -108,7 +106,6 @@ figure.snip1190 a {
   left: 0;
   right: 0;
     top: -5px;
->>>>>>> branch 'master' of https://github.com/luckyhguy/bitcamp-project-s.git
   bottom: 0;
   position: absolute;
 }
@@ -120,15 +117,18 @@ figure.snip1190.hover img {
 }
 figure.snip1190:hover h2,
 figure.snip1190.hover h2 {
-  opacity: 1;
-  -webkit-transform: translateY(0px);
-  transform: translateY(0px);
+    opacity: 1;
+    -webkit-transform: translateY(0px);
+    transform: translateY(0px);
+    top: 20%;
 }
 figure.snip1190:hover p,
 figure.snip1190.hover p {
-  opacity: 1;
-  -webkit-transform: translateY(0px) scale(1);
-  transform: translateY(0px) scale(1);
+    opacity: 1;
+    -webkit-transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1);
+    top: 43%;
+    color: #525252;
 }
 figure.snip1190:hover .square:before,
 figure.snip1190.hover .square:before {
@@ -146,3 +146,4 @@ figure.snip1190:hover .square div:after,
 figure.snip1190.hover .square div:after {
   height: 55%;
 }
+

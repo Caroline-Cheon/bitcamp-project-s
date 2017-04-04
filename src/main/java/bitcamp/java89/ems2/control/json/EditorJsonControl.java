@@ -1,12 +1,12 @@
 package bitcamp.java89.ems2.control.json;
 
 import java.io.FileOutputStream;
-import org.apache.tomcat.util.codec.binary.Base64;
 import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ public class EditorJsonControl {
 
   @RequestMapping("/expert/save")
   public AjaxResult editor(Editor editor) throws Exception {
-    String binaryData = editor.getThumbnail();
+    String binaryData = editor.getThumbnail();  
     FileOutputStream stream = null;
     int rno=0;
     try {

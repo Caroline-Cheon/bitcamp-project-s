@@ -50,6 +50,25 @@
 	insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
       (43, 
+      'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/hubble.jpg', 
+      'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/hubble(세로).jpg', 
+      '에드윈 파월 허블(Edwin Powell Hubble)', 
+      '미국의 천문학자', 
+      '<pre><strong class="p-desc" style="font-size: 17px;">에드윈 파월 허블(Edwin Powell Hubble)은 미국의 천문학자이다.</strong><br>
+그의 업적은 크게 두 가지가 있다. 그는 1921년 경 세페이드 변광성을 이용하여 
+우주의 크기를 재었다. 이 발견은 후에 할로 섀플리와 히버 커티스의 대논쟁을 
+종결하는 데 근거로 쓰였다. 또한, 그는 1929년 경 은하를 관측하여 그 스펙트럼의 
+선에 나타나는 적색 편이를 시선 속도라고 해석하고, 후퇴하는 속도가 은하 간 
+거리에 비례한다는 허블의 법칙을 발표하였다. 이는 우주가 팽창한다는 사실을 
+뒷받침하여 이후 대폭발 이론의 기초가 된다. 
+그의 발견 때문에 그는 여러 영예를 누렸다. 
+허블 우주 망원경은 그의 이름을 따서 명명하였다.
+</pre>',
+      '여키스 천문대(Yerkes Observatory) 박사'
+      );
+	insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
+    values
+      (44, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/lee.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/lee(세로).jpg', 
       '김연아', 
@@ -70,7 +89,7 @@ ISU 그랑프리 파이널 3회 우승을 통해 피겨 스케이팅의 여자 �
       );
   insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (44, 
+      (45, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/jobs.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/jobs(세로).jpg', 
       '스티브 잡스(Steven Paul Jobs)', 
@@ -90,7 +109,7 @@ ISU 그랑프리 파이널 3회 우승을 통해 피겨 스케이팅의 여자 �
       );
   insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (45, 
+      (46, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/jordan.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/jordan(세로).jpg', 
       '마이클 조던(Michael Jeffrey Jordan)', 
@@ -108,28 +127,8 @@ NBA의 트렌드와 조던과 떼어 놓을 수 없는 관계가 되어버린 �
 </pre>',
       '캐롤라이나 대학교(University of North Carolina)'
       );
-  insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
-    values
-      (46, 
-      'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/bear.jpg', 
-      'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/bear(세로).jpg', 
-      '베어 그릴스(Edward Michael Grylls)', 
-      '영국의 작가, 모험가', 
-      '<pre><strong class="p-desc" style="font-size: 17px;">베어 그릴스는 영국의 작가, 모험가, 텔레비전 진행자이다.</strong><br>
-그는 영국인 중 최연소로 에베레스트를 등반한 사람 중 하나이기도 한데, 
-그가 에베레스트 등반에 성공했던 나이는 24세 였다. 
-이것은 영국 최연소 일 뿐만 아니라, 세계 최연소 에베레스트 등반 기록이다. 
-그는 가톨릭 신자이며 자신을 지탱해주는 것은 가족과 종교라고 말한적이 있다.
-그외 제트 스키를 이용한 최초의 영국일주, 동력 글라이더를 이용한 베네수엘라의 
-엔젤폭포 넘기, 보트로 대서양 일주, 25000 피트 상공에서 만찬 식사하기, 
-동력 글라이더로 히말라야 산맥 넘기, 가장 긴 실내 자유 다이빙 시간경력 등의 
-이력이 있다.
-현재 Man vs. Wild라는 프로그램의 프로듀서와 진행을 맡고 있다. 
-방송 뿐만 아니라 그가 벌이는 다수의 스턴트와 이벤트들은 유력 방송사나 광고사와 
-계약하여 수익 대부분을 자선 사업 원조와 사회 기부 등으로 환원하고 있다
-</pre>',
-      '버크벡 대학교(University of Birkbeck)'
-      );
+
+
 
 - 설계도 데이터
 	insert into plan(cono, eno, plmap, plimg) values(4, 6, '설계도 내용', '설계도 썸네일'); 
