@@ -39,12 +39,19 @@ function loadContorl() {
 	if (hasLike == 'has') pageLoad('mento-like'); 
 
 }
-$(document.body).on("click", ".video-box .fpc_page-tip, .video-detail-btn", function() {
+$(document.body).on("click", ".video-box .fpc_page-tip", function() {
 	pageLoad('video');
 });
-$(document.body).on("click", ".mento-box .fpc_page-tip, .mento-detail-btn", function() {
+$(document.body).on("click", ".video-detail-btn", function() {
+	pageLoad('videoDetail');
+});
+$(document.body).on("click", ".mento-box .fpc_page-tip", function() {
 	console.log("plan클릭");
 	pageLoad('plan');
+});
+$(document.body).on("click", ".mento-detail-btn", function() {
+	console.log("plan클릭");
+	pageLoad('planDetail');
 });
 $(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
 	pageLoad('mento-like');
@@ -345,31 +352,63 @@ function pageLoad(choose) {
 		console.log('pageload/plan', memberInfo.memberNo);
 		$.getJSON(serverRoot + '/planDetail/Count.json', {"sno": memberInfo.memberNo}, 
 				function(ajaxResult) {
-					if (ajaxResult.status == 'success') {
-						console.log('/planDetail/Count.json');
-						initPgBtn('plan', ajaxResult.data.totalCount); 
-						$('.mystuff').switchClass('frame-area-center', 'frame-area-out', 2000, 'easeInOutBack');
-						setTimeout(function() {
-							$('.contents').append("<div class='detail-contents animated fadeInLeft'></div>");
-							$(".detail-contents").load("mystuff/detail/mento-detail.html .dashboard", function() {
-								loadPlanList();
-							});
-						}, 1200);
-					}
+			if (ajaxResult.status == 'success') {
+				console.log('/planDetail/Count.json');
+				initPgBtn('plan', ajaxResult.data.totalCount); 
+				$('.mystuff').switchClass('frame-area-center', 'frame-area-out', 2000, 'easeInOutBack');
+				setTimeout(function() {
+					$('.contents').append("<div class='detail-contents animated fadeInLeft'></div>");
+					$(".detail-contents").load("mystuff/detail/mento-detail.html .dashboard", function() {
+						loadPlanList();
+					});
+				}, 1200);
+			}
 		});
 		
-	} else if (choose == 'video') {
+	} else if (choose == 'planDetail') {
+	    console.log('pageload/video', memberInfo.memberNo);
+	    $.getJSON(serverRoot + '/planDetail/Count.json', {"sno": memberInfo.memberNo}, 
+	        function(ajaxResult) {
+	          if (ajaxResult.status == 'success') {
+	            console.log('/planDetail/Count.json');
+	            initPgBtn('plan', ajaxResult.data.totalCount);
+	            $(".detail-contents").load("mystuff/detail/mento-detail.html .dashboard", function() {
+	              loadPlanList();
+	            });
+	          }
+	    });
+	
+      }	else if (choose == 'video') {
 		console.log('pageload/video', memberInfo.memberNo);
 		$.getJSON(serverRoot + '/videoDetail/Count.json', {"sno": memberInfo.memberNo}, 
 				function(ajaxResult) {
-					if (ajaxResult.status == 'success') {
-						console.log('/videoDetail/Count.json');
-						initPgBtn('video', ajaxResult.data.totalCount); 
-						$(".mystuff").load("mystuff/detail/video-detail.html .dashboard", function() {
-							loadVideoList();
-						});
-					}
+			if (ajaxResult.status == 'success') {
+				console.log('/videoDetail/Count.json');
+				initPgBtn('video', ajaxResult.data.totalCount); 
+				$('.mystuff').switchClass('frame-area-center', 'frame-area-out', 2000, 'easeInOutBack');
+				setTimeout(function() {
+					$('.contents').append("<div class='detail-contents animated fadeInLeft'></div>");
+					$(".detail-contents").load("mystuff/detail/video-detail.html .dashboard", function() {
+						loadVideoList();
+					});
+				}, 1200);
+			}
 		});
+		
+
+	} else if (choose == 'videoDetail') {
+		    console.log('pageload/video', memberInfo.memberNo);
+		    $.getJSON(serverRoot + '/videoDetail/Count.json', {"sno": memberInfo.memberNo}, 
+		        function(ajaxResult) {
+		          if (ajaxResult.status == 'success') {
+		            console.log('/videoDetail/Count.json');
+		            initPgBtn('video', ajaxResult.data.totalCount); 
+		            $(".detail-contents").load("mystuff/detail/video-detail.html .dashboard", function() {
+		              loadVideoList();
+		            });
+		          }
+		    });
+		    
 		
 	} else if (choose == 'person') {
 		console.log('pageload/person', memberInfo.memberNo);

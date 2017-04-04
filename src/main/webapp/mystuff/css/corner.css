@@ -80,12 +80,6 @@ color: #666;//trivial
   width: 50px;
 } 
 
-.videoBox {
-	  border-right: 1px solid rgba(255, 0, 0, 0.18);
-    border-bottom: 1px solid rgba(255, 0, 0, 0.18);
-}
-
-
 .videoBox:hover .video-box  {/* edit corner size (First animation, when the whole page is rollovered)*/
   height: 20px;
   width: 20px;
