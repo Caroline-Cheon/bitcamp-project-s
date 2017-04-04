@@ -217,6 +217,10 @@ h3.warn-modal-testInfo {
     font-weight: 600;
     color: #e2525c;
 }
+.mentoset-comment > h3 {
+  font-size: 19px;
+  color: #5D6D7E;
+}
 .warn-modal-confirm div {
     display: inline-block;
     background: #e1525c;
@@ -259,6 +263,9 @@ h3.warn-modal-testInfo {
 .modal-confirm-no-btn {
     margin-left: 10px;
     width: 80px;
+}
+.cancel-mentoset {
+  left: 12%;
 }
 </style>
 <body>
@@ -319,7 +326,6 @@ h3.warn-modal-testInfo {
 <script type="text/javascript" src="mystuff/js/main.js"></script>
 <script type="text/javascript" src="mystuff/js/modal.js"></script>
 <script type="text/javascript" src="mystuff/js/jquery.jcarousel.min.js"></script>
-<script type="text/javascript" src="seeds/js/alert.js"></script>
 <script type="text/javascript" src="seeds/js/seeds-temp.js"></script>
 <script type="text/javascript" src="seeds/js/json.mbti.js"></script>
 <script type="text/javascript" src="likes/js/mento-like.js"></script>
@@ -543,6 +549,11 @@ function warnModalStart(comn) {
       $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
       $('.warn-modal-comment').append("<h3>이미 멘토전환을 하였습니다.</h3>"
           + "<div class='modal-confirm-btn'>확인</div>");
+  } else if (comn == 'info-about-mentoSet') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment mentoset-comment'></div>");
+    $('.warn-modal-comment').append("<h3>멘토로 한번 전환을 하면 멘티가 될 수 없습니다.<br>전환하시겠습니까?</h3>"
+        + "<div class='cancel-mentoset'>취소하기</div>"
+        + "<div class='okay-mentoset'>전환하기</div>");
 }
     $('.warn-modal').addClass('animated fadeInRight');
     $('.warn-modal-page-wrapper').addClass('warn-modal-blur-it');
