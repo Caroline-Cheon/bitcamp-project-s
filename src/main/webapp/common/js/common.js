@@ -40,10 +40,11 @@ function loadContorl() {
 	if (hasLike == 'has') pageLoad('mento-like'); 
 
 }
-$(document.body).on("click", ".video-box .fpc_page-tip", function() {
+$(document.body).on("click", ".video-box .fpc_page-tip, .video-detail-btn", function() {
 	pageLoad('video');
 });
-$(document.body).on("click", ".mento-box .fpc_page-tip", function() {
+$(document.body).on("click", ".mento-box .fpc_page-tip, .mento-detail-btn", function() {
+	console.log("plan클릭");
 	pageLoad('plan');
 });
 $(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
@@ -51,6 +52,9 @@ $(document.body).on( "click", "#likes-btn, .mento-like-btn", function() {
 });
 $(document.body).on( "click", ".video-like-btn", function() {
 	pageLoad('video-like');
+});
+$(document.body).on( "click", "#mystuff-btn", function() {
+	pageLoad('mystuff');
 });
 
 /*   pgbtn click events   */
@@ -113,14 +117,15 @@ function loadPlanList() {
 	console.log(currPageNo, pageSize);
 	$.getJSON(serverRoot + '/planDetail/list.json',
 		{
-		"pageNo": pageNo,
+		"pageNo": currPageNo,
 		"pageSize": pageSize,
-		"sno": sno
+		"sno": memberInfo.memberNo
 		}, function(ajaxResult) {
 				var status = ajaxResult.status;
 				if (status != "success") return;
 				console.log(ajaxResult.data.totalCount);
 				var list = ajaxResult.data.list;
+				console.log(list);
 				$.each(list, function(k, v) {
 					$.getJSON(serverRoot + '/video/isLike.json', 
 						{
@@ -233,6 +238,7 @@ function loadPersonList() {
 				if (status != "success") return;
 				console.log("person");
 				var list = ajaxResult.data.list;
+				console.log(list);
 				var section = $('.persons');
 				var template = Handlebars.compile($('#personDetail').html());
 				section.html(template({"list": list}));
@@ -306,6 +312,7 @@ function pageLoad(choose) {
 				      if (status != "success")
 				        return;
 				      var list = ajaxResult.data.list;
+				      console.log(list);
 				      countLike();
 				      function countLike() {
 				      $.each(list, function(k, v) {

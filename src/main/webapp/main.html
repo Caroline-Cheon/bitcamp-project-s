@@ -389,7 +389,7 @@ h3.warn-modal-testInfo {
  {{/if}}
   </button>
     <div class="mento-btm">
-     <div class="mt-photo"><img src='mystuff/img/lee.jpg'></div>
+     <div class="mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
      <div class="mento-name-favor"><span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p></div>
     </div>
      <div class="mento-box corner-box">
@@ -414,7 +414,7 @@ h3.warn-modal-testInfo {
        <img clas="map-img detail-map-img" src="mystuff/img/map1.jpg">
   </div>
     <div class="mt-btm">
-     <div class="detail-mt-photo"><img src='mystuff/img/lee.jpg'></div>
+     <div class="detail-mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
          <div class="mt-name"><span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p></div>
     </div>
    
@@ -431,7 +431,7 @@ h3.warn-modal-testInfo {
       <img clas="map-img" src="mystuff/img/map1.jpg">
     </div>
     <div class="mt-btm">
-      <div class="like-mt-photo"><img src='mystuff/img/lee.jpg'></div>
+      <div class="like-mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
       <div class="mt-name">
         <span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p>
       </div>
@@ -593,7 +593,8 @@ $(function() {
 	        $(".likes").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
 	        $(".mystuff").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack");
 	      } else if(!$(".frame-area-center dashboard").hasClass("mystuff-call")) {
-	    	  alert("복귀 테스트");
+	    	  pageLoad('mystuff');
+// 	    	  alert("복귀 테스트");
 	      }
     	} else {
     		modalConnector();

@@ -161,7 +161,7 @@ public class MessegeJsonControl {
     
     ArrayList<Integer> snoList = messageService.getMenteeNo(intMap);
 
-    if (snoList == null) {
+    if (snoList.size() == 0) {
       return new AjaxResult(AjaxResult.FAIL, "대화중인 학생이 없습니다.");
     }
     else {
@@ -176,9 +176,10 @@ public class MessegeJsonControl {
            count++;
         }
         else {
-          count = 0;
+          continue;
         }
      }
+    System.out.println("5번 노드 카운트"+count);
     return new AjaxResult(AjaxResult.SUCCESS, count);     
     }
     /*

@@ -60,7 +60,7 @@
   </select>
   
    <select id="getList" resultMap="plan-map" parameterType="map">
-  select plan.cono,mto.eno,name,plmap,plimg, sarea from contents ctt
+  select plan.cono,mto.eno,name,mb.mimg,plmap,plimg, sarea from contents ctt
   inner join plan on plan.cono = ctt.cono
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno
@@ -75,7 +75,7 @@
   
   
      <select id="detailList" resultMap="plan-map" parameterType="map">
-  select plan.cono,name,plmap,plimg, sarea from contents ctt
+  select plan.cono,name,mb.mimg,plmap,plimg, sarea from contents ctt
   inner join plan on plan.cono = ctt.cono
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno

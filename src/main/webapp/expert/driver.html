@@ -154,7 +154,6 @@ userInfo();
 	  <!-- /expert service load -->
 	  
 	  var count = 0;
-	  var mteNewMsg = 0;
 	   setTimeout(function() {
 	      $.getJSON(serverRoot + '/expert/board.json',
 	            {
@@ -169,6 +168,7 @@ userInfo();
 	              console.log(list);
 	              
 	              var count = new Array();
+	                var mteNewMsg = 0;
 	              $.each(list, function(k, v) {
 	                  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
 	                  {
@@ -178,10 +178,8 @@ userInfo();
 	                      var status = ajaxResult.status;
 	                    if (ajaxResult.status != "success") {return};
 	                    console.log(ajaxResult.data);
-	                     mteNewMsg = ajaxResult.data;
-	                    if (mteNewMsg != 0) {
-	                    	mteNewMsg++;
-	                    }
+ 	                     mteNewMsg = ajaxResult.data;
+
 	                    console.log(mteNewMsg);
                          list[k].newCount = mteNewMsg;
                        if (list[k].newCount != 0) {
@@ -196,13 +194,14 @@ userInfo();
 	                    var template = Handlebars.compile($('#boardTemp').html()); 
 	                    board.html(template({'list': list}));
 	                    
-	                    if (list[k].newCount != 0) {
+	                  mteNewMsg = 0;
+/* 	                    if (list[k].newCount != 0) {
 	                    	console.log($(this));
 	                    	$('.new-count').css('display','block');
-	                    /* 	list[k].isCount = true;
+	                     	list[k].isCount = true;
 	                    	count = count + list[k].newCount;
-	                    	$('.new-count').text(count); */
-	                    }
+	                    	$('.new-count').text(count); 
+	                    } */
 	                    
 	                  });
 	                }); // each 문

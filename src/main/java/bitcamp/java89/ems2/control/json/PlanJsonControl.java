@@ -65,6 +65,7 @@ public class PlanJsonControl {
     }
 
     List<Plan> list = planService.detailList(pageNo, pageSize, sno);
+System.out.println(list);
     int totalCount = planService.getSize();
     System.out.println("멘토리스트"+totalCount);
     
