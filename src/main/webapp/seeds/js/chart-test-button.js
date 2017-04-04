@@ -31,11 +31,14 @@ $(document.body).on("click", ".fa-times", function() {
       $('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
 	}
 	
-  $('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {
-    $('.auth-login-form').css("display", "block");
-    $('.login-form-card').addClass("animated fadeInRight");
-    });
-	
+	/*비회원일 경우 가입창 띄우기*/
+	if (memberInfo == undefined) {
+	  $('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {
+	    $('.auth-login-form').css("display", "block");
+	    $('.login-form-card').addClass("animated fadeInRight");
+	    $('.login-form-container').stop().addClass('login-form-active');
+	    });
+	}
 	
 });
 
