@@ -27,17 +27,33 @@ $.fn.cf = function () {
 		$this.find('[checked="checked"]').closest('.mento-set-box').addClass('checked');
 	});
 }
+
+
+$( function() {
+  $(document.body).on('click', '.user-change', function() {
+    
+    $('.warn-modal').css('border','1px solid rgba(51, 122, 183, 0.76)');
+    $('.warn-modal-head').css('background','rgba(51, 122, 183, 0.76)');
+    $('.fa-px').css('color','#cfecd0');
+    warnModalStart('info-about-mentoSet');
+    $(".user-menu").hide();
+  });
+});
+
+
+
+
 //mento-set button~
 $( function() {
-	$(document.body).on('click', '.user-change', function() {
+	$(document.body).on('click', '.okay-mentoset', function() {
 		
-		$(".user-menu").hide();
+		/*$(".user-menu").hide();*/
 		
 		
 		/*이미 멘토전환을 한 멘티는 멘토페이지로 가는 버튼으로 수정하기*/
 		console.log("memsType은? " + memsType);
 		if(memsType == "mento") {
-			warnModalStart('alreadyMento-check');
+			/*warnModalStart('alreadyMento-check');*/
 			
 		} else if(memsType != "mento") {
 			$('.user-change-modal').css('display','block');
@@ -103,30 +119,22 @@ $( function() {
 			warnModalStart('specialArea-check');
 		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
-	});
-	
-	$(document.body).on('click', '.mento-set-cancel-btn', function() {
-		$('#mento-set-wrap').css('display','none');
-		$('.user-change-modal').css('display','none');
 	});
 	
 });
- 
 
+$( function() {
+  $(document.body).on('click', '.mento-set-cancel-btn', function() {
+    $('#mento-set-wrap').css('display','none');
+    $('.user-change-modal').css('display','none');
+  });
+  
+});
 
-
-
-
-
-
-
+$( function() {
+  $(document.body).on('click', '.cancel-mentoset, .okay-mentoset', function(event) {
+    warnModalEnd();
+  });
+});
 
 

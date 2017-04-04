@@ -145,7 +145,7 @@
 }
 
 .button-two span:after {
-  content: 'Â»';
+  content: '»';
   position: absolute;
   opacity: 0;
   top: 0;
