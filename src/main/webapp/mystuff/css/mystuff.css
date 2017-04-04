@@ -295,46 +295,6 @@ display: inline-block;
     float: right;
 }
 
-
-.mt-photo img {
-    border-radius: 100%;
-    width: 87px;
-    height: 77px;
-    position: relative;
-}
-
-   .mt-btm {
-    position: absolute;
-     background:transparent;
-    background: linear-gradient(90deg, #69b7eb, #b3dbd3, #f4d6db);
-    display: inline-block;
-    height: 445px;
-    width: 100%;
-    height: 28%;
-    font-family: 'Daum_SemiBold';
-    margin-top: 10px;
-    border-radius: 10px;
-    left: 0;
-    top: 190px;
-   }
-
-
-
-.mt-conts {
-  display: inline-block;
-width: 530px;
-    height: 184px;
-        margin: 7px 0 0 7px;
-}
-
-.mt-name {
-    left: 350px;
-    display: none;
-    display: inline-block;
-    position: absolute;
-    top: 20px;
-
-}
 /** 슬라이드 prev next 버튼 **/
 
 .jcarousel-control-prev,
@@ -444,53 +404,4 @@ width: 530px;
     display: inline-block;
     border: transparent;
 }
-
-
-    .btn{
-border-radius: 50%;
-    float: left;
-    height: 38px;
-    /* margin: 0 30px 30px 0; */
-    position: absolute;
-    /* padding: 0px; */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 700;
-    -webkit-transition: all .1s linear;
-    transition: all .1s linear;
-    background-color: transparent;
-    }
-
-    .btn:after{
-    content: "";
-    display: block;
-    font-size: 23px;
-    height: 30px;
-    text-decoration: none;
-    text-shadow: 0px -1px 1px #bdb5b4, 1px 1px 1px white;
-    position: absolute;
-    background-color: transparent;
-    width: 30px;
-    opacity: 0.7;
-    }
-
-
-    .heart:after{
-    content: "❤";
-    left:0px;
-    top: 6px;
-    background-color: transparent;
-    }
-
-    .btn:hover{
-    background-color: transparent;
-      color:#0088cc;
-    }
-
-    .heart:hover:after{
-    background-color: transparent;
-      color:#f94e66;
-      text-shadow:0px 0px 6px #f94e66;
-    }
         

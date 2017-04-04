@@ -27,14 +27,11 @@
 <link rel="stylesheet" type="text/css" href="mystuff/css/mentoPage.css">
 <link rel="stylesheet" type="text/css" href="mystuff/css/person-test.css" />
 <link rel="stylesheet" type="text/css" href="likes/css/likes.css" />
-<!-- <link rel="stylesheet" type="text/css" href="expert/css/expert.css"> -->
 <link rel="stylesheet" type="text/css" href="expert/css/chat.css">
-
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 <link rel="stylesheet" type="text/css" href="seeds/css/chart-test.css" />
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="seeds/css/chart-test-button.css" />
-
 <link rel="stylesheet" type="text/css" href="auth/css/mento-set.css" />
 
 <style>
@@ -217,6 +214,10 @@ h3.warn-modal-testInfo {
     font-weight: 600;
     color: #e2525c;
 }
+.mentoset-comment > h3 {
+  font-size: 19px;
+  color: #5D6D7E;
+}
 .warn-modal-confirm div {
     display: inline-block;
     background: #e1525c;
@@ -259,6 +260,9 @@ h3.warn-modal-testInfo {
 .modal-confirm-no-btn {
     margin-left: 10px;
     width: 80px;
+}
+.cancel-mentoset {
+  left: 12%;
 }
 </style>
 <body>
@@ -319,19 +323,15 @@ h3.warn-modal-testInfo {
 <script type="text/javascript" src="mystuff/js/main.js"></script>
 <script type="text/javascript" src="mystuff/js/modal.js"></script>
 <script type="text/javascript" src="mystuff/js/jquery.jcarousel.min.js"></script>
-<script type="text/javascript" src="seeds/js/alert.js"></script>
 <script type="text/javascript" src="seeds/js/seeds-temp.js"></script>
 <script type="text/javascript" src="seeds/js/json.mbti.js"></script>
 <script type="text/javascript" src="likes/js/mento-like.js"></script>
 <script type="text/javascript" src="likes/js/video-like.js"></script>
-
-
 <script type="text/javascript" src="seeds/js/amcharts.js"></script>
 <script type="text/javascript" src="seeds/js/chart-heavy.js"></script>
 <script type="text/javascript" src="seeds/js/chart-theme.js"></script>
 <script type="text/javascript" src="seeds/js/chart-test.js"></script>
 <script type="text/javascript" src="seeds/js/chart-test-button.js"></script>
-
 <script type="text/javascript" src="auth/js/mento-set.js"></script>
 
 
@@ -395,7 +395,7 @@ h3.warn-modal-testInfo {
  {{/if}}
   </button>
     <div class="mento-btm">
-     <div class="mt-photo"><img src='mystuff/img/lee.jpg'></div>
+     <div class="mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
      <div class="mento-name-favor"><span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p></div>
     </div>
      <div class="mento-box corner-box">
@@ -420,7 +420,7 @@ h3.warn-modal-testInfo {
        <img clas="map-img detail-map-img" src="mystuff/img/map1.jpg">
   </div>
     <div class="mt-btm">
-     <div class="detail-mt-photo"><img src='mystuff/img/lee.jpg'></div>
+     <div class="detail-mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
          <div class="mt-name"><span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p></div>
     </div>
    
@@ -437,7 +437,7 @@ h3.warn-modal-testInfo {
       <img clas="map-img" src="mystuff/img/map1.jpg">
     </div>
     <div class="mt-btm">
-      <div class="like-mt-photo"><img src='mystuff/img/lee.jpg'></div>
+      <div class="like-mt-photo"><img src='http://localhost:8080/bitcamp-project-s/mystuff/img/{{photoPath}}'></div>
       <div class="mt-name">
         <span class="mento-name">{{name}}</span><br><p>{{specialArea}}</p>
       </div>
@@ -543,6 +543,11 @@ function warnModalStart(comn) {
       $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
       $('.warn-modal-comment').append("<h3>이미 멘토전환을 하였습니다.</h3>"
           + "<div class='modal-confirm-btn'>확인</div>");
+  } else if (comn == 'info-about-mentoSet') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment mentoset-comment'></div>");
+    $('.warn-modal-comment').append("<h3>멘토로 한번 전환을 하면 멘티가 될 수 없습니다.<br>전환하시겠습니까?</h3>"
+        + "<div class='cancel-mentoset'>취소하기</div>"
+        + "<div class='okay-mentoset'>전환하기</div>");
 }
     $('.warn-modal').addClass('animated fadeInRight');
     $('.warn-modal-page-wrapper').addClass('warn-modal-blur-it');
@@ -598,6 +603,7 @@ $(function() {
 	      } else if($(".frame-area-center").hasClass("likes")) {
 	        $(".likes").switchClass("frame-area-center", "frame-area-right", 2000, "easeInOutBack");
 	        $(".mystuff").switchClass("frame-area-left", "frame-area-center", 2000, "easeInOutBack");
+// <<<<<<< HEAD
 	      } else if($(".frame-area-out").hasClass("mystuff")) {
 	    	  $('.detail-contents').switchClass('fadeInLeft', 'fadeOutLeft', function() {
 	    		  setTimeout(function() {
@@ -606,6 +612,11 @@ $(function() {
 	    		  $('.frame-area-out').switchClass('frame-area-out', 'frame-area-center', 2000, 'easeInOutBack');
 	    	  });
 	    	  
+// =======
+// 	      } else if(!$(".frame-area-center dashboard").hasClass("mystuff-call")) {
+// 	    	  pageLoad('mystuff');
+// 	    	  alert("복귀 테스트");
+// >>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
 	      }
     	} else {
     		modalConnector();

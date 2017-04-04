@@ -263,10 +263,36 @@ label.label-checkbox.checked {
   width: 397px;
   font-size: 12px;
   /* border: 3px #33b1b9 solid; */
-  border-radius: 33px;
+  /* border-radius: 33px; */
   border: transparent;
   height: 246px;
   resize: none;
 }
+
+.cancel-mentoset {
+	left: 12%;
+	margin-left: 10px;
+  width: 80px;
+}
+.okay-mentoset {
+	margin-left: -100px;
+}
+
+.cancel-mentoset,
+.okay-mentoset {
+	color: #fff;
+  font-weight: 600;
+  padding: 4px;
+  background: rgba(51, 122, 183, 0.76);
+  width: 100px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  left: 50%;
+}
+
+
 
 

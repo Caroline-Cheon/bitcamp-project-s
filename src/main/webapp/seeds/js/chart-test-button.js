@@ -28,10 +28,14 @@ $(document.body).on("click", ".fa-times", function() {
 	 /*검사하고 씨드 내용이 검사 결과를 반영하도록~*/
 	if (memberInfo != undefined) {
 		var mbtiType = memberInfo.resultResult;
-
-        $('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
-		
+      $('.card--oil div:nth-child(2) .card__count-text').text('당신의 타입은 ' + mbtiType + '입니다');
 	}
+	
+  $('.auth-login-form').load(clientRoot + "/auth/login.html .login-form-container", function() {
+    $('.auth-login-form').css("display", "block");
+    $('.login-form-card').addClass("animated fadeInRight");
+    });
+	
 	
 });
 

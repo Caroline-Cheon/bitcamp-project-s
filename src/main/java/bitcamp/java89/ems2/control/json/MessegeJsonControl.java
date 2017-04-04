@@ -159,24 +159,39 @@ public class MessegeJsonControl {
     intMap.put("cono", cono);
     intMap.put("mswr", mswr);
     
-    String msno = messageService.mentoGetMessageNo(intMap);
-    System.out.println("msno"+msno);
-    
-    if (msno == null) {
+    ArrayList<Integer> snoList = messageService.getMenteeNo(intMap);
+
+    if (snoList.size() == 0) {
       return new AjaxResult(AjaxResult.FAIL, "대화중인 학생이 없습니다.");
     }
     else {
-      intMap.put("msno", msno);
+      
+      int count = 0;
+    for (int i = 0; i < snoList.size(); i++) {
+        int sno = snoList.get(i).intValue();
+        intMap.put("sno", sno);
+        Message message = (Message)messageService.getMessageWriter(intMap);
+        
+        if (message.getWriterNo() == (int)intMap.get("sno")) {
+           count++;
+        }
+        else {
+          continue;
+        }
+     }
+    System.out.println("5번 노드 카운트"+count);
+    return new AjaxResult(AjaxResult.SUCCESS, count);     
+    }
+    /*
+    else {
+      intMap.put("msno", sno);
     int count = messageService.nodeNewMsgCount(intMap);
     System.out.println("멘토 node new message"+count);
     
-    return new AjaxResult(AjaxResult.SUCCESS, count);
-    }
+    }*/
     
-    
-    
+   
   }
- 
   
   @RequestMapping("/message/nodeMessageCount")
   public AjaxResult nodeMessageCount(@RequestParam int cono, @RequestParam int sno, @RequestParam int mswr) throws Exception {
@@ -185,19 +200,24 @@ public class MessegeJsonControl {
     intMap.put("sno", sno);
     intMap.put("mswr", mswr);
     
-    String msno = messageService.nodeGetMessageNo(intMap);
-    System.out.println("node msno"+ msno);
-    
-    if (msno == null) {
-      return new AjaxResult(AjaxResult.FAIL, "대화중인 학생이 없습니다.");
+    Message message = messageService.nodeGetMessageNo(intMap);
+    System.out.println("node msno"+ message);
+    if (message.getWriterNo() == (int)intMap.get("mswr")) { // 마지막 작성자가 멘토라면
+      return new AjaxResult(AjaxResult.FAIL, "최신 멘티 질문이 없습니다.");
     }
-    else {
-      intMap.put("msno", msno);
-    int count = messageService.menteeNewMsgCount(intMap);
-    System.out.println("학생 node new message"+count);
-    
-    return new AjaxResult(AjaxResult.SUCCESS, count);
+    else { // 최근 mswr이 sno일때
+     intMap.put("msno", message.getMessageNo());
+      int count = messageService.menteeNewMsgCount(intMap);
+       
+       System.out.println("학생 node new message"+count);
+       
+     return new AjaxResult(AjaxResult.SUCCESS, count);
     }
+    
+    
+    
+    
+    
     
     
     

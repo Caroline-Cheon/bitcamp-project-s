@@ -7,6 +7,7 @@
 
   <resultMap type="mento" id="mento-map">
     <id     column="mno"        property="memberNo"/>
+    <result column="name"       property="name"/>
     <result column="sarea"       property="specialArea"/>
     <result column="darea"       property="detailArea"/>
     <result column="carr"       property="career"/>

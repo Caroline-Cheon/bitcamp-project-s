@@ -37,6 +37,22 @@ select msno
      limit 1
   </select>
   
+  <select id="getMenteeNo" resultType="int" parameterType="map">
+      select distinct sno
+       from messg
+        where cono = #{cono}
+  </select>
+  
+    <select id="getMessageWriter" resultMap="message-map" parameterType="map">
+select msno, mswr
+     from messg 
+     where cono = #{cono} and sno = #{sno}
+     ORDER BY msno desc 
+     limit 1
+  </select>
+  
+  
+  
   <select id="newMsgCount" resultType="int" parameterType="map">
 		select count(*)
 		     from messg
@@ -52,15 +68,15 @@ select msno
     <select id="menteeNewMsgCount" resultType="int" parameterType="map">
     select count(*) 
        from messg 
-       where cono = #{cono} and sno = #{sno} and msno > #{msno}
+       where cono = #{cono} and sno = #{sno} and mswr = #{sno} and msno >= #{msno}
   </select>
   
   
   
-    <select id="nodeGetMessageNo" resultType="String" parameterType="map">
-select msno
+    <select id="nodeGetMessageNo" resultMap="message-map" parameterType="map">
+select msno, mswr
      from messg 
-     where cono = #{cono} and sno = #{sno} and mswr = #{mswr} 
+     where cono = #{cono} and sno = #{sno}
      ORDER BY msno desc 
      limit 1
   </select>

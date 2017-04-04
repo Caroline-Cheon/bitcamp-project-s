@@ -48,7 +48,6 @@ public class PlanServiceImpl implements PlanService {
   
   public List<Plan> detailList(int pageNo, int pageSize, int sno) throws Exception {
 
-    System.out.println(pageNo + pageSize + sno);
     HashMap<String,Object> paramMap = new HashMap<>();
     paramMap.put("startRowIndex", (pageNo - 1) * pageSize);
     paramMap.put("rowSize", pageSize);
