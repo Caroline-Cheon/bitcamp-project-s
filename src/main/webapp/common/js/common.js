@@ -656,6 +656,9 @@ $(function() {
 			        	if (ajaxResult.status =="fail") return;
 			        	var areaList = ajaxResult.data;
 			        	console.log(areaList);
+			        	for (var i in areaList) {
+			        		$('.area-info').append("<div class='mto-area ui btns color"+i+"'>"+areaList[i]+"</div>");
+			        	}
 				    		
 			        });
 			        isopen_usermenu = true;
