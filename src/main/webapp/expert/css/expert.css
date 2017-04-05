@@ -57,6 +57,7 @@ body {
   position: inherit;
   height: 240px;
   width: 100%; 
+  background: #FFF;
 }
 #node-badge {
   position: absolute;
