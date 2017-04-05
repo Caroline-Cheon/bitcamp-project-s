@@ -116,6 +116,7 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
 				    	  console.log("상대방이 쓴것")
 				          $('.mystuff-chatwindow').append('<div class="left bye">' + text + '</div>');
 				      }
+				      $(".mystuff-chatwindow").scrollTop($(".mystuff-chatwindow")[0].scrollHeight);
 				    }); // 메세지 리스트 div 영역으로 나타내기
                     console.log("모달창 들어왔다.")
                     
@@ -131,6 +132,7 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
 	     console.log(text);
 	     $('.mystuff-chatwindow').append('<div class="right">' + text + '</div>');
 	     $('#mystuff-chat-msg').val('');
+	     $(".mystuff-chatwindow").scrollTop($(".mystuff-chatwindow")[0].scrollHeight);
 	       $.getJSON(serverRoot + '/message/mentee-send.json',
 	           {
 	             "msge": text, 

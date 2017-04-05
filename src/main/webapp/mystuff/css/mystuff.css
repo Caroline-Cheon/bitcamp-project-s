@@ -281,19 +281,6 @@ height: 368px;
 	border-radius:10px;
 }
 
-.mt-photo{ 
-display: inline-block;
-    /* border: 2px solid red; */
-    border-radius: 100%;
-    width: 105px;
-    height: 95px;
-    position: absolute;
-    z-index: 2000;
-    top: -10px;
-    padding: 3px;
-    left: 400px;
-    float: right;
-}
 
 /** 슬라이드 prev next 버튼 **/
 

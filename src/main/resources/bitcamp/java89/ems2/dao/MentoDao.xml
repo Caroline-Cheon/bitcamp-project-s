@@ -7,6 +7,7 @@
 
   <resultMap type="mento" id="mento-map">
     <id     column="mno"        property="memberNo"/>
+    <id     column="eno"        property="mentoNo"/>
     <result column="name"       property="name"/>
     <result column="sarea"       property="specialArea"/>
     <result column="darea"       property="detailArea"/>
@@ -26,37 +27,7 @@
     values(#{memberNo},#{specialArea},#{detailArea},#{career})
   </insert> 
   
-<!--   <insert id="insert" parameterType="mentee" 
-          useGeneratedKeys="true" keyColumn="mno" keyProperty="memberNo">
-    insert into mento(eno, sarea, darea, carr)
-    values(#{memberNo},#{specialArea},#{defaultArea},#{career})
-  </insert> 
-   -->
-<!--   <select id="getList" resultMap="member-map">
-    select 
-      mno, 
-      email, 
-      name, 
-      age
-    from memb
-  </select>
-  
-  
-  <select id="countByEmailPassword" parameterType="map" resultType="int">
-    select count(*) 
-    from memb 
-    where email=#{email} 
-      and pwd=password(#{password})
-  </select>
-  
-  
-  
-  
-  <delete id="delete" parameterType="int">
-    delete from memb where mno=#{value}
-  </delete>
-  
- -->
+
   
   <select id="getOne" parameterType="int" resultType="int">
     select count(*)
@@ -85,6 +56,27 @@
     where email=#{email} 
       and pwd=password(#{password})
   </select>
+  
+    <select id="getMentoInfo" parameterType="int" resultMap="mento-map">
+    select 
+      mno,
+      name, 
+      mimg,
+      sarea,
+      darea,
+      carr
+    from mento
+    inner join membs m on m.mno = mento.eno
+    where mento.eno = #{eno}
+  </select>
+
+    <select id="getAreaList" parameterType="int" resultMap="mento-map">
+    select 
+      sarea
+    from mento
+    where mento.eno = #{eno}
+  </select>
+
 
   <select id="countByNo" parameterType="int" resultType="int">
     select count(*)

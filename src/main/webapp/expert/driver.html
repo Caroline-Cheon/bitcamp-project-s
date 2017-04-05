@@ -934,8 +934,10 @@ userInfo();
 	              var list = ajaxResult.data.list;
 	              console.log(list);
 	              
-	              var count = new Array();
+	              var count = 0;
                 var mteNewMsg = 0;
+/*                 boardList();
+                function boardList() { */
 	              $.each(list, function(k, v) {
 	                  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
 	                  {
@@ -943,7 +945,12 @@ userInfo();
 	                    "mswr": memberInfo.memberNo
 	                  }, function(ajaxResult) {
 	                      var status = ajaxResult.status;
-	                    if (ajaxResult.status == "fail") return;
+	                    if (ajaxResult.status == "fail") {
+	                        var board = $('.board-call');
+	                        var template = Handlebars.compile($('#boardTemp').html()); 
+	                        board.html(template({'list': list}));
+	                    	  return;
+	                    }
 		                    console.log(ajaxResult.data);
 	 	                    mteNewMsg = ajaxResult.data;
 		                    console.log(mteNewMsg);
@@ -955,20 +962,16 @@ userInfo();
                     	   list[k].isCount = false;
                        }
 	                    var board = $('.board-call');
-	                    var template = Handlebars.compile($('#boardTemp').html()); 
+	                    var template = Handlebars.compile($('#boardTemp').html());
 	                    board.html(template({'list': list}));
 	                    mteNewMsg = 0;
-/* 	                    if (list[k].newCount != 0) {
-	                    	console.log($(this));
-	                    	$('.new-count').css('display','block');
-	                     	list[k].isCount = true;
-	                    	count = count + list[k].newCount;
-	                    	$('.new-count').text(count); 
-	                    } */
+
 	                  });
 	                }); // each 문
+/*                 } */
 	          });
 	   }, 1000);
+
 	   
     <!-- editor-explain click 이벤트 -->
     $(document.body).on("click", ".editor-explain", function() {
@@ -1005,7 +1008,6 @@ userInfo();
     			  {
     		    "cono" : cono
     			  }, function(ajaxResult) {
-    				  console.log($(this).attr("cono"));
     				  console.log(ajaxResult);
     				  if(ajaxResult.status == 'fail') {
     					  alert(ajaxResult.status);
@@ -1127,6 +1129,7 @@ userInfo();
 			          } else {
 			              $('.chatwindow').append('<div class="left bye">' + text + '</div>');
 			          }
+			          $(".chatwindow").scrollTop($(".chatwindow")[0].scrollHeight);
 			        });
 			      });
 
@@ -1151,6 +1154,7 @@ userInfo();
 			       });
 			       $('.chatwindow').append('<div class="right">' + text + '</div>');
 			       $('#message').val('');
+			       $(".mystuff-chatwindow").scrollTop($(".mystuff-chatwindow")[0].scrollHeight);
 
 			  });
 			  

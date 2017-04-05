@@ -85,45 +85,7 @@ System.out.println(list);
   }
   
   
-  
-  
-  
- /* @RequestMapping("/plan/detail")
-  public AjaxResult detail(int memberNo) throws Exception {
-    Plan plan = planService.getDetail(memberNo);
-    
-    if (plan == null) {
-      return new AjaxResult(AjaxResult.FAIL, "해당 학생이 없습니다.");
-    }
-    
-    return new AjaxResult(AjaxResult.SUCCESS, plan);
-  }
-  @RequestMapping("/plan/add")
-  public AjaxResult add(Plan plan) throws Exception {
-    planService.add(plan);
-    return new AjaxResult(AjaxResult.SUCCESS, "등록 성공입니다.");
-  }
 
-  @RequestMapping("/plan/delete")
-  public AjaxResult delete(int memberNo, HttpServletRequest request) throws Exception {
-    int count = planService.delete(memberNo);
-    if (count == 0) {
-      return new AjaxResult(AjaxResult.FAIL, "해당 번호의 학생이 없습니다.");
-    }
-    return new AjaxResult(AjaxResult.SUCCESS, "삭제 성공입니다.");
-  }
-  
-  @RequestMapping("/plan/update")
-  public AjaxResult update(Plan plan) throws Exception {
-
-    int count = planService.update(plan);
-    
-    if (count == 0) {
-      return new AjaxResult(AjaxResult.FAIL, "해당 번호의 학생이 없습니다.");
-    }
-    
-    return new AjaxResult(AjaxResult.SUCCESS, "변경 성공입니다.");
-  }*/
 }
 
 

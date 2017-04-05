@@ -11,6 +11,8 @@ public interface MentoService {
   int update(Mento mento) throws Exception;
   int delete(int mentoNo) throws Exception;
   int updateProfile(HashMap<String, Object> map) throws Exception;
+  Mento getMentoInfo(int eno) throws Exception;
+  ArrayList<Mento> getAreaList(int eno) throws Exception;
 }
 
 

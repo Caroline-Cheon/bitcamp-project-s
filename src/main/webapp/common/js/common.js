@@ -447,6 +447,7 @@ function pageLoad(choose) {
 				});
 			}
 		});
+		
 	}
 }
 
@@ -646,6 +647,17 @@ $(function() {
 	        	else {
 	        		$(".message-menu").hide();
 			        $(".mento-menu").show(); // 멘토 정보 창 div
+			        userInfo();
+			        console.log(expertNo);
+			        $.getJSON(serverRoot + '/expert/getMentoInfo.json', 
+				    		{
+				    		  "eno": expertNo
+				    		}, function(ajaxResult) {
+			        	if (ajaxResult.status =="fail") return;
+			        	var areaList = ajaxResult.data;
+			        	console.log(areaList);
+				    		
+			        });
 			        isopen_usermenu = true;
 		            isopen_messagemenu = false;
 	        	}
@@ -768,7 +780,9 @@ $(function() {
 								        	  console.log("상대방이 쓴것")
 								              $('.mystuff-chatwindow').append('<div class="left bye">' + text + '</div>');
 								          }
+
 								        }); // 메세지 리스트 div 영역으로 나타내기
+							        $(".mystuff-chatwindow").scrollTop($(".mystuff-chatwindow")[0].scrollHeight);
 								 
                                   console.log("모달창 들어왔다.")
                                   

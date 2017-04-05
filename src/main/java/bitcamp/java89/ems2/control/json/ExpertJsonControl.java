@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import bitcamp.java89.ems2.domain.Mento;
 import bitcamp.java89.ems2.domain.Plan;
+import bitcamp.java89.ems2.service.MentoService;
 import bitcamp.java89.ems2.service.PlanService;
 
 @RestController
 public class ExpertJsonControl {
   @Autowired ServletContext sc;
   @Autowired PlanService planService;
+  @Autowired MentoService mentoService;
   
   @RequestMapping("/expert/board")
   public AjaxResult boardList(@RequestParam(defaultValue="1") int pageNo,
@@ -31,6 +34,22 @@ public class ExpertJsonControl {
     
     return new AjaxResult(AjaxResult.SUCCESS, resultMap);
   }
+  
+  @RequestMapping("/expert/getMentoInfo")
+  public AjaxResult getMentoInfo(int eno) throws Exception {
+    
+    Mento mento = mentoService.getMentoInfo(eno);
+    String[] areaList = mento.getSpecialArea().split(",");
+    System.out.println("areaList"+areaList);
+
+    
+    return new AjaxResult(AjaxResult.SUCCESS, areaList);
+    
+    
+  }
+  
+  
+  
 }
 
 

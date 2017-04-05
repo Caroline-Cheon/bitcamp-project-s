@@ -114,6 +114,7 @@ $( function() {
 			
 			$('#mento-set-wrap').css('display','none');
 			$('.user-change-modal').css('display','none');
+			location.href=serverRoot + "/expert/driver.html";
 			
 		}	else if(totalCheckList == " ") {
 			warnModalStart('specialArea-check');
