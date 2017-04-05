@@ -605,7 +605,7 @@ function view_init() {
         });
     });
     // 페이지에 저장된 json 형식의 데이터를 불러와 디스플레이 영역에 표시 한다 - 추후 DB 연결로 변경 예정
-    load();
+    view_load();
   }
   
   
@@ -680,8 +680,8 @@ function view_init() {
     layoutAngle(leftward, 180);
 //     myDiagram.commitTransaction("Layout");
   }
-  function load() {
-    myDiagram.model = go.Model.fromJson(document.getElementById("mySavedModel").value);
+  function view_load() {
+    myDiagram.model = go.Model.fromJson(document.getElementById("viewSavedModel").value);
   }
 </script>
 </head>
@@ -1122,7 +1122,7 @@ boardList();
     					  return;
     				  } else if (ajaxResult.status == 'success') {
     					  console.log(ajaxResult.data.planMap);
-    					  $('#mySavedModel').val(ajaxResult.data.planMap); 
+    					  $('#viewSavedModel').val(ajaxResult.data.planMap); 
     					  setTimeout(function() {
     						  view_init();
     					  }, 2000);
