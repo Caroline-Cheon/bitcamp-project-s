@@ -21,7 +21,7 @@ public class EditorJsonControl {
   @Autowired PlanService planService;
   @Autowired EditorService editorService;
 
-  @RequestMapping("/expert/save")
+  @RequestMapping("/editor/save")
   public AjaxResult editor(Editor editor) throws Exception {
     String binaryData = editor.getThumbnail();  
     FileOutputStream stream = null;
