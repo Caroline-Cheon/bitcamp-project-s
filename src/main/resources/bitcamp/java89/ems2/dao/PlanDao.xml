@@ -80,17 +80,17 @@
   </select>
   
   
-     <select id="detailList" resultMap="plan-map" parameterType="map">
-  select plan.cono,name,mb.mimg,plmap,plimg, sarea from contents ctt
-  inner join plan on plan.cono = ctt.cono
-  inner join copic cp on ctt.cono = cp.cono
-  inner join topic tp on cp.tno = tp.tno
-  inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno
-  inner join membs mb on mb.mno = plan.eno
-  inner join mento mto on mto.eno = mb.mno
-  where ret.sno = #{sno} and mb.mno = plan.eno
-  limit #{startRowIndex}, #{rowSize}
+  <select id="detailList" resultMap="plan-map" parameterType="map">
+	  select plan.cono,name,mb.mimg,plmap,plimg, sarea from contents ctt
+	  inner join plan on plan.cono = ctt.cono
+	  inner join copic cp on ctt.cono = cp.cono
+	  inner join topic tp on cp.tno = tp.tno
+	  inner join snatr snt on tp.tno = snt.tno 
+	  inner join result ret on snt.reno = ret.reno
+	  inner join membs mb on mb.mno = plan.eno
+	  inner join mento mto on mto.eno = mb.mno
+	  where ret.sno = #{sno} and mb.mno = plan.eno
+	  limit #{startRowIndex}, #{rowSize}
   </select>
   
 
@@ -101,7 +101,7 @@
   </select>
   
   <select id="boardList" resultMap="plan-map" parameterType="map">
-  SELECT name, 
+    SELECT name, 
        mb.mno,
        mto.eno,
        pl.cono, 
@@ -109,10 +109,11 @@
        plimg, 
        sarea
     FROM plan pl
-     inner join mento mto on mto.eno = pl.eno
-     inner join membs mb on mb.mno = mto.eno
-      WHERE pl.eno = #{eno}
-      LIMIT 6
+      inner join mento mto on mto.eno = pl.eno
+      inner join membs mb on mb.mno = mto.eno
+    WHERE pl.eno = #{eno}
+    ORDER BY pl.cono DESC
+    LIMIT 6
     <!--  limit #{startRowIndex}, #{rowSize} -->
   </select>
   

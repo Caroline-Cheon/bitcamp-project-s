@@ -439,7 +439,7 @@ var nodePart; // 각 노드를 찾기 위한 오브젝트 저장용 전역 변�
 function view_init() {
     var $ = go.GraphObject.make;
     myDiagram =
-      $(go.Diagram, "myDiagramDiv",
+      $(go.Diagram, "viewDiagramDiv",
         {
     //마인맵 영역 설정
           "commandHandler.copiesTree": true, //복사 가능한 트리 구조
@@ -691,8 +691,8 @@ function view_init() {
 <link rel="stylesheet" type="text/css" href="../common/css/header.css">
 <link rel="stylesheet" type="text/css" href="css/expert.css">
 <link rel="stylesheet" type="text/css" href="css/chat.css">
-<link rel="stylesheet" href="../mystuff/css/modal.css">
-<link rel="stylesheet" href="../common/css/common.css">
+<link rel="stylesheet" type="text/css" href="../mystuff/css/modal.css">
+<link rel="stylesheet" type="text/css" href="../common/css/common.css">
 <link rel="stylesheet" type="text/css" href="../auth/css/login.css">
 <style>
 
@@ -783,11 +783,30 @@ function view_init() {
 .plan-name {
     display: inline-block;
     background: tomato;
+    width: 1100px;
+    height: 40px;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 0px 0 0 30px;
+    line-height: 45px;
+    position: relative;
+    top: 2px;
 }
 .plan-name > input {
+    border-radius: 30px;
     border: none;
-    background: tomato;
-    height: 2.8em;
+    background: white;
+    position: relative;
+    top: -4px;
+    left: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 80%;
+    height: 65%;
+    font-size: 20px;
+    font-weight: 600;
 }
 .plan-item {
     display: inline-block;
@@ -830,14 +849,14 @@ function view_init() {
 .close-fa:HOVER {
     color: rgba(158, 158, 158, .2);
 }
-#myDigramDiv {
-    width: 100%;
-    height: 90%;
-    margin: 20px 0px;
-    position: relative;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    cursor: auto;
-}
+/* #myDigramDiv { */
+/*     width: 100%; */
+/*     height: 90%; */
+/*     margin: 20px 0px; */
+/*     position: relative; */
+/*     -webkit-tap-highlight-color: rgba(255, 255, 255, 0); */
+/*     cursor: auto; */
+/* } */
 /* #myDigramDiv > canvas {
     position: absolute;
     top: 0px;
@@ -865,10 +884,10 @@ function view_init() {
         <div class="editor-div animated fadeIn">
           <div class="plan-name"> 설계도 제목 <input type='text' value=''></div>
           <div class="plan-item">
-            <span class="save-fa fa-floppy-o" aria-hidden="true"> 저장 </span>
-            <span class="close-fa fa-times-circle" aria-hidden="true"></span>
+            <span class="editor-save save-fa fa-floppy-o" aria-hidden="true"> 저장 </span>
+            <span class="editor-close close-fa fa-times-circle" aria-hidden="true"></span>
           </div>
-          <div id="myDiagramDiv"></div>
+          <div id="myDiagramDiv" style="margin: 20px 0px; width: 100%; height: 90%"></div>
         </div>
       <!-- 다이어그램 영역 끝  -->
       <!--  페이지에 데이터를 저장하는 텍스트에어리어 시작 -->
@@ -889,6 +908,21 @@ function view_init() {
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="warn-modal-wrapper">
+  <div class="warn-modal">
+    <div class="warn-modal-head">
+      <i class="warn-modal-btn-close warn-modal-trigger fa fa-times" aria-hidden="true"></i>
+    </div>
+    <div class="warn-modal-content">
+        <div class="warn-modal-good-job">
+          <i class="fa-px fa-info-circle" aria-hidden="true"></i>
+        </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript" src="../common/js/context.js"></script>
 <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
 <script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -907,72 +941,141 @@ function view_init() {
 <script type="text/javascript" src="../common/js/common.js"></script>
 <script type="text/javascript" src="../mystuff/js/modal.js"></script>
 <script type="text/javascript" src="js/go.js"></script>
+<script type="text/javascript" src="js/html2canvas.js"></script>
 <script>
+$(document.body).on('click', '.editor-save', function() {
+	if (check()) warnModalStart('plan-save');
+});
+$(document.body).on('click', '.save-plan', function() {
+	serversave();
+	$('.warn-modal-comment > h3, .save-plan, .cancel-plan').remove();
+	$('.warn-modal-comment').append("<h3 class='animated flash'><br>저장 중...</h3>");
+});
+$(document.body).on('click', '.close-plan', function() {
+	warnModalEnd();
+	$('.editor-div').addClass('animated fadeOut');
+	setTimeout(function() {
+		    $('.editor-div').remove();
+			  $(".editor-explain, .fa-plus").removeClass("animated fadeOutUp");
+			  $(".editor-explain, .fa-plus").addClass("animated fadeInDown");
+			  setTimeout(function() {
+			      $(".editor").switchClass("frame-area-center", "frame-area-left", 2000, "easeInOutBack");
+			      $(".board").switchClass("frame-area-right", "frame-area-center", 2000, "easeInOutBack");
+				    $('.editor').load('driver.html .editor-call');
+				    $(".editor-explain, .fa-plus").removeClass("animated fadeInDown");
+			  }, 400);
+	}, 400);
+});
+$(document.body).on('click', '.cancel-plan, .enter-plan', function() {
+	warnModalEnd();
+});
+//체킹 함수
+function check(){
+  if($(".plan-name input").val()==""){
+	  warnModalStart('plan-name');
+    return false;
+  }else if(expertNo==undefined){
+	  warnModalStart('plan-writer');
+    return false;
+  }else{
+    return true;
+  }
+}
+//화면 캡쳐 서버 저장용 함수
+function capture() {
+  html2canvas($("#myDiagramDiv"), { // 해당 영역만 스크린샷 생성
+       onrendered: function(canvas) {
+         $.post(serverRoot + "/editor/save.json", 
+          {
+          "title" : $(".plan-name input").val(),
+          "writer" : expertNo,
+          "data" : $("#mySavedModel").val(),
+          "thumbnail" : canvas.toDataURL("image/png")
+          }, function(ajaxResult) {
+            if (ajaxResult.status == 'fail') {
+            	warnModalStart('fail-plan');
+            } else {
+            	  warnModalEnd();
+            	  $('.editor-div').addClass('animated fadeOut');
+            	  setTimeout(function() {
+            	        $('.editor-div').remove();
+            	        $(".editor-explain, .fa-plus").removeClass("animated fadeOutUp");
+            	        $(".editor-explain, .fa-plus").addClass("animated fadeInDown");
+            	        setTimeout(function() {
+            	            $(".editor").switchClass("frame-area-center", "frame-area-left", 2000, "easeInOutBack");
+            	            $(".board").switchClass("frame-area-right", "frame-area-center", 2000, "easeInOutBack");
+            	            $('.editor').load('driver.html .editor-call');
+            	            $(".editor-explain, .fa-plus").removeClass("animated fadeInDown");
+            	            boardList();
+            	        }, 400);
+            	  }, 400);
+            }
+          });
+       }
+   });
+}
+</script>
+<script>
+function boardList() {
+    var count = 0;
+    setTimeout(function() {
+        $.getJSON(serverRoot + '/expert/board.json',
+              {
+                'pageNo': 1,
+                'pageSize': 6, 
+                'eno': memberInfo.memberNo
+              }, function(ajaxResult) {
+                var status = ajaxResult.status;
+                if (status != "success") return; 
+                
+                var list = ajaxResult.data.list;
+                console.log(list);
+                
+                var count = new Array();
+                var mteNewMsg = 0;
+                $.each(list, function(k, v) {
+                    $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
+                    {
+                      "cono": v.contentsNo,
+                      "mswr": memberInfo.memberNo
+                    }, function(ajaxResult) {
+                        var status = ajaxResult.status;
+                      if (ajaxResult.status == "fail") {
+                          var board = $('.board-call');
+                          var template = Handlebars.compile($('#boardTemp').html()); 
+                          board.html(template({'list': list}));
+                          return;
+                      }
+                        console.log(ajaxResult.data);
+                        mteNewMsg = ajaxResult.data;
+                        console.log(mteNewMsg);
+                        list[k].newCount = mteNewMsg;
+                       if (list[k].newCount != 0) {
+                        list[k].isCount = true;
+                       } 
+                       else {
+                         list[k].isCount = false;
+                       }
+                      var board = $('.board-call');
+                      var template = Handlebars.compile($('#boardTemp').html()); 
+                      board.html(template({'list': list}));
+                      mteNewMsg = 0;
+                    });
+                  }); // each 문
+            });
+     }, 1000);
+}
+
 $(function() {
 	  <!-- header load -->
 userInfo();
-
+boardList();
 	  <!-- /header load -->
 	  
 	  <!-- expert service loader -->
 /* 	  $(function() {
 	    $(".board-call").load("board.html .board-dash");
 	  }); */
-	  <!-- /expert service load -->
-	  
-	  var count = 0;
-	   setTimeout(function() {
-	      $.getJSON(serverRoot + '/expert/board.json',
-	            {
-	              'pageNo': 1,
-	              'pageSize': 6, 
-	              'eno': memberInfo.memberNo
-	            }, function(ajaxResult) {
-	              var status = ajaxResult.status;
-	              if (status != "success") return; 
-	              
-	              var list = ajaxResult.data.list;
-	              console.log(list);
-	              
-	              var count = 0;
-                var mteNewMsg = 0;
-/*                 boardList();
-                function boardList() { */
-	              $.each(list, function(k, v) {
-	                  $.getJSON(serverRoot + '/message/menteeMessageCount.json', 
-	                  {
-	                    "cono": v.contentsNo,
-	                    "mswr": memberInfo.memberNo
-	                  }, function(ajaxResult) {
-	                      var status = ajaxResult.status;
-	                    if (ajaxResult.status == "fail") {
-	                        var board = $('.board-call');
-	                        var template = Handlebars.compile($('#boardTemp').html()); 
-	                        board.html(template({'list': list}));
-	                    	  return;
-	                    }
-		                    console.log(ajaxResult.data);
-	 	                    mteNewMsg = ajaxResult.data;
-		                    console.log(mteNewMsg);
-	                      list[k].newCount = mteNewMsg;
-                       if (list[k].newCount != 0) {
-	                      list[k].isCount = true;
-                       } 
-                       else {
-                    	   list[k].isCount = false;
-                       }
-	                    var board = $('.board-call');
-	                    var template = Handlebars.compile($('#boardTemp').html());
-	                    board.html(template({'list': list}));
-	                    mteNewMsg = 0;
-
-	                  });
-	                }); // each 문
-/*                 } */
-	          });
-	   }, 1000);
-
-	   
     <!-- editor-explain click 이벤트 -->
     $(document.body).on("click", ".editor-explain", function() {
     	$(".editor-explain, .fa-plus").addClass("animated");
@@ -984,6 +1087,11 @@ userInfo();
     });
     <!-- /editor-explain click 이벤트 -->
     
+    <!-- editor closs click 이벤트 -->
+    $(document.body).on("click", ".editor-close", function() {
+    	warnModalStart('plan-close');
+      });
+    <!-- /editor closs click 이벤트 -->
     <!-- across closs click 이벤트 -->
     $(document.body).on("click", ".across-close", function() {
         $(".this-across").addClass("animated");
@@ -1110,7 +1218,6 @@ userInfo();
 			  $('.bot h3').text(mteName);
 			  $('.bot img').attr('src', mteImg);
 			  
-			  
 			  $.getJSON(serverRoot + '/message/list.json', 
 			      {
 			        "cono": cono, 
@@ -1157,12 +1264,7 @@ userInfo();
 			       $(".mystuff-chatwindow").scrollTop($(".mystuff-chatwindow")[0].scrollHeight);
 
 			  });
-			  
-			  
-			  
-			  
 		  });
-		  
 	  })
 	  
 	  
@@ -1239,7 +1341,7 @@ userInfo();
 {{#each list}}
     <div id="node" cono="{{contentsNo}}" class="nodes animated fadeIn">
       <div class="node-img">
-       <img class="node-img" alt="" src="{{planImage}}">
+       <img class="node-img" alt="" src="http://localhost:8080/bitcamp-project-s/upload/{{planImage}}">
         {{#if isCount}}
           <label class="plan-new-count" for="msgCount">{{newCount}}</label>
         {{else}}

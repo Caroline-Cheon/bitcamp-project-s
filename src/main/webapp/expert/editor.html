@@ -467,7 +467,7 @@ var nodePart; // 각 노드를 찾기 위한 오브젝트 저장용 전역 변�
 function capture() {
   html2canvas($("#myDiagramDiv"), { // 해당 영역만 스크린샷 생성
        onrendered: function(canvas) {
-         $.post(serverRoot + "/expert/save.json", 
+         $.post(serverRoot + "/editor/save.json", 
          	{
          	"title" : "설계도 타이틀",
          	"writer" : 6, 

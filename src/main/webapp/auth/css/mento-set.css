@@ -1,4 +1,3 @@
-
 .user-change-modal {
   position: fixed;
   width: 800px;
@@ -27,24 +26,23 @@
 }
 
 .mento-set-special-title {
-    font-family: 'Nanum Brush Script', serif;
-    position: absolute;
-    padding: 0 58px;
-    font-size: 30px;
-    width: 400px;
+  font-family: 'Nanum Brush Script', serif;
+  position: absolute;
+  padding: 0 58px;
+  font-size: 30px;
+  width: 400px;
 }
 .mento-set-detail-title{
-    font-family: 'Nanum Brush Script', serif;
-    position: absolute;
-    padding: 0 58px;
-    font-size: 30px;
+  font-family: 'Nanum Brush Script', serif;
+  position: absolute;
+  padding: 0 58px;
+  font-size: 30px;
 }
 .mento-set-career-title {
   font-family: 'Nanum Brush Script', serif;
   position: absolute;
   padding: 0 58px;
   font-size: 30px;
-  /* padding-left: 63px; */
 }
 
 .pre-after-icons {
@@ -70,17 +68,12 @@
 .special-mento-wrapper {
   border: 3px rgba(162, 217, 206, 0.61) solid;
   border-radius: 33px;
-  /* margin: 4px 6px; */
-  /* width: 500px; */
   margin-top: -5px;
   margin-left: 10px;
-  /* z-index: 1010; */
   height: 152px;
   width: 450px;
   height: 713px;
-  /* position: absolute; */
   webkit-scrollbar: width:2px;
-  /* overflow: scroll; */
 }
 
 .detail-mento-wrapper {
@@ -107,10 +100,10 @@
   width: 450px;
 }
 .mento-set-box {
-      position: relative;
-      background-color: #fff;
-      margin-bottom: 20px;
-      height: 754px;
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 20px;
+  height: 754px;
 }
 fieldset {
   background-color: #fff;
@@ -174,13 +167,12 @@ background:#efefef;
   /* width: 774px; */
   display: inline-block;
 }
-.label-checkbox,
-.crbtn {
+.label-checkbox {
   padding: 3px 0;
   cursor: pointer;
   overflow: hidden;
   display: inline-block;
-  font-size: 16px;
+  font-size: 13px;
   width: 170px;
 }
 .label-checkbox input[type="checkbox"],
@@ -224,8 +216,6 @@ label.label-checkbox.checked {
   margin-left: 13px;
   font-size: 12px;
   border: transparent;
-  /* border: 3px #33b1b9 solid; */
-  /* border-radius: 50px; */
   resize: none;
 }
 
@@ -257,13 +247,10 @@ label.label-checkbox.checked {
   float: right;
 }
 
-
 .detail-area {
   margin-left: 12px;
   width: 397px;
   font-size: 12px;
-  /* border: 3px #33b1b9 solid; */
-  /* border-radius: 33px; */
   border: transparent;
   height: 246px;
   resize: none;

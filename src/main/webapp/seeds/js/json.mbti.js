@@ -6,19 +6,22 @@ var mbtiValues;
 var mbtiResult;
 
 function makembtizero() {
-	stepCount = 0; 
-	stepChange = 0;
-	hasStep = new Array(); 
-	mbti = [0, 0, 0, 0];
-	mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
-	mbtiResult = {};
+  stepCount = 0; 
+  stepChange = 0;
+  hasStep = new Array(); 
+  mbti = [0, 0, 0, 0];
+  mbtiValues = [0, 0, 0, 0, 0, 0, 0, 0];
+  mbtiResult = {};
+  chartHeavy();
+  d = 0;
 }
 $(function() {
-	makembtizero();
+  makembtizero();
     if (stepCount != 0) $(".progress-bar").css("border-radius", "0 100px 100px 0");
     $(document.body).on("click", ".button-two", function() {
+
       stepCount++;
-	  $('.btn-on').attr('disabled', 'disabled'); 
+    $('.btn-on').attr('disabled', 'disabled'); 
       var nextDiv = $(".on").next("div");
       $(".on").removeClass("on");
       nextDiv.addClass("on");
@@ -63,13 +66,15 @@ $(function() {
             $('.frame-area-out').switchClass('frame-area-out','frame-area-center', 2000, 'easeInOutBack');
             $('.seeds-modal-call').css('display', 'block');
             $('.seeds-modal-call').load('seeds/chart-test.html','.chart-result', function() {
+             
                 chartCreater(mbtiValues[0], mbtiValues[1], mbtiValues[2], mbtiValues[3], 
                         mbtiValues[4], mbtiValues[5], mbtiValues[6], mbtiValues[7]);
                 makembtizero();
+                $('.mbti-type-e').text(resultMsg);
             });
         } else {
-        	console.log("로그인 상태 : DB 전송할 데이터");
-        	console.log(resultMsg, resultValues, memberInfo.memberNo);
+          console.log("로그인 상태 : DB 전송할 데이터");
+          console.log(resultMsg, resultValues, memberInfo.memberNo);
             var param = {
                 "memberNo": memberInfo.memberNo,
                 "type": 'mbti',
@@ -96,10 +101,10 @@ $(function() {
     $(document.body).on("change", ".radio input", function() {
         for (var i = 0; i < hasStep.length; i++) {
           if (hasStep[i] == $(this).attr('setanswer')) return; 
-	  }
-	  hasStep[stepChange++] = $(this).attr('setanswer');
+    }
+    hasStep[stepChange++] = $(this).attr('setanswer');
       if (stepChange == 4 || stepChange == 8 || stepChange == 12 || stepChange == 16)
-    	  $('.btn-on').removeAttr('disabled'); 
+        $('.btn-on').removeAttr('disabled'); 
       
       if (stepChange == 20) {
         $(".result-btn").removeAttr("disabled");
@@ -109,24 +114,24 @@ $(function() {
       $(question).addClass(question);
       if($(this).attr("setAnswer") <= 5) {
         mbti[0] += Number($(this).val()); 
-        	if($(this).val() > 0) mbtiValues[0] += Number($(this).val()); 
-        	if($(this).val() < 0) mbtiValues[1] += Number($(this).val()); 
-        	console.log(mbtiValues[0], mbtiValues[1]); 
+          if($(this).val() > 0) mbtiValues[0] += Number($(this).val()); 
+          if($(this).val() < 0) mbtiValues[1] += Number($(this).val()); 
+          console.log(mbtiValues[0], mbtiValues[1]); 
       } else if ($(this).attr("setAnswer") <= 10 && $(this).attr("setAnswer") > 5) {
          mbti[1] += Number($(this).val()); 
-	     	if($(this).val() > 0) mbtiValues[2] += Number($(this).val()); 
-	    	if($(this).val() < 0) mbtiValues[3] += Number($(this).val()); 
-	    	console.log(mbtiValues[2], mbtiValues[3]); 
+        if($(this).val() > 0) mbtiValues[2] += Number($(this).val()); 
+        if($(this).val() < 0) mbtiValues[3] += Number($(this).val()); 
+        console.log(mbtiValues[2], mbtiValues[3]); 
       } else if ($(this).attr("setAnswer") <= 15 && $(this).attr("setAnswer") > 10) {
          mbti[2] += Number($(this).val()); 
-	     	if($(this).val() > 0) mbtiValues[4] += Number($(this).val()); 
-	    	if($(this).val() < 0) mbtiValues[5] += Number($(this).val()); 
-	    	console.log(mbtiValues[4], mbtiValues[5]); 
+        if($(this).val() > 0) mbtiValues[4] += Number($(this).val()); 
+        if($(this).val() < 0) mbtiValues[5] += Number($(this).val()); 
+        console.log(mbtiValues[4], mbtiValues[5]); 
       } else if ($(this).attr("setAnswer") <= 20 && $(this).attr("setAnswer") > 15) {
          mbti[3] += Number($(this).val()); 
-	     	if($(this).val() > 0) mbtiValues[6] += Number($(this).val()); 
-	    	if($(this).val() < 0) mbtiValues[7] += Number($(this).val()); 
-	    	console.log(mbtiValues[6], mbtiValues[7]); 
+        if($(this).val() > 0) mbtiValues[6] += Number($(this).val()); 
+        if($(this).val() < 0) mbtiValues[7] += Number($(this).val()); 
+        console.log(mbtiValues[6], mbtiValues[7]); 
       }
       
       $(".progress-wrap").attr("data-progress-percent", 5*stepChange);

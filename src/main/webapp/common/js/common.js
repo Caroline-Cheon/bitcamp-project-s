@@ -917,3 +917,106 @@ function eventControll() {
   }
 }
 //<!-- /eventControll -->
+
+/*<!--   modal contector   -->*/
+function modalConnector() {
+	if (!loginEvent) {
+		console.log('modalConnector.loginEvent');
+		console.log(!loginEvent);
+		warnModalStart('log-off');
+	} else if (loginEvent && !testEvent) {
+	    console.log('modalConnector.login.testEvent');
+	    console.log(loginEvent, !testEvent);
+			warnModalStart('test-none');
+	}
+}
+/*<!--   /modal contector   -->
+<!--   warn modal function   -->*/
+function warnModalStart(comn) {
+	console.log('warnModalStart(comn)');
+	console.log(comn);
+	if (comn == 'log-off') {
+		$('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+		$('.warn-modal-comment').append("<h3>로그인하셔야 진로를<br> 추천해드릴 수 있어요.</h3>"
+				+ "<div class='modal-confirm-btn'>확인</div>");
+	} else if (comn == 'test-none') {
+		$('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+		$('.warn-modal-comment').append("<h3>추천 진로는 테스트 완료 후<br> 안내드릴 수 있어요.</h3>"
+				+ "<div class='modal-confirm-btn'>확인</div>");
+	} else if (comn == 'confirm') {
+	    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+	    $('.warn-modal-comment').append("<h3>가입 전 테스트 결과가 있어요.<br>저장하시겠습니까?</h3>"
+	        + "<div class='modal-confirm-yes-btn'>저장하기</div>"
+	        + "<div class='modal-confirm-no-btn'>아니오</div>");
+	} else if (comn == 'save-success') {
+	    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+	    $('.warn-modal-comment').append("<h3>저장 완료!</h3>"
+	        + "<div class='modal-confirm-success-btn'>확인</div>");
+	} else if (comn == 'save-fail') {
+	      $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+	      $('.warn-modal-comment').append("<h3>저장 실패...</h3>"
+	          + "<div class='modal-confirm-btn'>확인</div>");
+	} else if (comn == 'email-check') {
+	      $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+	      $('.warn-modal-comment').append("<h3>이미 가입된 이메일이에요!</h3>"
+	          + "<div class='modal-confirm-btn'>확인</div>");
+	} else if (comn == 'password-check') {
+	      $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+	      $('.warn-modal-comment').append("<h3>비밀번호가 서로 달라요.</h3>"
+	          + "<div class='modal-confirm-btn'>확인</div>");
+	} else if (comn == 'specialArea-check') {
+		  console.log("main 콘솔 몇번");
+        $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+        $('.warn-modal-comment').append("<h3>전문분야를 선택해주세요.</h3>"
+            + "<div class='modal-confirm-btn'>확인</div>");
+  } else if (comn == 'alreadyMento-check') {
+      console.log("main 콘솔 몇번");
+      $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+      $('.warn-modal-comment').append("<h3>이미 멘토전환을 하였습니다.</h3>"
+          + "<div class='modal-confirm-btn'>확인</div>");
+  } else if (comn == 'info-about-mentoSet') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment mentoset-comment'></div>");
+    $('.warn-modal-comment').append("<h3>멘토로 한번 전환을 하면 멘티가 될 수 없습니다.<br>전환하시겠습니까?</h3>"
+        + "<div class='cancel-mentoset'>취소하기</div>"
+        + "<div class='okay-mentoset'>전환하기</div>");
+} else if (comn == 'plan-save') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>저장하시겠습니까?</h3>"
+		+ "<div class='save-plan'>저장하기</div>"
+        + "<div class='cancel-plan'>아니오</div>");
+} else if (comn == 'plan-close') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>저장하지 않고<br> 작업을 종료합니다.</h3>"
+		+ "<div class='close-plan'>네</div>"
+        + "<div class='cancel-plan'>아니오</div>");
+} else if (comn == 'plan-name') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>설계도 제목을 입력하세요.</h3>"
+        + "<div class='enter-plan'>확인</div>");
+} else if (comn == 'plan-writer') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>작성자 정보가 없습니다.</h3>"
+        + "<div class='enter-plan'>확인</div>");
+} else if (comn == 'success-plan') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>저장 완료!</h3>");
+} else if (comn == 'fail-plan') {
+    $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
+    $('.warn-modal-comment').append("<h3>저장 실패...</h3>"
+            + "<div class='enter-plan'>확인</div>");
+}
+    $('.warn-modal').addClass('animated fadeInRight');
+    $('.warn-modal-page-wrapper').addClass('warn-modal-blur-it');
+    $('.warn-modal-wrapper').addClass('warn-modal-open');
+}
+function warnModalEnd() {
+    $('.warn-modal').addClass('animated fadeOutRight');
+    setTimeout(function() {
+      $('.warn-modal').removeClass('animated fadeOutRight');
+      $('.warn-modal-wrapper').removeClass('warn-modal-open');
+      $('.warn-modal').removeClass('animated fadeInRight');
+      $('.warn-modal-page-wrapper').removeClass('warn-modal-blur-it');
+      $('.warn-modal-comment').remove();
+    }, 1000);
+  }
+/*<!--   /warn modal function   -->*/

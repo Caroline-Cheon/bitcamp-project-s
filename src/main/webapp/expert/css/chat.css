@@ -419,7 +419,7 @@ Right triangle, left side slightly down
   margin: 0px;
   line-height: 1.5;
 }
-@-webkit-keyframes fadeIn {
+/* @-webkit-keyframes fadeIn {
   0% {
     font-size: 0em;
   }
@@ -439,7 +439,7 @@ Right triangle, left side slightly down
   }
   100% {
     font-size: 1em;
-  }
+  } */
 }
   .window .chatwindow .left .bye {
   -webkit-animation-name: fadeOut;
@@ -496,7 +496,7 @@ Right triangle, left side slightly down
     opacity: 0;
   }
 }
-@-webkit-keyframes fadeOut {
+/* @-webkit-keyframes fadeOut {
   0% {
     font-size: 1.2em;
   }
@@ -516,7 +516,7 @@ Right triangle, left side slightly down
   }
   100% {
     font-size: 0em;
-  }
+  } */
 }
   .window .chatwindow .left:before {
   -webkit-transform: scaleX(-1);
