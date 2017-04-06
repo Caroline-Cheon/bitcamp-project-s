@@ -117,7 +117,7 @@ request(url, function(error, response, html){
 		for (i = 0; ted.anker.length > i; i++) {
 			  url = ted.anker[i]; 
 			  crowl(ted); 
-			}
+		}
 });
 
 function crowl(ted) {
@@ -129,21 +129,20 @@ function crowl(ted) {
 
 	   ted.addVodsc(a('p.talk-description').text().replace(/\n/g, "").replace(/\r/g, "")); // 비디오 설명.
 	   ted.addSimg(a('img.thumb__image').attr("src")); // 스피커 이미지
+
 	   ted.addSpnm(a('a.talk-speaker__link').attr("href"));// 스피커 이름
 	   ted.addSpdsc(a('div.talk-speaker__description').text()); // 스피커 직업
 	   
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);
-		   test();
+		   video();
 	   });
-	   function test() {
-//		   console.log(++ted.cono,ted.crtitle[0], ted.anker[0], ted.thumImg[0], ted.vodsc[0], ted.spnm[0], ted.spdsc[0], ted.simg[0], ted.posted[0]);
-	   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
+	   function video() {
+		   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
 				   [++ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count++]],
 				   function (err, rows, fields) {
 			   			console.log(rows);
-//			   				copic();
 			});
 	   };
 	   
@@ -156,5 +155,6 @@ function crowl(ted) {
 
 			})
 		}*/
+
 	});
-}
+};

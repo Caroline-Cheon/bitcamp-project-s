@@ -41,6 +41,7 @@ public class EditorJsonControl {
       editor.setThumbnail(fileName+".png");
       editorService.mindInsert(editor);
       rno = editor.getContentsNo();
+      editorService.mindCopic(editor);
       
       HashMap<String, Object> resultMap = new HashMap<>(); 
       resultMap.put("rno", rno);
