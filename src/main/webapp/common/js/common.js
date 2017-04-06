@@ -248,6 +248,7 @@ function loadPersonList() {
 				var section = $('.persons');
 				var template = Handlebars.compile($('#personDetail').html());
 				section.html(template({"list": list}));
+
 				/***
 				 * 적절한 타임아웃 필요. 페이지 로드 전 함수 호출 시 예기치 않은 오류 발생 
 				 */
@@ -511,11 +512,12 @@ $(function() {
 						console.log(hasLike);
 						eventControll();
 						if (memsType == 'mentee') {
+							console.log("mentee")
 						$('.header-icon-user').css("display", "inline-block");
 						$('.header-icon-message').css("display", "inline-block");
 						newMessageCount();
 					    }
-					     else { // 접속자 멘토일 때
+					     else if (memsType == 'mento'){ // 접속자 멘토일 때
 						$('.header-icon-user').css("display", "inline-block");
 						$('.mentee-service').css('display', 'none');
 
@@ -1025,3 +1027,39 @@ function warnModalEnd() {
     }, 1000);
   }
 /*<!--   /warn modal function   -->*/
+
+
+function jcarousels() {
+    $('.jcarousel').jcarousel();
+
+    $('.jcarousel-control-prev')
+        .on('jcarouselcontrol:active', function() {
+            $(this).removeClass('inactive');
+        })
+        .on('jcarouselcontrol:inactive', function() {
+            $(this).addClass('inactive');
+        })
+        .jcarouselControl({
+            target: '-=1'
+        });
+
+    $('.jcarousel-control-next')
+        .on('jcarouselcontrol:active', function() {
+            $(this).removeClass('inactive');
+        })
+        .on('jcarouselcontrol:inactive', function() {
+            $(this).addClass('inactive');
+        })
+        .jcarouselControl({
+            target: '+=1'
+        });
+
+    $('.jcarousel-pagination')
+        .on('jcarouselpagination:active', 'a', function() {
+            $(this).addClass('active');
+        })
+        .on('jcarouselpagination:inactive', 'a', function() {
+            $(this).removeClass('active');
+        })
+        .jcarouselPagination();
+};

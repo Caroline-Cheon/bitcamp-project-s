@@ -65,7 +65,7 @@ $(function() {
 				    	});
 		    			
 		    		}
-		    		else {
+		    		else if (memsType == 'mento'){
 		    			console.log("멘토");
 		    			$('.header-icon-user').css("display", "inline-block");
 		    			location.href=serverRoot + '/expert/driver.html';
@@ -137,7 +137,7 @@ $(function() {
 	$(document.body).on('click', '.modal-confirm-yes-btn', function(event) {
 		warnModalEnd();
 		var param = {
-				'memberNo' : memberInfo.memberNo,
+				'memberNo' : sno,
 				'type' : 'mbti',
 				'resultResult' : window.sessionStorage.getItem('result'),
 				'eachResult' : window.sessionStorage.getItem('resultValues')

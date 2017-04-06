@@ -38,7 +38,8 @@ select count(*) from video vd
       inner join copic cp on ctt.cono = cp.cono
       inner join topic tp on cp.tno = tp.tno
       inner join snatr snt on tp.tno = snt.tno 
-      inner join result ret on snt.reno = ret.reno
+      inner join res_define resdf on resdf.define = snt.define 
+      inner join result ret on ret.rer = resdf.define
   where ret.sno = #{sno}
   </select>
   
@@ -48,7 +49,8 @@ select count(*) from video vd
 		  inner join copic cp on ctt.cono = cp.cono
 		  inner join topic tp on cp.tno = tp.tno
 		  inner join snatr snt on tp.tno = snt.tno 
-		  inner join result ret on snt.reno = ret.reno
+      inner join res_define resdf on resdf.define = snt.define 
+      inner join result ret on ret.rer = resdf.define
 	  where ret.sno = #{sno}
 	  limit 6;
   </select>
@@ -65,7 +67,8 @@ select count(*) from video vd
 		  inner join copic cp on ctt.cono = cp.cono
 		  inner join topic tp on cp.tno = tp.tno
 		  inner join snatr snt on tp.tno = snt.tno 
-		  inner join result ret on snt.reno = ret.reno
+      inner join res_define resdf on resdf.define = snt.define 
+      inner join result ret on ret.rer = resdf.define
 	  where ret.sno = #{sno}
 	  limit #{startRowIndex}, #{rowSize}
   </select>

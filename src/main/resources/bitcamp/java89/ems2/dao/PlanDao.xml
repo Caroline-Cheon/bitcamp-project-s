@@ -71,7 +71,8 @@
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno
   inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno
+  inner join res_define resdf on resdf.define = snt.define 
+  inner join result ret on ret.rer = resdf.define
   inner join membs mb on mb.mno = plan.eno
   inner join mento mto on mto.eno = mb.mno
   where ret.sno = 5 and mb.mno = plan.eno 
@@ -85,8 +86,9 @@
 	  inner join plan on plan.cono = ctt.cono
 	  inner join copic cp on ctt.cono = cp.cono
 	  inner join topic tp on cp.tno = tp.tno
-	  inner join snatr snt on tp.tno = snt.tno 
-	  inner join result ret on snt.reno = ret.reno
+	  inner join snatr snt on tp.tno = snt.tno
+	  inner join res_define resdf on resdf.define = snt.define 
+	  inner join result ret on ret.rer = resdf.define
 	  inner join membs mb on mb.mno = plan.eno
 	  inner join mento mto on mto.eno = mb.mno
 	  where ret.sno = #{sno} and mb.mno = plan.eno
