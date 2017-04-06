@@ -1,11 +1,9 @@
 var mysql = require('mysql');
 var request = require("request");  
 var cheerio = require("cheerio");  
-var url = "https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=astronomy";
-/*https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=astronomy
-   https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=biotech
-      https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=finance
-*/
+var url = "https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=astronomy"; // topic = 1 (천문학)(url에 맞춰 ted.topic 번호 바꿔줄 것)
+/*var url = "https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=biotech";*/ // topic = 2 (바이오테크)
+/*var url = "https://www.ted.com/talks?language=ko&sort=newest&topics%5B%5D=finance";*/ // topic = 3 (재무)
 var dbConnection = mysql.createConnection({   
 	host: 'localhost', 
 	user: 'java89',   
@@ -14,6 +12,7 @@ var dbConnection = mysql.createConnection({
 });
 
 function Ted() {
+	this.topic = 1;
 	this.cono = 0;
 	this.count = 0;
 	this.crtitle = new Array(); 
@@ -126,7 +125,7 @@ request(url, function(error, response, html){
 	crowls();
 }*/
 function crowl(ted) {
-	request(url, function(error, response, html){  
+	request(url, function(error, response, html){
 	   if (error) {return console.log(error)};
 //          console.log("url="+url);
 	   var a = cheerio.load(html);
@@ -139,16 +138,22 @@ function crowl(ted) {
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);
-		   test();
+		   contents();
 	   });
-	   function test() {
-//		   console.log(++ted.cono,ted.crtitle[0], ted.anker[0], ted.thumImg[0], ted.vodsc[0], ted.spnm[0], ted.spdsc[0], ted.simg[0], ted.posted[0]);
-	   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
-				   [++ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
+	   function contents() {
+		   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
+				   [ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
 				   function (err, rows, fields) {
 			   			console.log(rows);
+			   			copic()
 			});
-	   ted.count++
-	   };
+	   }
+	   function copic() {
+		   dbConnection.query("insert into copic(tno, cono) values(?, ?)", 
+				   [ted.topic, ++ted.cono],
+				   function (err, rows, fields) {
+		   		});
+		   		ted.count++
+	   }
 	});
 }
