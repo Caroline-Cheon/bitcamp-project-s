@@ -55,26 +55,10 @@ insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) valu
 - 인물 데이터
 	insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc, pschl) values(3, '썸네일1', '썸네일2', '인물이름', '인물직업', '인물설명','비트대학교'); 
 
-- 설계도 데이터
-	insert into plan(cono, eno, plnm,  plmap, plimg) values(38, 6, '설계도 이름', '설계도 내용', '설계도 썸네일');
-	insert into plan(cono, eno, plnm,  plmap, plimg) values(39, 7, '설계도 이름', '설계도 내용', '설계도 썸네일');
-	insert into plan(cono, eno, plnm,  plmap, plimg) values(40, 8, '설계도 이름', '설계도 내용', '설계도 썸네일');
-	insert into plan(cono, eno, plnm,  plmap, plimg) values(41, 9, '설계도 이름', '설계도 내용', '설계도 썸네일');
-	insert into plan(cono, eno, plnm,  plmap, plimg) values(42, 10,'설계도 이름', '설계도 내용', '설계도 썸네일');
-
-
-- 주제 데이터
-	insert into topic(tnm) values('천문학'); 
-	insert into topic(tnm) values('바이오테크'); 
-	insert into topic(tnm) values('재무'); 
-	
-	
-
-
 - 콘텐츠 주제 데이터
-	insert into copic(tno, cono) values(1, 2); 
-	insert into copic(tno, cono) values(2, 3); 
-	insert into copic(tno, cono) values(3, 4); 
+	insert into copic(tno, cono) values(1, 2);
+	insert into copic(tno, cono) values(2, 3);
+	insert into copic(tno, cono) values(3, 4);
 	insert into copic(tno, cono) values(1, 5);
 	insert into copic(tno, cono) values(2, 6);
 	insert into copic(tno, cono) values(2, 7);
@@ -116,11 +100,93 @@ insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) valu
 
 - 검사결과 데이터
 	insert into result(sno, type, rer) values(5, 'mbti', 'istp');
+	
+	- 주제 데이터
+  insert into topic(tnm) values('천문학'); 
+  insert into topic(tnm) values('바이오테크'); 
+  insert into topic(tnm) values('재무'); 
 
 - 추천주제 데이터
-	insert into snatr(tno, reno) values(1, 1); 
-	insert into snatr(tno, reno) values(2, 1); 
-	insert into snatr(tno, reno) values(3, 1);
+	insert into snatr(tno, define) values(1, 'ISTP');  
+	insert into snatr(tno, define) values(2, 'ISTP');  
+	insert into snatr(tno, define) values(3, 'ISTP');
+	
+	insert into snatr(tno, define) values(1, 'INTP');  
+  insert into snatr(tno, define) values(2, 'INTP');  
+  insert into snatr(tno, define) values(3, 'INTP');
+  
+  insert into snatr(tno, define) values(1, 'ENTJ');  
+  insert into snatr(tno, define) values(2, 'ENTJ');  
+  insert into snatr(tno, define) values(3, 'ENTJ');
+  
+  insert into snatr(tno, define) values(1, 'ENTP');  
+  insert into snatr(tno, define) values(2, 'ENTP');  
+  insert into snatr(tno, define) values(3, 'ENTP');
+  
+  insert into snatr(tno, define) values(1, 'INFJ');  
+  insert into snatr(tno, define) values(2, 'INFJ');  
+  insert into snatr(tno, define) values(3, 'INFJ');
+  
+  insert into snatr(tno, define) values(1, 'INFP');  
+  insert into snatr(tno, define) values(2, 'INFP');  
+  insert into snatr(tno, define) values(3, 'INFP');
+  
+  insert into snatr(tno, define) values(1, 'ENFJ');  
+  insert into snatr(tno, define) values(2, 'ENFJ');  
+  insert into snatr(tno, define) values(3, 'ENFJ');
+
+  insert into snatr(tno, define) values(1, 'ENFP');  
+  insert into snatr(tno, define) values(2, 'ENFP');  
+  insert into snatr(tno, define) values(3, 'ENFP');
+  
+  insert into snatr(tno, define) values(1, 'ISTJ');  
+  insert into snatr(tno, define) values(2, 'ISTJ');  
+  insert into snatr(tno, define) values(3, 'ISTJ');
+  
+  insert into snatr(tno, define) values(1, 'ISFJ');  
+  insert into snatr(tno, define) values(2, 'ISFJ');  
+  insert into snatr(tno, define) values(3, 'ISFJ');
+  
+  insert into snatr(tno, define) values(1, 'ESTJ');  
+  insert into snatr(tno, define) values(2, 'ESTJ');  
+  insert into snatr(tno, define) values(3, 'ESTJ');
+  
+  insert into snatr(tno, define) values(1, 'ESFJ');  
+  insert into snatr(tno, define) values(2, 'ESFJ');  
+  insert into snatr(tno, define) values(3, 'ESFJ');
+  
+  insert into snatr(tno, define) values(1, 'ISFP');  
+  insert into snatr(tno, define) values(2, 'ISFP');  
+  insert into snatr(tno, define) values(3, 'ISFP');
+  
+  insert into snatr(tno, define) values(1, 'ESTP');  
+  insert into snatr(tno, define) values(2, 'ESTP');  
+  insert into snatr(tno, define) values(3, 'ESTP');
+  
+  insert into snatr(tno, define) values(1, 'ESFP');  
+  insert into snatr(tno, define) values(2, 'ESFP');  
+  insert into snatr(tno, define) values(3, 'ESFP');
+  
+  
+  - 검사결과 16가지 정의 
+  insert into res_define(define) values('INTJ');
+  insert into res_define(define) values('INTP');
+  insert into res_define(define) values('ENTJ');
+  insert into res_define(define) values('ENTP');
+  insert into res_define(define) values('INFJ');
+  insert into res_define(define) values('INFP');
+  insert into res_define(define) values('ENFJ');
+  insert into res_define(define) values('ENFP');
+  insert into res_define(define) values('ISTJ');
+  insert into res_define(define) values('ISFJ');
+  insert into res_define(define) values('ESTJ');
+  insert into res_define(define) values('ESFJ');
+  insert into res_define(define) values('ISTP');
+  insert into res_define(define) values('ISFP');
+  insert into res_define(define) values('ESTP');
+  insert into res_define(define) values('ESFP');
+  
+  
 - 질의응답 데이터
 insert into qna(cono,sno) values(38,5);
 insert into qna(cono,sno) values(38,1);
@@ -214,6 +280,13 @@ insert into qna(cono,sno) values(5,2);
 	where ret.sno = '5';
 
 
+
+	
+	
+	
+	
+	
+	
 	
 ==============================================================================================	
 	모든 테이블 삭제

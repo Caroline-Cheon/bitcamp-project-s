@@ -49,11 +49,11 @@
   </select>
   
   <insert id="insert" parameterType="result">
-    insert into result(sno,type,rer,eare) 
+    insert into result(sno,rer,type,eare) 
     values(
       #{memberNo},
-      #{type}, 
       #{resultResult},
+      #{type}, 
       #{eachResult})
   </insert>  
   
