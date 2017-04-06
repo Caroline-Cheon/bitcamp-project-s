@@ -12,7 +12,7 @@ var dbConnection = mysql.createConnection({
 });
 
 function Ted() {
-	this.topic = '1';
+	this.topic = 1;
 	this.cono = 0;
 	this.count = 0;
 	this.crtitle = new Array(); 
