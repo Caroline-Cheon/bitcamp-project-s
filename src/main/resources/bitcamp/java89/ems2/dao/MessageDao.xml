@@ -21,7 +21,7 @@
     WHERE sno = #{sno}
   </select>
   
-    <select id="getMessageNo" resultType="int" parameterType="int">
+    <select id="getMessageNo" resultType="String" parameterType="map">
 select msno
      from messg 
      where mswr = #{sno} 

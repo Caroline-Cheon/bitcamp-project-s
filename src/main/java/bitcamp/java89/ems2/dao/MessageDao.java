@@ -11,7 +11,7 @@ public interface MessageDao {
   int menteeSendQnA(Message message) throws Exception; 
   int menteeSendMesg(Message message) throws Exception; 
   int mentoSendMesg(Message message) throws Exception;
-  int getMessageNo(int sno) throws Exception;
+  String getMessageNo(HashMap<String, Object> intMap) throws Exception;
   ArrayList<Integer> getMenteeNo(HashMap<String, Object> intMap) throws Exception;
   String mentoGetMessageNo(HashMap<String, Object> intMap) throws Exception;
   Message nodeGetMessageNo(HashMap<String, Object> intMap) throws Exception;

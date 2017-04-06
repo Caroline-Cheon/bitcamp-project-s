@@ -62,6 +62,13 @@ insert into job(cono, jbimg, jbnm, jbdsc) values(1, 'abce', '연구원', '연구
 	insert into copic(tno, cono) values(1, 22);
 	insert into copic(tno, cono) values(1, 23);
 	insert into copic(tno, cono) values(1, 24);
+	
+	
+	- 추천 인물 리스트
+	insert into copic(tno, cono) values(1, 38);
+	insert into copic(tno, cono) values(1, 39);
+	insert into copic(tno, cono) values(1, 40);
+	insert into copic(tno, cono) values(1, 41);
 
 	- 아래부터 설계도 리스트
   insert into copic(tno, cono) values(1, 37);

@@ -40,7 +40,8 @@
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno
   inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno 
+  inner join res_define resdf on resdf.define = snt.define 
+  inner join result ret on ret.rer = resdf.define
   inner join mentee mte on ret.sno = mte.sno
   inner join lklst lk on ctt.cono = lk.cono
   where lk.sno = #{sno};
@@ -52,7 +53,8 @@
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno
   inner join snatr snt on tp.tno = snt.tno 
-  inner join result ret on snt.reno = ret.reno 
+  inner join res_define resdf on resdf.define = snt.define 
+  inner join result ret on ret.rer = resdf.define
   inner join mentee mte on ret.sno = mte.sno
   inner join lklst lk on ctt.cono = lk.cono
   where lk.sno = #{sno};

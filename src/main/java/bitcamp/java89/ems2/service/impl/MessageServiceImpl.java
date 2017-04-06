@@ -70,8 +70,8 @@ public class MessageServiceImpl implements MessageService {
   }
 
   @Override
-  public int getMessageNo(int sno) throws Exception {
-    return messageDao.getMessageNo(sno);
+  public String getMessageNo(HashMap<String, Object> intMap) throws Exception {
+    return messageDao.getMessageNo(intMap);
   }
   
   @Override

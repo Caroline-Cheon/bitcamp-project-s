@@ -137,9 +137,9 @@ public class MessegeJsonControl {
   public AjaxResult newMessageCount(@RequestParam int sno) throws Exception { // 멘티 입장에서 main 화면 헤더 부분 카운트 표시를 위한~
   HashMap<String, Object> intMap = new HashMap<String, Object>();
   intMap.put("sno", sno);
-    int msno = messageService.getMessageNo(sno);
+    String msno = messageService.getMessageNo(intMap);
     
-    if (msno == 0) {
+    if (msno == null) {
       return new AjaxResult(AjaxResult.FAIL, "최신 답변이 없습니다.");
     }
     else {

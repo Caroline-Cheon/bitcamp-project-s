@@ -40,7 +40,8 @@
       tnm
     from membs mb
      inner join result re on re.sno = mb.mno
-     inner join snatr snr on snr.reno = re.reno
+     inner join res_define resdf on resdf.define = re.rer
+     inner join snatr snr on snr.define = resdf.define
      inner join topic tp on tp.tno = snr.tno 
     where mb.mno=#{memberNo}
   </select>
