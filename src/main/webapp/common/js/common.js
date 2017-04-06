@@ -476,6 +476,7 @@ function userInfo() {
 				loadContorl();
 			}, 3500);
 			if(memberInfo != undefined) {
+				console.log('memberInfo != undefined', memberInfo.name);
 	    		$('.user-info h3').text(memberInfo.name);
 	    		if (memberInfo.photoPath != undefined) {
 	    			console.log(memberInfo.photoPath);
@@ -977,8 +978,8 @@ function warnModalStart(comn) {
   } else if (comn == 'info-about-mentoSet') {
     $('.warn-modal-content').append("<div class='warn-modal-comment mentoset-comment'></div>");
     $('.warn-modal-comment').append("<h3>멘토로 한번 전환을 하면 멘티가 될 수 없습니다.<br>전환하시겠습니까?</h3>"
-        + "<div class='cancel-mentoset'>취소하기</div>"
-        + "<div class='okay-mentoset'>전환하기</div>");
+    		+ "<div class='okay-mentoset'>전환하기</div>"
+        + "<div class='cancel-mentoset'>취소하기</div>");
 } else if (comn == 'plan-save') {
     $('.warn-modal-content').append("<div class='warn-modal-comment'></div>");
     $('.warn-modal-comment').append("<h3>저장하시겠습니까?</h3>"
@@ -1017,6 +1018,7 @@ function warnModalEnd() {
       $('.warn-modal').removeClass('animated fadeInRight');
       $('.warn-modal-page-wrapper').removeClass('warn-modal-blur-it');
       $('.warn-modal-comment').remove();
+      colorSet();
     }, 1000);
   }
 /*<!--   /warn modal function   -->*/

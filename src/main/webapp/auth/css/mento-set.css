@@ -257,27 +257,27 @@ label.label-checkbox.checked {
 }
 
 .cancel-mentoset {
-	left: 12%;
 	margin-left: 10px;
   width: 80px;
 }
 .okay-mentoset {
-	margin-left: -100px;
+	  margin-left: -100px;
+    width: 100px;
 }
 
 .cancel-mentoset,
 .okay-mentoset {
+  left: 50%;
 	color: #fff;
   font-weight: 600;
   padding: 4px;
   background: rgba(51, 122, 183, 0.76);
-  width: 100px;
   border-radius: 4px;
   text-align: center;
   cursor: pointer;
   display: inline-block;
   position: relative;
-  left: 50%;
+
 }
 
 
