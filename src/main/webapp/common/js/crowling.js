@@ -138,6 +138,7 @@ function crowl(ted) {
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);
+	   }, function() {
 		   contents();
 	   });
 	   function contents() {
@@ -145,15 +146,17 @@ function crowl(ted) {
 				   [ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
 				   function (err, rows, fields) {
 			   			console.log(rows);
-			   			copic()
-			});
+		   }, function() {
+			   copic();
+		   });
 	   }
 	   function copic() {
 		   dbConnection.query("insert into copic(tno, cono) values(?, ?)", 
 				   [ted.topic, ++ted.cono],
 				   function (err, rows, fields) {
-		   		});
-		   		ted.count++
+		   }, function() {
+			   ted.count++
+		   });
 	   }
 	});
 }
