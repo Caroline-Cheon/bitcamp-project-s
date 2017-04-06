@@ -135,6 +135,7 @@ function crowl(ted) {
 	   ted.addSpnm(a('div.talk-speaker__name > a').text());// 스피커 이름
 	   ted.addSpdsc(a('div.talk-speaker__description').text()); // 스피커 직업
 	   
+	   
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);
@@ -144,7 +145,6 @@ function crowl(ted) {
 		   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
 				   [ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
 				   function (err, rows, fields) {
-			   			console.log(rows);
 			   			copic()
 			});
 	   }
