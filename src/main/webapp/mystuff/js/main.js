@@ -207,7 +207,7 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
                 $(this).removeClass('active');
         }).jcarouselPagination();
     };
-
+    
 	$(".hover").mouseleave(function () {
 		$(this).removeClass("hover");
 	});
