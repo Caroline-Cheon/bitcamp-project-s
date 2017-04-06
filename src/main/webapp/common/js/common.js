@@ -275,6 +275,7 @@ function pageLoad(choose) {
 				      console.log(section);
 				      var template = Handlebars.compile($('#personList').html());
 				      section.html(template({"list": list}));
+				      jcarousels();
 					});
 			$.getJSON(serverRoot + '/video/list.json', 
 				    {
