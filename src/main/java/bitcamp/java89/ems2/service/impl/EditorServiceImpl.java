@@ -24,6 +24,10 @@ public class EditorServiceImpl implements EditorService {
   public int mindInsert(Editor editor) throws Exception {
     return editorDao.mindInsert(editor);
   }
+  
+  public int mindCopic(Editor editor) throws Exception {
+    return editorDao.mindCopic(editor);
+  }
 }
 
 
