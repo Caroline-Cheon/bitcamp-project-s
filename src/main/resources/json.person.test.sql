@@ -49,7 +49,7 @@
 	insert into contents(type) values('person'); 
 	insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (43, 
+      (38, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/hubble.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/hubble(세로).jpg', 
       '에드윈 파월 허블(Edwin Powell Hubble)', 
@@ -68,7 +68,7 @@
       );
 	insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (44, 
+      (39, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/lee.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/lee(세로).jpg', 
       '김연아', 
@@ -89,7 +89,7 @@ ISU 그랑프리 파이널 3회 우승을 통해 피겨 스케이팅의 여자 �
       );
   insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (45, 
+      (40, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/jobs.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/jobs(세로).jpg', 
       '스티브 잡스(Steven Paul Jobs)', 
@@ -109,7 +109,7 @@ ISU 그랑프리 파이널 3회 우승을 통해 피겨 스케이팅의 여자 �
       );
   insert into person(cono, psimg1, psimg2, psnm, psjob, psdsc,pschl) 
     values
-      (46, 
+      (41, 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/jordan.jpg', 
       'http://localhost:8080/bitcamp-project-s/mystuff/img/personImg/studio/jordan(세로).jpg', 
       '마이클 조던(Michael Jeffrey Jordan)', 
@@ -131,7 +131,7 @@ NBA의 트렌드와 조던과 떼어 놓을 수 없는 관계가 되어버린 �
 
 
 - 설계도 데이터
-	insert into plan(cono, eno, plmap, plimg) values(4, 6, '설계도 내용', '설계도 썸네일'); 
+	insert into plan(cono, eno, plmap, plimg) values(4, 6, '설계도 내용', '설계도 썸네일');
 	insert into plan(cono, eno, plnm, plimg) values(38, 6, '연봉 수직선상을 꿈꾸다', 'http://cfile25.uf.tistory.com/image/23506637556925C1021DCE'); 
 	insert into plan(cono, eno, plnm, plimg) values(39, 6, '사람을 위한, 사람에 의한 건축', 'http://www.issuemaker.kr/PEG/14469592276738.jpg'); 
 	insert into plan(cono, eno, plnm, plimg) values(40, 6, '번역의 즐거움', 'http://cfile232.uf.daum.net/image/120CF7284CE4E98A3CB10D'); 

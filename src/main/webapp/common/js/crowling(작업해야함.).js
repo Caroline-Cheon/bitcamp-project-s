@@ -103,6 +103,7 @@ request(url, function(error, response, html){
           ted.addPosted(post[1] + post[0]);
         });
 
+		
 		dbConnection.query(
 			  'select cono from contents ORDER BY cono desc;', 
 			  function(err, rows, fields) { // 서버에서 결과를 받았을 때 호출되는 함수
@@ -111,11 +112,20 @@ request(url, function(error, response, html){
 				  
 				  console.log(rows[0].cono);
 					ted.cono = rows[0].cono;
+					crowlingTed();
 		});
-		for (i = 0; i < ted.anker.length; i++) {
+		var url ="";
+		function crowlingTed() {
+			
+		for (var i = 0; i < 36; i++) {
+			console.log("ted" + ted.anker[i]);
+			setTimeout(function() {
+				console.log(ted.anker[0]);
 			console.log(ted.anker[i]);
 			url = ted.anker[i];
 			crowl(ted);
+			}, 1000);
+		 }
 		}
 });
 
@@ -138,25 +148,27 @@ function crowl(ted) {
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);
+		   setTimeout(function() {
 		   contents();
-	   })
+		   },1000)
+	   });
 
 	   function contents() {
 		   dbConnection.query("insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) values(?,?,?,?,?,?,?,?,?)", 
-				   [++ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
+				   [ted.cono, ted.crtitle[ted.count], ted.anker[ted.count], ted.thumImg[ted.count], ted.vodsc[ted.count], ted.spnm[ted.count], ted.spdsc[ted.count], ted.simg[ted.count], ted.posted[ted.count]],
 				   function (err, rows, fields) {
 			   			console.log(rows);
-			   			setTimeout(function() {
-			   			copic();
-			   			},100);
-		   })
+		   }, function() {
+			   copic();
+		   });
 	   }
 	   function copic() {
 		   dbConnection.query("insert into copic(tno, cono) values(?, ?)", 
-				   [ted.topic, ted.cono],
+				   [ted.topic, ++ted.cono],
 				   function (err, rows, fields) {
-			     ted.count++
-		   })
+		   }, function() {
+			   ted.count++
+		   });
 	   }
 	});
 }
