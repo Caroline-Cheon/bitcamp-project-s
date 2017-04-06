@@ -63,10 +63,7 @@ insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) valu
 	insert into plan(cono, eno, plnm,  plmap, plimg) values(42, 10,'설계도 이름', '설계도 내용', '설계도 썸네일');
 
 
-- 주제 데이터
-	insert into topic(tnm) values('천문학'); 
-	insert into topic(tnm) values('바이오테크'); 
-	insert into topic(tnm) values('재무'); 
+
 	
 	
 
@@ -116,11 +113,16 @@ insert into video(cono, kotl, entl, voimg, vodsc, spnm, sjob, simg, posted) valu
 
 - 검사결과 데이터
 	insert into result(sno, type, rer) values(5, 'mbti', 'istp');
+	
+	- 주제 데이터
+  insert into topic(tnm) values('천문학'); 
+  insert into topic(tnm) values('바이오테크'); 
+  insert into topic(tnm) values('재무'); 
 
 - 추천주제 데이터
-	insert into snatr(tno, reno) values(1, 1); 
-	insert into snatr(tno, reno) values(2, 1); 
-	insert into snatr(tno, reno) values(3, 1);
+	insert into snatr(tno, reno) values(1, 1);  
+	insert into snatr(tno, reno) values(2, 1);  
+	insert into snatr(tno, reno) values(3, 1);  
 - 질의응답 데이터
 insert into qna(cono,sno) values(38,5);
 insert into qna(cono,sno) values(38,1);
