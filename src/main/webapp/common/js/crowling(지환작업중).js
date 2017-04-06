@@ -8,7 +8,7 @@ var dbConnection = mysql.createConnection({
 	host: 'localhost', 
 	user: 'java89',   
 	password: '1111',   
-	database: 'dreamtree' 
+	database: 'dreamtree'
 });
 
 function Ted() {
