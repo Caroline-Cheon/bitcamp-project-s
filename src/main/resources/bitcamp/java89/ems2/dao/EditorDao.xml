@@ -13,4 +13,8 @@
   insert into plan(cono,plnm,eno,plmap,plimg) values(#{contentsNo}, #{title}, #{writer}, #{data}, #{thumbnail})
 </insert>
 
+<insert id="mindCopic" parameterType="editor">
+  insert into copic(cono, tno) values('5', '1'),('5', '2'),('5', '3')
+</insert>
+
 </mapper>
