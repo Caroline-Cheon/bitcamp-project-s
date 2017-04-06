@@ -138,6 +138,15 @@ body {
     -webkit-font-smoothing: antialiased;
     font-size: 24px;
 }
+.board-fa {
+    font-size: 8em;
+    color: rgba(128, 128, 128, 0.6);
+    top: 30%;
+    left: 50%;
+    margin: -60px 0 0 -50px;
+    position: absolute;
+}
+.board-explain,
 .editor-explain,
 .across-explain {
     left: 50%;
@@ -145,6 +154,12 @@ body {
     color: #9E9E9E;
     font-size: 24px;
     text-shadow: 1px 1px 1px rgba(96, 125, 139, 0.45);
+}
+.board-explain {
+    top: 44%;
+    margin-left: -380px;
+    cursor: default;
+    text-align: center;
 }
 .editor-explain {
     top: 42%;

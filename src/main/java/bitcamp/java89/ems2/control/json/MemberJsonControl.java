@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import bitcamp.java89.ems2.domain.Member;
 import bitcamp.java89.ems2.domain.Mentee;
 import bitcamp.java89.ems2.domain.Mento;
-import bitcamp.java89.ems2.domain.Result;
 import bitcamp.java89.ems2.service.MemberService;
 
 //@Controller

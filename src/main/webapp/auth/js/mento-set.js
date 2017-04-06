@@ -40,6 +40,11 @@ $( function() {
   });
 });
 
+function colorSet() {
+    $('.warn-modal').css('border','1px solid #e2525c');
+    $('.warn-modal-head').css('background','#e2525c');
+    $('.fa-px').css('color','#e2525c');
+}
 
 
 

@@ -158,7 +158,7 @@ body { overflow: auto; }
   top: -10px;
   right: -22px;
   position: relative;
-  font-size: 28px;
+  font-size: 2.5em;
   display: block;
   float: right;
   color: #fff;
@@ -214,7 +214,7 @@ h3.warn-modal-testInfo {
     color: #e2525c;
 }
 .mentoset-comment > h3 {
-  font-size: 19px;
+  font-size: 15px;
   color: #5D6D7E;
 }
 .warn-modal-confirm div {
