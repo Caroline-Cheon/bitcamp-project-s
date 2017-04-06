@@ -47,6 +47,11 @@
     animation-duration: 0.5s;
 }
 
+.modal-content .detail-plan-area  {
+	  width: 66%;
+    height: 99%;
+}
+
 .modal-btn {
 	cursor: pointer;
   position: absolute;
@@ -399,6 +404,7 @@
     /* bottom: 35px; */
     /* overflow-x: hidden; */
     margin-right: -30px;
+    font-size: 15px;
  }
  
 ::-webkit-scrollbar {

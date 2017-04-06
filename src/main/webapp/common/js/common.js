@@ -718,7 +718,7 @@ $(function() {
 					    	  $('.nothing-message').hide();
 					    	  console.log(ajaxResult.data);
 					    	  
-					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+					    	  $('.message-info').append('<li> <img class="profile-img" src="/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
 					    	 
 					      }
 

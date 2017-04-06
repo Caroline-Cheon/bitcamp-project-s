@@ -5,7 +5,6 @@
   
 <mapper namespace="bitcamp.java89.ems2.dao.PlanDao">
 
-
   <resultMap type="bitcamp.java89.ems2.domain.Plan" id="plan-map" extends="mento-map">
     <id     column="mno"        property="memberNo"/>
     <id     column="cono"        property="contentsNo"/>
@@ -43,7 +42,7 @@
   </select> -->
   
   <select id="getOne" resultMap="plan-map">
-    select pl.eno, name, mimg
+    select pl.eno, name, mimg, plmap
         from plan pl
          inner join mento mte on mte.eno = pl.eno
          inner join membs mb on mb.mno = mte.eno
@@ -66,7 +65,7 @@
   </select>
   
    <select id="getList" resultMap="plan-map" parameterType="map">
-  select plan.cono,mto.eno,name,mb.mimg,plmap,plimg, sarea from contents ctt
+  select distinct plan.cono,mto.eno,name,mb.mimg,plmap,plimg, sarea from contents ctt
   inner join plan on plan.cono = ctt.cono
   inner join copic cp on ctt.cono = cp.cono
   inner join topic tp on cp.tno = tp.tno
@@ -75,7 +74,7 @@
   inner join result ret on ret.rer = resdf.define
   inner join membs mb on mb.mno = plan.eno
   inner join mento mto on mto.eno = mb.mno
-  where ret.sno = 5 and mb.mno = plan.eno 
+  where ret.sno = #{sno} and mb.mno = plan.eno 
   limit 4
 <!--     limit #{startRowIndex}, #{rowSize} -->
   </select>

@@ -286,7 +286,7 @@ Right triangle, left side slightly down
 }
   .window .enter {
     position: fixed;
-    bottom: 96px;
+    bottom: 137px;
     z-index: 1;
     width: 428px;
     /* left: 0; */
@@ -313,7 +313,7 @@ Right triangle, left side slightly down
     display: block;
     position: fixed;
     z-index: 3;
-    bottom: 98px;
+    bottom: 139px;
     margin-left: 404px;
 }
   .window .send:before {

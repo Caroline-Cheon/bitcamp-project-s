@@ -99,6 +99,9 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
 					    eno = ajaxResult.data.mento.mentoNo;
 						var mteName = ajaxResult.data.mento.name;
 						var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
+						var mteMap = ajaxResult.data.mento.planMap
+						
+//						var mteMap = serverRoot + '/upload/' + ajaxResult.data.mento.planImage;
 						console.log(mteName);
 						console.log(mtePhoto);
 					$('.mystuff-modal').load('mystuff/plan-modal.html .plan-modal', function() {
@@ -122,6 +125,12 @@ $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 �
                     
                     $('.mystuff-chat-bot h3').text(mteName);
                     $('.mystuff-chat-bot img').attr('src',mtePhoto);
+                    $('#viewSavedModel').val(mteMap);
+                    view_init();
+                    
+                    
+//                    $('.detail-plan-area img').attr('src',mteMap);
+                     
 			});
 		});
 	});
