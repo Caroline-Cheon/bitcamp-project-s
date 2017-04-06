@@ -462,8 +462,10 @@ function userInfo() {
 			hasLike = ajaxResult.data.hasLike;
 			memsType = ajaxResult.data.memsType;
 			console.log(memsType)
-			if (memsType == 'mentee') 
+			if (memsType == 'mentee') {
 				sno = ajaxResult.data.topic.memberNo;
+				messageWorker();
+	  		}
 			if (memsType == 'mento') 
 				expertNo = ajaxResult.data.topic.memberNo;
 			console.log('세션 획득 정보');
@@ -478,11 +480,14 @@ function userInfo() {
 			}, 3500);
 			if(memberInfo != undefined) {
 				console.log('memberInfo != undefined', memberInfo.name);
-	    		$('.user-info h3').text(memberInfo.name);
-	    		if (memberInfo.photoPath != undefined) {
-	    			console.log(memberInfo.photoPath);
-	    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-	    		}
+				while(true) {
+		    		$('.user-info h3').text(memberInfo.name);
+		    		if (memberInfo.photoPath != undefined) {
+		    			console.log(memberInfo.photoPath);
+		    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+		    			break;
+		    		}
+				}
 			}
 	  });
 }
@@ -600,14 +605,9 @@ $(function() {
 							    	
 						    }, 'json'); // 새 파일 업로드 post 요청. update 요청.
 						    
-						    $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call');
-						    setTimeout(function() {
+						    $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
 						    	userInfo(); 
-						    	console.log('로드 오케이?');
-						    	console.log(memberInfo.name);
-						    	$('.user-info h3').text(memberInfo.name);
-						    $('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-						    }, 5000);
+						    });
 						    
 				    } // 사진 새로 바꿨을 때 호출되는 함수.
 				}); // 업로드 컴플릿 펑션 
@@ -688,41 +688,34 @@ $(function() {
 					"sno": memberInfo.memberNo
 						}, 
 						function(ajaxResult) {
-							var status = ajaxResult.status;
-							if (status != "success") {
-					             console.log("이게뭐람");
-								return;
-							}
 							
-							
-	             console.log(ajaxResult.data);
+			             console.log(ajaxResult.data);
+			             
+			             var list = ajaxResult.data;
 	             
-	             var list = ajaxResult.data;
-	             
-	             
-			      $.each(list, function(k, v) {
-			    	  console.log(list,k,v);
-			    	  $.getJSON(serverRoot + '/message/isMsg.json', 
-			    		{
-			    		  "cono": v.contentsNo,
-			    		  "sno": memberInfo.memberNo
-			    		}, function(ajaxResult) {
-			  		      var status = ajaxResult.status;
-					      if (status == "fail") {
-					    	  console.log("최신 답변 없엉");
-					    	  return;
-					      }
-					      else {
-					    	  count++
-					    	  $('.nothing-message').hide();
-					    	  console.log(ajaxResult.data);
-					    	  
-					    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
-					    	 
-					      }
-
-			    		}); // isMsg 콜백함수
-			      });
+					      $.each(list, function(k, v) {
+					    	  console.log(list,k,v);
+					    	  $.getJSON(serverRoot + '/message/isMsg.json', 
+					    		{
+					    		  "cono": v.contentsNo,
+					    		  "sno": memberInfo.memberNo
+					    		}, function(ajaxResult) {
+					  		      var status = ajaxResult.status;
+							      if (status == "fail") {
+							    	  console.log("최신 답변 없엉");
+							    	  return;
+							      }
+							      else {
+							    	  count++
+							    	  $('.nothing-message').hide();
+							    	  console.log(ajaxResult.data);
+							    	  
+							    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+							    	 
+							      }
+		
+					    		}); // isMsg 콜백함수
+					      });
 	             
      
 	        

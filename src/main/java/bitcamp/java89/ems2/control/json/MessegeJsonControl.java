@@ -130,13 +130,13 @@ public class MessegeJsonControl {
       Message message = messageService.mentoGetOne(targetMento);
       return new AjaxResult(AjaxResult.SUCCESS, message);
     }
-    
   }
   
   @RequestMapping("/message/count")
-  public AjaxResult newMessageCount(@RequestParam int sno) throws Exception { // 멘티 입장에서 main 화면 헤더 부분 카운트 표시를 위한~
+  public AjaxResult newMessageCount(@RequestParam int sno) throws Exception {
+    // 멘티 입장에서 main 화면 헤더 부분 카운트 표시를 위한~
   HashMap<String, Object> intMap = new HashMap<String, Object>();
-  intMap.put("sno", sno);
+    intMap.put("sno", sno);
     String msno = messageService.getMessageNo(intMap);
     
     if (msno == null) {
@@ -148,9 +148,6 @@ public class MessegeJsonControl {
     
     return new AjaxResult(AjaxResult.SUCCESS, count);
     }
-    
-    
-    
   }
   
   @RequestMapping("/message/menteeMessageCount")
