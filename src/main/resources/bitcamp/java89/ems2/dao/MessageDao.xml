@@ -21,12 +21,12 @@
     WHERE sno = #{sno}
   </select>
   
-    <select id="getMessageNo" resultType="String" parameterType="map">
-select msno
-     from messg 
-     where mswr = #{sno} 
-     ORDER BY msno desc 
-     limit 1
+  <select id="getMessageNo" resultType="String" parameterType="map">
+		SELECT msno
+    FROM messg 
+    WHERE mswr = #{sno} 
+    ORDER BY msno DESC 
+    LIMIT 1
   </select>
   
     <select id="mentoGetMessageNo" resultType="String" parameterType="map">
