@@ -61,6 +61,28 @@ insert into job(cono, jbimg, jbnm, jbdsc) values(1, 'abce', '연구원', '연구
 	insert into copic(tno, cono) values(1, 26);
 	insert into copic(tno, cono) values(1, 27);
 	
+	 
+	 insert into copic(tno, cono) values(1, 44);
+  insert into copic(tno, cono) values(1, 45);
+  insert into copic(tno, cono) values(1, 46);
+  insert into copic(tno, cono) values(1, 47);
+  insert into copic(tno, cono) values(1, 48);
+  insert into copic(tno, cono) values(1, 49);
+  insert into copic(tno, cono) values(1, 50);
+  insert into copic(tno, cono) values(1, 51);
+  insert into copic(tno, cono) values(1, 52);
+  insert into copic(tno, cono) values(1, 53);
+  insert into copic(tno, cono) values(1, 54);
+  insert into copic(tno, cono) values(1, 55);
+  insert into copic(tno, cono) values(1, 56);
+  insert into copic(tno, cono) values(1, 57);
+  insert into copic(tno, cono) values(1, 58);
+  insert into copic(tno, cono) values(1, 59);
+  insert into copic(tno, cono) values(1, 60);
+  insert into copic(tno, cono) values(1, 61);
+  insert into copic(tno, cono) values(1, 62);
+  insert into copic(tno, cono) values(1, 63);
+  insert into copic(tno, cono) values(1, 64);
 	
 	- 추천 인물 리스트
 	insert into copic(tno, cono) values(1, 38);

@@ -128,11 +128,10 @@ function crowl(ted) {
 	   
 
 	   ted.addVodsc(a('p.talk-description').text().replace(/\n/g, "").replace(/\r/g, "")); // 비디오 설명.
-	   ted.addSimg(a('img.thumb__image').attr("src")); // 스피커 이미지
+	   ted.addSimg(a('a.talk-speaker__image img').attr("src")); // 스피커 이미지
 
-	   ted.addSpnm(a('a.talk-speaker__link').attr("href"));// 스피커 이름
-	   ted.addSpdsc(a('div.talk-speaker__description').text()); // 스피커 직업
-	   
+	   ted.addSpnm(a('div.talk-speaker__name > a').text());// 스피커 이름
+	   ted.addSpdsc(a('div.talk-speaker__description').text()); // 스피커 직업	   
 	   dbConnection.query("insert into contents(type) values('video')",
 			   function(err, rows, fields) {
 		   console.log("rows" + rows);

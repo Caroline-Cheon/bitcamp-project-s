@@ -1,5 +1,6 @@
 	      // 멘티 메인 페이지 뱃지에 넣을 새로 올라온 답변 카운트
  function newMessageCount() {
+	 console.log('newMessageCount');
 	 $.getJSON(serverRoot + '/message/count.json', // 새로 올라온 멘토들의 답변 리스트
 			 {
 		 		"sno": memberInfo.memberNo
@@ -8,7 +9,7 @@
 				 var status = ajaxResult.status;
 				 if (ajaxResult.data == 0 || ajaxResult.data == '최신 답변이 없습니다.') {
 					 return;
-				 } else {
+				 } else if(status == 'success') {
 					 $('.new-count').css('display','block');
 					 $('.new-count').text(ajaxResult.data);
 				 }
@@ -281,6 +282,7 @@ function pageLoad(choose) {
 				      console.log("video 객체");
 				      console.log(ajaxResult);
 				      var list = ajaxResult.data.list;
+				      console.log(list);
 				      $.each(list, function(k, v) {
 				    	  $.getJSON(serverRoot + '/video/isLike.json', 
 				    		{
@@ -456,13 +458,10 @@ function userInfo() {
 			hasLike = ajaxResult.data.hasLike;
 			memsType = ajaxResult.data.memsType;
 			console.log(memsType)
-			if (memsType == 'mentee') {
+			if (memsType == 'mentee') 
 				sno = ajaxResult.data.topic.memberNo;
-//				messageWorker();
-			}
-			if (memsType == 'mento') {
+			if (memsType == 'mento') 
 				expertNo = ajaxResult.data.topic.memberNo;
-			}
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
@@ -473,46 +472,17 @@ function userInfo() {
 			setTimeout(function() {
 				loadContorl();
 			}, 3500);
-/*<<<<<<< HEAD
 			if(memberInfo != undefined) {
 				console.log('memberInfo != undefined', memberInfo.name);
-//				while(true) {
-		    		$('.user-info h3').text(memberInfo.name);
-		    		if (memberInfo.photoPath != undefined) {
-		    			console.log(memberInfo.photoPath);
-		    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-//		    			break;
-		    		}
-//				}
+	    		$('.user-info h3').text(memberInfo.name);
+	    		if (memberInfo.photoPath != undefined) {
+	    			console.log(memberInfo.photoPath);
+	    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+	    		}
 			}
-=======*/
-			setUserinfo = setInterval(function() {
-				console.log($('.user-info .name').text());
-				console.log(memberInfo.name);
-					setTimeout(function() {
-					$('.user-info .name').text(memberInfo.name);
-					if (memberInfo.photoPath != undefined) {
-						console.log(memberInfo.photoPath);
-						$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-					}
-				}, 2000);
-				setTimeout(function() {
-					if($('.user-info .name').text() != "") {
-						console.log("!= ''");
-						clearTimeout(setUserinfo);
-						}
-				}, 2250);
-			}, 3250);
 	  });
 }
 /*   /user session 정보 받아오는 함수   */
-
-/*   새로운 메시지가 존재하는지 서버에 질문하는 워커님   */
-/*function messageWorker() {
-	setInterval(function() {
-	   newMessageCount();
-	}, 1000);
-}*/
 
 $(function() {
 	/*   header 호출 스크립트 및 로그인 유저 로그인 상태 확인.   */
@@ -528,15 +498,24 @@ $(function() {
 					} else {
 						memberInfo = ajaxResult.data.topic;
 						topicName = ajaxResult.data.topicName;
-						userInfo();
+						
+						if(ajaxResult.data.topic == null || ajaxResult.data.topicName == []) {
+							userInfo();
+						}
+						console.log('세션 획득 정보');
+						console.log(memberInfo);
+						console.log(topicName);
+						console.log(hasLike);
 						eventControll();
 						if (memsType == 'mentee') {
-							$('.header-icon-user').css("display", "inline-block");
-							$('.header-icon-message').css("display", "inline-block");
-							newMessageCount();
-					    } else if (memsType == 'mento'){ // 접속자 멘토일 때
-							$('.header-icon-user').css("display", "inline-block");
-							$('.mentee-service').css('display', 'none');
+						$('.header-icon-user').css("display", "inline-block");
+						$('.header-icon-message').css("display", "inline-block");
+						newMessageCount();
+					    }
+					     else { // 접속자 멘토일 때
+						$('.header-icon-user').css("display", "inline-block");
+						$('.mentee-service').css('display', 'none');
+
 						}
 					}
 				memberNo = memberInfo.memberNo;
@@ -545,21 +524,18 @@ $(function() {
 				setInterval(function(){
 					$(".new-message blink").toggle();
 					}, 550);
-/*<<<<<<< HEAD
 				if (memberInfo.photoPath != undefined) {
 					
-					$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
 				}
 				$('.user-info h3').text(memberInfo.name);
-=======
->>>>>>> branch 'master' of https://github.com/Liamkimjihwan/bitcamp-project-s.git
-*/				/* topicName length 만큼 반복문 돌려서 생성해야 함 */
+				/* topicName length 만큼 반복문 돌려서 생성해야 함 */
 //				console.log(topicName.length);
 				
 				if (topicName != undefined) {
-					$('.recommand-info .one').text(topicName[0]);
-					$('.recommand-info .two').text(topicName[1]);
-					$('.recommand-info .three').text(topicName[2]);
+				$('.recommand-info .one').text(topicName[0]);
+				$('.recommand-info .two').text(topicName[1]);
+				$('.recommand-info .three').text(topicName[2]);
 				}
 				/*   /topicName length 만큼 반복문 돌려서 생성해야 함   */ 
 				$('.result-info .test-name').text(memberInfo.type);
@@ -577,8 +553,11 @@ $(function() {
 				    previewMaxHeight: 800,  // 미리보기 이미지 높이 
 				    previewCrop: true,      // 미리보기 이미지를 출력할 때 원본에서 지정된 크기로 자르기
 				    done: function (e, data) { // 서버에서 응답이 오면 호출된다. 각 파일 별로 호출된다.
+				    	console.log('done()...');
+				    	console.log(data.result.data[0]);
 				       photoPath = data.result.data[0];
 //				        $('#photo-path').val(data.result);
+				       console.log("하하하하");
 				       console.log(data.result.data[0]);
 				        
 					
@@ -590,10 +569,16 @@ $(function() {
 					    
 						    $.post(serverRoot + '/mentee/update.json', param, function(ajaxResult) {
 						    	if (ajaxResult.status != "success") {
+						    		console.log("업데이트안됨.");
 						    		alert(ajaxResult.data);
 						    		return;
 						    	}
+						    	console.log("파일업로드!");
+						    	console.log(ajaxResult.data);
 						    	photoPath = ajaxResult.data.photoPath
+
+						    	console.log(date.getTime())
+						    	console.log(location.href); 
 /*						    	
 						    	refresh();
 						    	function refresh() {
@@ -606,8 +591,6 @@ $(function() {
 						          });
 						  		}
 */	
-
-							    	
 						    }, 'json'); // 새 파일 업로드 post 요청. update 요청.
 						    
 						    $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call');
@@ -771,7 +754,7 @@ $(function() {
 	      
 	      
 	      $(document.body).on( "click", ".message-info li", function() { // 메세지 info에서 해당 new 메세지 눌렀을 때 이벤트
-	    	
+	    	  
 	    	  console.log($(this));
 	    	 var cono = $(this).children('.job-sort').attr('data-no');
 	    	
@@ -796,6 +779,7 @@ $(function() {
 							    eno = ajaxResult.data.mento.mentoNo;
 								var mteName = ajaxResult.data.mento.name;
 								var mtePhoto = serverRoot + '/mystuff/img/' + ajaxResult.data.mento.photoPath;
+								var mteMap = ajaxResult.data.mento.planMap
 								console.log(mteName);
 								console.log(mtePhoto);
 								
@@ -824,7 +808,8 @@ $(function() {
                                   
                                   $('.mystuff-chat-bot h3').text(mteName);
                                   $('.mystuff-chat-bot img').attr('src',mtePhoto);
-								 
+                                  $('#viewSavedModel').val(mteMap);
+                                  view_init();
 							 }) // mystuff-modal 창에 로드 시키기.
 				
 			  }) // messageList getJson
