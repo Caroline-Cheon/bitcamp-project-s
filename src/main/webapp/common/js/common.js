@@ -475,18 +475,20 @@ function userInfo() {
 			setUserinfo = setInterval(function() {
 				console.log($('.user-info .name').text());
 				console.log(memberInfo.name);
-				$('.user-info .name').text(memberInfo.name);
-				if (memberInfo.photoPath != undefined) {
-					console.log(memberInfo.photoPath);
-					$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-				}
+					setTimeout(function() {
+					$('.user-info .name').text(memberInfo.name);
+					if (memberInfo.photoPath != undefined) {
+						console.log(memberInfo.photoPath);
+						$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+					}
+				}, 2000);
 				setTimeout(function() {
 					if($('.user-info .name').text() != "") {
 						console.log("!= ''");
 						clearTimeout(setUserinfo);
 						}
-				}, 250);
-			}, 250);
+				}, 2250);
+			}, 3250);
 	  });
 }
 /*   /user session 정보 받아오는 함수   */
@@ -546,11 +548,8 @@ $(function() {
 				    previewMaxHeight: 800,  // 미리보기 이미지 높이 
 				    previewCrop: true,      // 미리보기 이미지를 출력할 때 원본에서 지정된 크기로 자르기
 				    done: function (e, data) { // 서버에서 응답이 오면 호출된다. 각 파일 별로 호출된다.
-				    	console.log('done()...');
-				    	console.log(data.result.data[0]);
 				       photoPath = data.result.data[0];
 //				        $('#photo-path').val(data.result);
-				       console.log("하하하하");
 				       console.log(data.result.data[0]);
 				        
 					
@@ -562,16 +561,10 @@ $(function() {
 					    
 						    $.post(serverRoot + '/mentee/update.json', param, function(ajaxResult) {
 						    	if (ajaxResult.status != "success") {
-						    		console.log("업데이트안됨.");
 						    		alert(ajaxResult.data);
 						    		return;
 						    	}
-						    	console.log("파일업로드!");
-						    	console.log(ajaxResult.data);
 						    	photoPath = ajaxResult.data.photoPath
-
-						    	console.log(date.getTime())
-						    	console.log(location.href); 
 /*						    	
 						    	refresh();
 						    	function refresh() {
