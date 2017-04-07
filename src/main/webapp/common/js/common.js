@@ -2,25 +2,19 @@
  function newMessageCount() {
 	 $.getJSON(serverRoot + '/message/count.json', // 새로 올라온 멘토들의 답변 리스트
 			 {
-		 "sno": memberInfo.memberNo
+		 		"sno": memberInfo.memberNo
 			 }, 
 			 function(ajaxResult) {
 				 var status = ajaxResult.status;
-				 if (status != "success") {
-					 console.log("카운트 없음.");
-					 return;
-				 }
-				 console.log(ajaxResult.data);
 				 if (ajaxResult.data == 0) {
 					 return;
 				 }
 				 else {
-					 console.log("들어와랏");
 					 $('.new-count').css('display','block');
 					 $('.new-count').text(ajaxResult.data);
 				 }
 			 })
- } // newMessageCount() 	
+ } // newMessageCount()
 
 $(function() { 
 	userInfo();
@@ -479,17 +473,21 @@ function userInfo() {
 			setTimeout(function() {
 				loadContorl();
 			}, 3500);
-			if(memberInfo != undefined) {
-				console.log('memberInfo != undefined', memberInfo.name);
-				while(true) {
-		    		$('.user-info h3').text(memberInfo.name);
-		    		if (memberInfo.photoPath != undefined) {
-		    			console.log(memberInfo.photoPath);
-		    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-		    			break;
-		    		}
+			setUserinfo = setInterval(function() {
+				console.log($('.user-info .name').text());
+				console.log(memberInfo.name);
+				$('.user-info .name').text(memberInfo.name);
+				if (memberInfo.photoPath != undefined) {
+					console.log(memberInfo.photoPath);
+					$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
 				}
-			}
+				setTimeout(function() {
+					if($('.user-info .name').text() != "") {
+						console.log("!= ''");
+						clearTimeout(setUserinfo);
+						}
+				}, 250);
+			}, 250);
 	  });
 }
 /*   /user session 정보 받아오는 함수   */
@@ -508,25 +506,15 @@ $(function() {
 					} else {
 						memberInfo = ajaxResult.data.topic;
 						topicName = ajaxResult.data.topicName;
-						
-						if(ajaxResult.data.topic == null || ajaxResult.data.topicName == []) {
-							userInfo();
-						}
-						console.log('세션 획득 정보');
-						console.log(memberInfo);
-						console.log(topicName);
-						console.log(hasLike);
+						userInfo();
 						eventControll();
 						if (memsType == 'mentee') {
-							console.log("mentee")
-						$('.header-icon-user').css("display", "inline-block");
-						$('.header-icon-message').css("display", "inline-block");
-						newMessageCount();
-					    }
-					     else if (memsType == 'mento'){ // 접속자 멘토일 때
-						$('.header-icon-user').css("display", "inline-block");
-						$('.mentee-service').css('display', 'none');
-
+							$('.header-icon-user').css("display", "inline-block");
+							$('.header-icon-message').css("display", "inline-block");
+							newMessageCount();
+					    } else if (memsType == 'mento'){ // 접속자 멘토일 때
+							$('.header-icon-user').css("display", "inline-block");
+							$('.mentee-service').css('display', 'none');
 						}
 					}
 				memberNo = memberInfo.memberNo;
@@ -535,18 +523,13 @@ $(function() {
 				setInterval(function(){
 					$(".new-message blink").toggle();
 					}, 550);
-				if (memberInfo.photoPath != undefined) {
-					
-					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
-				}
-				$('.user-info h3').text(memberInfo.name);
 				/* topicName length 만큼 반복문 돌려서 생성해야 함 */
 //				console.log(topicName.length);
 				
 				if (topicName != undefined) {
-				$('.recommand-info .one').text(topicName[0]);
-				$('.recommand-info .two').text(topicName[1]);
-				$('.recommand-info .three').text(topicName[2]);
+					$('.recommand-info .one').text(topicName[0]);
+					$('.recommand-info .two').text(topicName[1]);
+					$('.recommand-info .three').text(topicName[2]);
 				}
 				/*   /topicName length 만큼 반복문 돌려서 생성해야 함   */ 
 				$('.result-info .test-name').text(memberInfo.type);
