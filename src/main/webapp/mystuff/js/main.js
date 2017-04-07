@@ -1,10 +1,3 @@
-/*   새로운 메시지가 존재하는지 서버에 질문하는 워커님   */
-function messageWorker() {
-	setInterval(function() {
-	   newMessageCount();
-	}, 1000);
-}
-
 // 좋아요 버튼 눌렀을 때
 $(document.body).on("click", ".buttonHolder", function() {// 좋아요 버튼 눌렀을 때
 	event.preventDefault();

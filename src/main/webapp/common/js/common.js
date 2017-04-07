@@ -465,10 +465,11 @@ function userInfo() {
 			console.log(memsType)
 			if (memsType == 'mentee') {
 				sno = ajaxResult.data.topic.memberNo;
-				messageWorker();
-	  		}
-			if (memsType == 'mento') 
+//				messageWorker();
+			}
+			if (memsType == 'mento') {
 				expertNo = ajaxResult.data.topic.memberNo;
+			}
 			console.log('세션 획득 정보');
 			console.log("memberInfo", memberInfo);
 			console.log("topicName", topicName);
@@ -481,18 +482,25 @@ function userInfo() {
 			}, 3500);
 			if(memberInfo != undefined) {
 				console.log('memberInfo != undefined', memberInfo.name);
-				while(true) {
+//				while(true) {
 		    		$('.user-info h3').text(memberInfo.name);
 		    		if (memberInfo.photoPath != undefined) {
 		    			console.log(memberInfo.photoPath);
 		    			$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
-		    			break;
+//		    			break;
 		    		}
-				}
+//				}
 			}
 	  });
 }
 /*   /user session 정보 받아오는 함수   */
+
+/*   새로운 메시지가 존재하는지 서버에 질문하는 워커님   */
+/*function messageWorker() {
+	setInterval(function() {
+	   newMessageCount();
+	}, 1000);
+}*/
 
 $(function() {
 	/*   header 호출 스크립트 및 로그인 유저 로그인 상태 확인.   */
@@ -537,7 +545,7 @@ $(function() {
 					}, 550);
 				if (memberInfo.photoPath != undefined) {
 					
-					$('.profile-img').attr('src', serverRoot + '/mystuff/img/' + memberInfo.photoPath);
+					$('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
 				}
 				$('.user-info h3').text(memberInfo.name);
 				/* topicName length 만큼 반복문 돌려서 생성해야 함 */
@@ -606,9 +614,14 @@ $(function() {
 							    	
 						    }, 'json'); // 새 파일 업로드 post 요청. update 요청.
 						    
-						    $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call', function() {
+						    $('.user-menu').load(clientRoot + '/common/header.html .user-menu-call');
+						    setTimeout(function() {
 						    	userInfo(); 
-						    });
+						    	console.log('로드 오케이?');
+						    	console.log(memberInfo.name);
+						    	$('.user-info h3').text(memberInfo.name);
+						    $('.profile-img').attr('src', clientRoot + '/mystuff/img/' + memberInfo.photoPath);
+						    }, 5000);
 						    
 				    } // 사진 새로 바꿨을 때 호출되는 함수.
 				}); // 업로드 컴플릿 펑션 
@@ -679,7 +692,7 @@ $(function() {
 	      
 	      if (target.hasClass("header-icon-message")) { // 멘토 답변 업데이트 알림 아이콘.
 	        if (!isopen_messagemenu) {
-//	        	 newMessageCount();
+	        	 newMessageCount();
 	        $(".user-menu").hide();
 	        $(".mento-menu").hide();
 	        $('.message-menu').load('common/header.html .message-info', function() {
@@ -739,7 +752,7 @@ $(function() {
 							    	  $('.nothing-message').hide();
 							    	  console.log(ajaxResult.data);
 							    	  
-							    	  $('.message-info').append('<li> <img class="profile-img" src="localhost:8080/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
+							    	  $('.message-info').append('<li> <img class="profile-img" src="/bitcamp-project-s/mystuff/img/' + ajaxResult.data.photoPath +'"/>' + '<span class="job-sort" data-no="'+ajaxResult.data.contentsNo+'">' + ajaxResult.data.specialArea +'</span> <span class="message-context"> <h3 class="name">'+ ajaxResult.data.name +'</h3>님의 메세지 <div class="new-message"><blink>NEW</blink></div> </span> </li>');
 							    	 
 							      }
 		

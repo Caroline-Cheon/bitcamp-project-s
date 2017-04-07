@@ -43,10 +43,6 @@ $(function() {
 			if (ajaxResult.status != "success") {
 				alert(ajaxResult.data);
 			}
-				console.log('logIn().ajaxResult');
-				console.log(ajaxResult.status);
-				console.log(ajaxResult.data.mento);
-				console.log(memsType);
 				eventControll();
 				// 서비스 대상에 따른 페이지 분기점
 				$('.login-form-container').removeClass("animated fadeInRight");
