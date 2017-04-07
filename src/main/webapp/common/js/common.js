@@ -6,10 +6,9 @@
 			 }, 
 			 function(ajaxResult) {
 				 var status = ajaxResult.status;
-				 if (ajaxResult.data == 0) {
+				 if (ajaxResult.data == 0 || ajaxResult.data == '최신 답변이 없습니다.') {
 					 return;
-				 }
-				 else {
+				 } else {
 					 $('.new-count').css('display','block');
 					 $('.new-count').text(ajaxResult.data);
 				 }
